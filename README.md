@@ -8,6 +8,19 @@ pydicts uses several acronyms to call functions and parameters
 - lood: List of ordered dictionaries (OrderedDicts from collections module)
 - lol: List of lists 
 
+## LOD
+### lod_has_key
+```python
+>>> from pydicts.lod import lod_has_key
+>>> lod=[{"a":1, "b":4},{"a":2, "b":5}]
+>>> lod_has_key(lod,"a")
+True
+>>> lod_has_key(lod,"d")
+False
+>>> lod_has_key([],"d")
+False
+```
+
 ## Testing
 poetry run pytest
 
