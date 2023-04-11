@@ -1,97 +1,4 @@
-## THIS IS FILE IS FROM https://github.com/turulomio/django_moneymoney/moneymoney/lod_functions.py
-## IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT AND DOWNLOAD FROM IT
-## DO NOT UPDATE IT IN YOUR CODE
-
 from collections import OrderedDict
-
-## El objetivo es crear un objeto list_dict que se almacenera en self.ld con funciones set
-## set_from_db #Todo se carga desde base de datos con el minimo parametro posible
-## set_from_db_and_variables #Preguntara a base datos aquellas variables que falten. Aunque no estén en los parámetros p.e. money_convert
-## set_from_variables #Solo con variables
-## set #El lod ya está hecho pero se necesita el objeto para operar con el
-##class Do:
-##    def __init__(self,d):
-##        self.d=d
-##        self.create_attributes()
-##
-##    def number_keys(self):
-##        return len(self.d)
-##
-##    def has_key(self,key):
-##        return key in self.d
-##
-##    def print(self):
-##        lod_print(self.d)
-##
-##    ## Creates an attibute from a key
-##    def create_attributes(self):
-##        for key, value in self.d.items():
-##            setattr(self, key, value)
-
-
-
-
-## Class that return a object to manage lod
-## El objetivo es crear un objeto list_dict que se almacenera en self.ld con funciones set
-## set_from_db #Todo se carga desde base de datos con el minimo parametro posible
-## set_from_db_and_variables #Preguntara a base datos aquellas variables que falten. Aunque no estén en los parámetros p.e. money_convert
-## set_from_variables #Solo con variables
-## set #El lod ya está hecho pero se necesita el objeto para operar con el
-class LOD:
-    def __init__(self, name=None):
-        self.name=self.__class__.__name__ if name is None else name
-        self.ld=[]
-
-    def length(self):
-        return len(self.ld)
-
-    def has_key(self,key):
-        return lod_has_key(self.ld,key)
-
-    def print(self):
-        lod_print(self.ld)
-
-    def print_first(self):
-        lod_print_first(self.ld)
-
-    def sum(self, key, ignore_nones=True):
-        return lod_sum(self.ld, key, ignore_nones)
-
-    def list(self, key, sorted=True):
-        return lod2list(self.ld, key, sorted)
-
-    def average_ponderated(self, key_numbers, key_values):
-        return lod_average_ponderated(self.ld, key_numbers, key_values)
-
-    def set(self, ld):
-        del self.ld
-        self.ld=ld
-        return self
-
-    def is_set(self):
-        if hasattr(self, "ld"):
-            return True
-        print(f"You must set your lod in {self.name}")
-        return False
-
-    def append(self,o):
-        self.ld.append(o)
-
-    def first(self):
-        return self.ld[0] if self.length()>0 else None
-
-    ## Return list keys of the first element[21~
-    def first_keys(self):
-        if self.length()>0:
-            return self.first().keys()
-        else:
-            return "I can't show keys"
-    
-    def order_by(self, key, reverse=False):
-        self.ld=sorted(self.ld,  key=lambda item: item[key], reverse=reverse)
-        
-    def json(self):
-        return lod2json(self.ld)
 
 def lod_has_key(lod, key):
     if len(lod)==0:
@@ -240,26 +147,6 @@ def lod2list_distinct(lod, key, sorted=False, cast=None):
         r.sort()
     return r
 
-
-
-def lod2json(lod):
-    try:
-        from casts import var2json
-    except ImportError:
-        raise NotImplementedError("You need https://github.com/turulomio/reusingcode/python/casts.py to use this function.")
-    
-    if len(lod)==0:
-        return "[]"
-
-    r="["
-    for o in lod:
-        d={}
-        for field in o.keys():
-            d[field]=var2json(o[field])
-        r=r+str(d).replace("': 'null'", "': null").replace("': 'true'", "': true").replace("': 'false'", "': false") +","
-    r=r[:-1]+"]"
-    return r
-
 ## Returns the max of a key in lod
 def lod_max(lod, key):
     return max(lod2list(lod,key))
@@ -270,7 +157,7 @@ def lod_min(lod, key):
 
 ## Converts a list of ordereddict to a list of rows. ONLY DATA
 ## @params keys If None we must suppose is an ordered dict or keys will be randomized
-def lod2listofrows(lod,  keys=None):
+def lod2lol(lod,  keys=None):
     if len(lod)==0:
         return []
         
@@ -285,7 +172,7 @@ def lod2listofrows(lod,  keys=None):
         r.append(row_r)
     return r
 
-def lod2listofordereddicts(ld, keys):
+def lod2lood(ld, keys):
     if len(ld)==0:
         return []
                 

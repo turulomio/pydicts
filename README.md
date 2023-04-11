@@ -1,6 +1,13 @@
 # pydicts
 Module to use dictionaries in various situations
 
+## Acronyms
+pydicts uses several acronyms to call functions and parameters
+
+- lod: List of dictionaries
+- lood: List of ordered dictionaries (OrderedDicts from collections module)
+- lol: List of lists 
+
 ## Testing
 poetry run pytest
 
