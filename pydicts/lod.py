@@ -86,21 +86,21 @@ def lod2dictkv(lod, key, value):
     return d
 
 ## Converts a lod to a dict using key as new dict key, and the dict as a value
-def lod2dict(lod, key):
+def lod2dod(lod, key):
     d={}
     for ld in lod:
         d[ld[key]]=ld
     return d
     
 ## Converts a lod to a dict using (key1,key2) tuple  as new dict key, and the dict as a value
-def lod2dict_tuple(lod, key1, key2):
+def lod2dod_tuple(lod, key1, key2):
     d={}
     for ld in lod:
         d[(ld[key1],ld[key2])]=ld
     return d
 
 ## Converts a dict of dictionaries (prefered orderdict) to a list of dictionaries
-def dict2lod(d):
+def dod2lod(d):
     r=[]
     for k,v in d.items():
         r.append(v)

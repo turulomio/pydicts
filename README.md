@@ -4,9 +4,10 @@ Module to use dictionaries in various situations
 ## Acronyms
 pydicts uses several acronyms to call functions and parameters
 
-- lod: List of dictionaries
-- lood: List of ordered dictionaries (OrderedDicts from collections module)
-- lol: List of lists 
+- lod: List of dictionaries `[{"a":1,"b":2}, {"a":3,"b":4}]`
+- lood: List of ordered dictionaries (OrderedDicts from collections module) `[OrderedDict([('a', 1), ('b', 2)]), OrderedDict([('a', 3), ('b', 4)])]`
+- lol: List of lists `[[1, 2, 3], [4, 5, 6]]` 
+- dod: Dictionary of dictionaries `{'key2': {'a': 1, 'b': 2}, 'key1': {'a': 1, 'b': 2}}`
 
 ## LOD
 ### lod_has_key
