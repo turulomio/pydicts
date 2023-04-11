@@ -46,9 +46,6 @@ def lod_sum(lod, key, ignore_nones=True):
         r=r+d[key]
     return r
 
-
-
-
 def lod_sum_negatives(lod, key):
     r=0
     for d in lod:
