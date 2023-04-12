@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project pydicts",
     "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-04-10, 10:07:54"
+    "saved": "2023-04-11, 17:19:14"
   },
   "project": {
     "AUTHOR": "",
@@ -56,10 +56,10 @@
     "MIXEDLANGUAGE": false,
     "OTHERS": [
       ".gitignore",
+      "NEW_RELEASE.md",
       "README.md",
       "pydicts.epj",
-      "pyproject.toml",
-      "requirements.txt"
+      "pyproject.toml"
     ],
     "OTHERTOOLSPARMS": {},
     "PACKAGERSPARMS": {},
@@ -75,6 +75,7 @@
     "RESOURCES": [],
     "SOURCES": [
       "pydicts/__init__.py",
+      "pydicts/classes.py",
       "pydicts/lod.py",
       "pydicts/row_column_value.py",
       "pydicts/tests/__init__.py",

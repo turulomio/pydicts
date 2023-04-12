@@ -27,3 +27,7 @@ def tests_lod_sum():
     with raises(TypeError) as excinfo:
         lod_sum(lod, "d", ignore_nones=False)==16
     assert "NoneType" in str(excinfo.value)
+    
+    
+def tests_dod2lod():
+    dod=

@@ -1,10 +1,10 @@
 from collections import OrderedDict
+from tabulate import tabulate
 
 def lod_has_key(lod, key):
     if len(lod)==0:
         return False
     return key in lod[0]
-
 
 ## Order data columns. None values are set at the beginning
 def lod_order_by(ld, key, reverse=False, none_at_top=True):
@@ -22,21 +22,19 @@ def lod_order_by(ld, key, reverse=False, none_at_top=True):
     else:
         return nonull+null
 
+def lod_print(lod, number=None):
+    """
+    Function Prints a list of dictionaries with tabulate module.
 
-
-def lod_print(lod):
-    for row in lod:
-        print(row)
-
-def lod_print_first(lod):
+    @param lod
+    @type List of dictionaries
+    @param number Number of dictionaries in the list to print. If None prints all lod. (defaults to None)
+    @type Integer
+    """
+    number=len(lod) if number is None else number
     if len(lod)==0:
-        print("No rows in lod")
-        return
-    print("Printing first dict in a lod")
-    keys=list(lod[0].keys())
-    keys.sort()
-    for key in keys:
-        print(f"    - {key}: {lod[0][key]}")
+        print("No data to print_batch")
+    print(tabulate(lod[0:number], headers="keys", tablefmt="psql"))
 
 def lod_sum(lod, key, ignore_nones=True):
     r=0
@@ -62,7 +60,6 @@ def lod_sum_positives(lod, key):
         r=r+d[key]
     return r
 
-
 def lod_average(lod, key):
     return lod_sum(lod,key)/len(lod)
 
@@ -72,11 +69,9 @@ def lod_average_ponderated(lod, key_numbers, key_values):
         prods=prods+d[key_numbers]*d[key_values]
     return prods/lod_sum(lod, key_numbers)
 
-
 def lod_median(lod, key):
     from statistics import median
     return median(lod2list(lod, key, sorted=True))
-
 
 ## Converts a lod to a dict using key as new dict key, and value as the key of the value field
 def lod2dictkv(lod, key, value):
@@ -124,7 +119,6 @@ def lod2list(lod, key, sorted=False, cast=None):
         r.sort()
     return r
 
-
 ## Returns a list from a lod key, with distinct values, not all values
 ## @param lod
 ## @param key String with the key to extract
@@ -144,12 +138,16 @@ def lod2list_distinct(lod, key, sorted=False, cast=None):
         r.sort()
     return r
 
-## Returns the max of a key in lod
 def lod_max(lod, key):
+    """
+        Returns the max of a key in lod
+    """
     return max(lod2list(lod,key))
 
-## Returns the min of a key in lod
 def lod_min(lod, key):
+    """
+        Returns the min of a key in lod
+    """
     return min(lod2list(lod,key))
 
 ## Converts a list of ordereddict to a list of rows. ONLY DATA
