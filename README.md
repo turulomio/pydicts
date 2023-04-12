@@ -67,5 +67,11 @@ TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
 poetry run pytest
 
 ## CHANGELOG
+
+### 0.2.0 (2023-04-12)
+- Added lod_print with tabulate module
+- Improving documentation
+- Refactorized modules to lod_xyv, lod_ymmv
+
 ### 0.1.0 (2023-04-10)
 - First version addapting listdict_functions from reusingcode
