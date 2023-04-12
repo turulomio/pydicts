@@ -1,5 +1,8 @@
 # pydicts
-Module to use dictionaries, list of dictionaries, ... in various situations
+
+Module to use dictionaries, list of dictionaries and other data structures 
+
+I've developed this module because I needed this kind of methods developing with Django and python
 
 ## Acronyms
 pydicts uses several acronyms to call functions and parameters
