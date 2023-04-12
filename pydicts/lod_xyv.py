@@ -3,11 +3,11 @@
 
 ## Converts a tipical groyp by lor with A, B, value, value into an other lod with A as rows, B as columns and value as AxB list of dic
 ## columns order can be defined in order
-def lod_row_column_value_transformation(ld, key_row, key_column, key_value, order=None):
+def lod_xyv_transformation(ld, key_x, key_y, key_value, order=None):
     if len(ld)==0:
        return []
 
-    if not key_row in ld[0] or not key_column in ld[0] or not key_value in ld[0]:
+    if not key_x in ld[0] or not key_y in ld[0] or not key_value in ld[0]:
         print("Keys names are not correct in dictionary in lod_year_month_value_transposition function")
         return None
 
@@ -15,8 +15,8 @@ def lod_row_column_value_transformation(ld, key_row, key_column, key_value, orde
     columns=set()
     rows=set()
     for d in ld:
-        columns.add(d[key_column])
-        rows.add(d[key_row])
+        columns.add(d[key_y])
+        rows.add(d[key_x])
     columns=list(columns)
     rows=list(rows)
     
@@ -30,7 +30,7 @@ def lod_row_column_value_transformation(ld, key_row, key_column, key_value, orde
 
     #Assign values
     for d in ld:
-        dd[d[key_row]][d[key_column]]=d[key_value]
+        dd[d[key_x]][d[key_y]]=d[key_value]
     
     ## Converts dd to a ld
     r=[]

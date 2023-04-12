@@ -1,20 +1,18 @@
-
-
 from datetime import date
-from pydicts.lod import lod2dict, lod_min_value, lod_max_value, lod2dict_tuple
+from pydicts import lod
 
 
 ## Converts a tipical groyp by lor with year, month, value into an other lor with year, 1, 2, 3 .... 12, total 
-def lod_year_month_value_transposition(ld, key_year="year", key_month="month", key_value="value"):
+def lod_ymv_transposition(ld, key_year="year", key_month="month", key_value="value"):
     if len(ld)==0:
        return []
 
     if not key_year in ld[0] or not key_month in ld[0] or not key_value in ld[0]:
-        print("Keys names are not correct in dictionary in lod_year_month_value_transposition function")
+        print("Keys names are not correct in dictionary in lod_ymv_transposition function")
         return None
 
-    min_year=lod_min_value(ld, key_year)
-    max_year=lod_max_value(ld, key_year)
+    min_year=lod.lod_min_value(ld, key_year)
+    max_year=lod.lod_max_value(ld, key_year)
     #Initialize result
     r=[]
     for year in range(min_year,max_year+1):
@@ -31,9 +29,9 @@ def lod_year_month_value_transposition(ld, key_year="year", key_month="month", k
 
     return r
 
-def lod_year_month_value_transposition_sum(lymv_a, lymv_b):
+def lod_ymv_transposition_sum(lymv_a, lymv_b):
     """
-        Sums to lod_year_month_value_transpositions
+        Sums to lod_ymv_transpositions
     """
     def get_younger(year, field):
         if year in d_younger:
@@ -50,7 +48,7 @@ def lod_year_month_value_transposition_sum(lymv_a, lymv_b):
     print(year_lymv_a, year_lymv_b)
     older=lymv_a if year_lymv_a<year_lymv_b else lymv_b
     younger=lymv_a if year_lymv_a>year_lymv_b else lymv_b
-    d_younger=lod2dict(younger, "year")
+    d_younger=lod.lod2dod(younger, "year")
     r=[]
     for d in older:
         new={}
@@ -72,8 +70,8 @@ def lod_year_month_value_transposition_sum(lymv_a, lymv_b):
     return r
 
 ## Converts a tipical groyp by lor with year, month (normaly extracted from db to fill empty values)
-def lod_year_month_value_filling(lod, year_from, year_to=date.today().year, fill_value=0, key_year="year", key_month="month", key_value="value"):
-    ld_tuple=lod2dict_tuple(lod, key_year, key_month)
+def lod_ymv_filling(lod, year_from, year_to=date.today().year, fill_value=0, key_year="year", key_month="month", key_value="value"):
+    ld_tuple=lod.lod2dod_tuple(lod, key_year, key_month)
     for year in range(year_from,year_to+1):
         for month in range (1,13):
             if not (key_year,key_month) in ld_tuple:
