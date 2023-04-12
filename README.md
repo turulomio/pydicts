@@ -1,4 +1,4 @@
-# pydicts
+# PyDicts  [![PyPI - Downloads](https://img.shields.io/pypi/dm/pydicts?label=Pypi%20downloads)](https://pypi.org/project/pydicts/)
 
 Module to use dictionaries, list of dictionaries and other data structures 
 
