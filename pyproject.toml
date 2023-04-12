@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pydicts"
-version = "0.1.0"
+version = "0.2.0"
 description = "Module to use dictionaries in various situations"
 authors = ["turulomio <turulomio@yahoo.es>"]
 license = "GPL-3.0"
