@@ -12,6 +12,27 @@ pydicts uses several acronyms to call functions and parameters
 - lod_xyv: List of dictionaries with x-y-value keys `[{'X': 21, 'Y': 12, 'value': 180}, {'X': 2, 'Y': 122, 'value': 170}]`
 
 ## LOD
+
+### dod2lod
+
+### lod2dictkv
+
+### lod2dod
+
+### lod2dod_tuple
+
+### lod2list
+
+### lod2list_distinct
+
+### lod2lol
+
+### lod2lood
+
+### lod_average
+
+### lod_average_ponderated
+
 ### lod_has_key
 
 Returns a boolean. Checks if list of dictionaries has a key
@@ -26,6 +47,18 @@ False
 >>> lod_has_key([],"d")
 False
 ```
+
+### lod_max
+
+### lod_max_value
+
+### lod_median
+
+### lod_min
+
+### lod_min_value
+
+### lod_order_by
 
 ### lod_print
 
@@ -42,6 +75,8 @@ Prints a list of dictionaries in a tabulated way
 |   2 |     |
 +-----+-----+
 ```
+
+### lod_rename_key
 
 ### lod_sum
 
@@ -62,6 +97,21 @@ Traceback (most recent call last):
 TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
 ```
 
+### lod_sum_negatives
+
+### lod_sum_positives
+
+## LOD_XYV
+
+### lod_xyv_transformation
+
+## LOD_YMV
+
+### lod_ymv_transposition
+
+### lod_ymv_transposition_sum
+
+### lod_ymv_filling
 
 ## Testing
 poetry run pytest
