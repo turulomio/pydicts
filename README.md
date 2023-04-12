@@ -1,5 +1,5 @@
 # pydicts
-Module to use dictionaries in various situations
+Module to use dictionaries, list of dictionaries, ... in various situations
 
 ## Acronyms
 pydicts uses several acronyms to call functions and parameters

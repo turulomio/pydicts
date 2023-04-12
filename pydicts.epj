@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project pydicts",
     "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-04-12, 07:42:05"
+    "saved": "2023-04-12, 08:19:24"
   },
   "project": {
     "AUTHOR": "",
@@ -74,7 +74,6 @@
     },
     "RESOURCES": [],
     "SOURCES": [
-      "prueba.py",
       "pydicts/__init__.py",
       "pydicts/classes.py",
       "pydicts/lod.py",
