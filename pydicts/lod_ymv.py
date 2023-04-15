@@ -141,8 +141,11 @@ def lod_ymv_transposition_with_percentages(lod_ymv_transposition):
         new_d["m12"]=percentage(d["m11"], d["m12"])
         if i==0:
             new_d["total"]=percentage(d[d_ymv_transposition_first_value(d)], d[d_ymv_transposition_last_value(d)])
+            new_d["from_first_quote"]=percentage
         else:
             new_d["total"]=percentage(lod_ymv_transposition[i-1]["m12"], d[d_ymv_transposition_last_value(d)])
+        new_d["from_first_quote"]=percentage(lod_ymv_transposition[0][d_ymv_transposition_first_value(lod_ymv_transposition[0])], d[d_ymv_transposition_last_value(d)])
+            
         r.append(new_d)
     return r
 
