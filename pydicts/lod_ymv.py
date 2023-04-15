@@ -1,9 +1,68 @@
 from datetime import date
 from pydicts import lod
+"""
+    lod_ymv example:
+    +------------------+-------------------+---------+
+|   datetime__year |   datetime__month |   quote |
+|------------------+-------------------+---------|
+|             2020 |                 1 |   82.92 |
+|             2020 |                 2 |   67.41 |
+|             2020 |                 3 |   51.24 |
+|             2020 |                 4 |   61.98 |
+|             2020 |                 5 |   65.21 |
+|             2020 |                 6 |   66.69 |
+|             2020 |                 7 |   70.55 |
+|             2020 |                 8 |   81.31 |
+|             2020 |                 9 |   76.6  |
+|             2020 |                10 |   74.33 |
+|             2020 |                11 |   85.59 |
+|             2020 |                12 |   89.84 |
+|             2021 |                 1 |   90.52 |
+|             2021 |                 2 |   96.19 |
+|             2021 |                 3 |  106.42 |
+|             2021 |                 4 |  114.54 |
+|             2021 |                 5 |  113.42 |
+|             2021 |                 6 |  122.66 |
+|             2021 |                 7 |  128.38 |
+|             2021 |                 8 |  137.18 |
+|             2021 |                 9 |  128.82 |
+|             2021 |                10 |  143.94 |
+|             2021 |                11 |  147.06 |
+|             2021 |                12 |  159.98 |
+|             2022 |                 1 |  139.62 |
+|             2022 |                 2 |  134    |
+|             2022 |                 3 |  148.32 |
+|             2022 |                 4 |  131.9  |
+|             2022 |                 5 |  122.38 |
+|             2022 |                 6 |  104.96 |
+|             2022 |                 7 |  125.88 |
+|             2022 |                 8 |  120.36 |
+|             2022 |                 9 |  103.98 |
+|             2022 |                10 |  114.4  |
+|             2022 |                11 |  113.64 |
+|             2022 |                12 |  102.12 |
+|             2023 |                 1 |  111.62 |
+|             2023 |                 2 |  110.42 |
+|             2023 |                 3 |  112.76 |
+|             2023 |                 4 |  113.96 |
++------------------+-------------------+---------+
+
+"""
 
 
 ## Converts a tipical groyp by lor with year, month, value into an other lor with year, 1, 2, 3 .... 12, total 
 def lod_ymv_transposition(ld, key_year="year", key_month="month", key_value="value"):
+    """
+        Covert lod_ymv into a trasposition form 
+        +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+---------+
+        |   year |     m1 |     m2 |     m3 |     m4 |     m5 |     m6 |     m7 |     m8 |     m9 |    m10 |    m11 |    m12 |   total |
+        |--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+---------|
+        |   2020 |  82.92 |  67.41 |  51.24 |  61.98 |  65.21 |  66.69 |  70.55 |  81.31 |  76.6  |  74.33 |  85.59 |  89.84 |  873.67 |
+        |   2021 |  90.52 |  96.19 | 106.42 | 114.54 | 113.42 | 122.66 | 128.38 | 137.18 | 128.82 | 143.94 | 147.06 | 159.98 | 1489.11 |
+        |   2022 | 139.62 | 134    | 148.32 | 131.9  | 122.38 | 104.96 | 125.88 | 120.36 | 103.98 | 114.4  | 113.64 | 102.12 | 1461.56 |
+        |   2023 | 111.62 | 110.42 | 112.76 | 113.96 |   0    |   0    |   0    |   0    |   0    |   0    |   0    |   0    |  448.76 |
+        +--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+--------+---------+
+    """
     if len(ld)==0:
        return []
 
@@ -27,6 +86,64 @@ def lod_ymv_transposition(ld, key_year="year", key_month="month", key_value="val
         d=r[year-min_year]
         d["total"]=d["m1"]+d["m2"]+d["m3"]+d["m4"]+d["m5"]+d["m6"]+d["m7"]+d["m8"]+d["m9"]+d["m10"]+d["m11"]+d["m12"]
 
+    return r
+    
+def d_ymv_transposition_first_value(d):
+    """
+        REturns the first key mX not null in dictionary
+    """
+    r=None
+    for i in range(1, 13):
+        if d[f"m{i}"]!=0:
+            r= f"m{i}"
+            break
+    return r
+
+def d_ymv_transposition_last_value(d):
+    """
+        REturns the last key mX not null in dictionary
+    """
+    r=None
+    for i in reversed(range(1, 13)):
+        if d[f"m{i}"]!=0:
+            r= f"m{i}"
+            break
+    return r
+
+    
+def lod_ymv_transposition_with_percentages(lod_ymv_transposition):
+    """
+        Replace a lod_ymv_transposition values to Percentages
+    """
+    def percentage(from_,  to_):
+        if from_ is None or from_==0:
+            return None
+        if to_ is None or to_==0:
+            return None
+        return (to_-from_)/from_
+    ###########################
+    r=[]
+    if len(lod_ymv_transposition)==0:
+        return r
+    for i, d in enumerate(lod_ymv_transposition):
+        new_d={"year":d["year"]}
+        new_d["m1"]=None if i==0 else percentage(lod_ymv_transposition[i-1]["m12"], d["m1"])
+        new_d["m2"]=percentage(d["m1"], d["m2"])
+        new_d["m3"]=percentage(d["m2"], d["m3"])
+        new_d["m4"]=percentage(d["m3"], d["m4"])
+        new_d["m5"]=percentage(d["m4"], d["m5"])
+        new_d["m6"]=percentage(d["m5"], d["m6"])
+        new_d["m7"]=percentage(d["m6"], d["m7"])
+        new_d["m8"]=percentage(d["m7"], d["m8"])
+        new_d["m9"]=percentage(d["m8"], d["m9"])
+        new_d["m10"]=percentage(d["m9"], d["m10"])
+        new_d["m11"]=percentage(d["m10"], d["m11"])
+        new_d["m12"]=percentage(d["m11"], d["m12"])
+        if i==0:
+            new_d["total"]=percentage(d[d_ymv_transposition_first_value(d)], d[d_ymv_transposition_last_value(d)])
+        else:
+            new_d["total"]=percentage(lod_ymv_transposition[i-1]["m12"], d[d_ymv_transposition_last_value(d)])
+        r.append(new_d)
     return r
 
 def lod_ymv_transposition_sum(lymv_a, lymv_b):
