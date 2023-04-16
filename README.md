@@ -121,6 +121,9 @@ poetry run pytest
 
 ## CHANGELOG
 
+### 0.3.0 (2023-04-16)
+- Added lod_ymv_transposition_with_porcentages
+
 ### 0.2.0 (2023-04-12)
 - Added lod_print with tabulate module
 - Improving documentation
