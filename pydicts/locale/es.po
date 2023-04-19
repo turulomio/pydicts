@@ -1,0 +1,77 @@
+# Spanish translations for PACKAGE package
+# Traducciones al español para el paquete PACKAGE.
+# Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# root <turulomio@yahoo.es>, 2015, 2020.
+msgid ""
+msgstr ""
+"Project-Id-Version: TooManyFiles\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2023-04-19 19:15+0200\n"
+"PO-Revision-Date: 2020-04-03 08:54+0200\n"
+"Last-Translator: trabajo <turulomio@yahoo.es>\n"
+"Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 19.12.3\n"
+
+msgid "You pressed 'Ctrl+C', exiting..."
+msgstr "Has pulsado 'Ctrl+C', saliendo..."
+
+#~ msgid "Developed by Mariano Muñoz 2022-{}"
+#~ msgstr "Desarrollado por Mariano Muñoz 2022-{}"
+
+#~ msgid "(Without subject)"
+#~ msgstr "(sin asunto)"
+
+#~ msgid "Error parsing subject"
+#~ msgstr "Error al obtener el asunto"
+
+#~ msgid "[Error detected. Won't be renamed]"
+#~ msgstr "[Error detectado. No será renombrado]"
+
+#~ msgid "[Error detected. Not Renamed]"
+#~ msgstr "[Error detectado. No renombrado]"
+
+#~ msgid "[Will be renamed]"
+#~ msgstr "[Será renombrado]"
+
+#~ msgid "[Renamed]"
+#~ msgstr "[Renombrado]"
+
+#~ msgid "[Format detected. Won't de renamed]"
+#~ msgstr "[Formato detectado. No será renombrado]"
+
+#~ msgid "[Format detected. Not renamed]"
+#~ msgstr "[Formato detectado. No renombrado]"
+
+#~ msgid "Script renames all eml files in a directory using mail metadata "
+#~ msgstr "Este comando renombra todos los ficheros eml en un directorio usando los metadatos del correo"
+
+#~ msgid "Forces subject update when 'YYYMMDD HHMM [from]' format is detected"
+#~ msgstr "Fuerza la modificación del asunto cuando el formato 'YYYYMMDD HHMM [Desde]' es detectado"
+
+#, python-brace-format
+#~ msgid "Maximum length allowed to final name using 'YYYMMDD HHMM [from]'. Default: {0}"
+#~ msgstr "Máxima longitud permitida al nombre final usando 'YYYYMMDD HHMM [Desde]'. Por defecto: {0}"
+
+#~ msgid "Without this parameter files won't be renamed. Script only pretend the result"
+#~ msgstr "Sin este parámetro los ficheros no serán renombrados. El comando solo adivina el resultado"
+
+#~ msgid "Processing eml files"
+#~ msgstr "Procesando ficheros eml"
+
+#, python-brace-format
+#~ msgid "{0} files were renamed."
+#~ msgstr "{0} ficheros fueron renombrados."
+
+#, python-brace-format
+#~ msgid "Process was simulated, files weren't renamed. Use --save to rename {0} files."
+#~ msgstr "El proceso fue simulado, los ficheros no fueron renombrados. Usa --save para renombrar {0} ficheros."
+
+#~ msgid "It took {}"
+#~ msgstr "Tardó {}"

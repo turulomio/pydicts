@@ -5,5 +5,6 @@
   4. Make a comit with the form pydicts-$NEWVERSION$
   5. git push
   6. Create a new release setting $NEWVERSION$
-  7. poetry publish --username --password
+  7. poetry build
+  8. poetry publish --username --password
 
