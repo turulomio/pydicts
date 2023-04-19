@@ -147,6 +147,11 @@ poetry run pytest
 
 ## CHANGELOG
 
+### 0.4.0 (2023-04-19)
+- Added poetry support
+- Added poethepoet support
+- Added lod_remove_key
+
 ### 0.3.0 (2023-04-16)
 - Added lod_ymv_transposition_with_porcentages
 

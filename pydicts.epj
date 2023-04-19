@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project pydicts",
     "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-04-12, 08:19:24"
+    "saved": "2023-04-19, 20:03:31"
   },
   "project": {
     "AUTHOR": "",
@@ -11,7 +11,7 @@
     "DOCSTRING": "",
     "DOCUMENTATIONPARMS": {},
     "EMAIL": "",
-    "EMBEDDED_VENV": true,
+    "EMBEDDED_VENV": false,
     "EOL": 0,
     "FILETYPES": {
       "*.cfg": "OTHERS",
@@ -56,7 +56,6 @@
     "MIXEDLANGUAGE": false,
     "OTHERS": [
       ".gitignore",
-      "NEW_RELEASE.md",
       "README.md",
       "pydicts.epj",
       "pyproject.toml"
@@ -76,6 +75,7 @@
     "SOURCES": [
       "pydicts/__init__.py",
       "pydicts/classes.py",
+      "pydicts/devscripts.py",
       "pydicts/lod.py",
       "pydicts/lod_xyv.py",
       "pydicts/lod_ymv.py",
