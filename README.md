@@ -81,6 +81,32 @@ Prints a list of dictionaries in a tabulated way
 
 ### lod_rename_key
 
+### lod_remove_key
+
+Removes a key in all dictionaries in the list of dictionaries
+
+```python
+from pydicts.lod import lod_print, lod_remove_key
+lod=[{"a":1, "b":4},{"a":2, "b":None}]
+>>> from pydicts.lod import *
+>>> lod=[{"a":1, "b":4},{"a":2, "b":None}]
+>>> lod_print(lod)
++-----+-----+
+|   a |   b |
+|-----+-----|
+|   1 |   4 |
+|   2 |     |
++-----+-----+
+>>> lod_remove_key(lod,"b")
+>>> lod_print(lod)
++-----+
+|   a |
+|-----|
+|   1 |
+|   2 |
++-----+
+```
+
 ### lod_sum
 
 Sums all values from a lod key. None values are ignored by default

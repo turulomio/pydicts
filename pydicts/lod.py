@@ -210,3 +210,10 @@ def lod_rename_key(ld, from_, to_):
         d[to_]=d.pop(from_)
     return ld
 
+def lod_remove_key(lod, key):
+    """
+        Removes a key from all dictionaries in a list of dictionaries
+    """
+    for d in lod:
+        del d[key]
+    return lod

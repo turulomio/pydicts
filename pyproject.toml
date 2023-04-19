@@ -24,6 +24,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poe.tasks]
 release = { script = "pydicts.devscripts:release" }
 translate = { script = "pydicts.devscripts:translate" }
+test   = "pytest" 
 
 [project.urls]
 homepage = "https://github.com/turulomio/pydicts/"

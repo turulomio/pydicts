@@ -26,3 +26,9 @@ def tests_lod_sum():
     with raises(TypeError) as excinfo:
         lod.lod_sum(lod_, "d", ignore_nones=False)==16
     assert "NoneType" in str(excinfo.value)
+    
+def test_lod_remove_key():
+    assert lod.lod_has_key(lod_, "d")
+    lod.lod_remove_key(lod_, "d")
+    assert not lod.lod_has_key(lod_, "d")
+    
