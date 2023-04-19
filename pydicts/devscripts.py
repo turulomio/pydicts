@@ -3,6 +3,7 @@ from os import system
 
 def release():
     print("""Nueva versión:
+  * Cambiar la version en pyproject.toml
   * Cambiar la versión y la fecha en __init__.py
   * Modificar el Changelog en README
   * poe translate
