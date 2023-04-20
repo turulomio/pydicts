@@ -86,9 +86,7 @@ Prints a list of dictionaries in a tabulated way
 Removes a key in all dictionaries in the list of dictionaries
 
 ```python
-from pydicts.lod import lod_print, lod_remove_key
-lod=[{"a":1, "b":4},{"a":2, "b":None}]
->>> from pydicts.lod import *
+>>> from pydicts.lod import lod_print, lod_remove_key
 >>> lod=[{"a":1, "b":4},{"a":2, "b":None}]
 >>> lod_print(lod)
 +-----+-----+
