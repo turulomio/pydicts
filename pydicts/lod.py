@@ -217,3 +217,13 @@ def lod_remove_key(lod, key):
     for d in lod:
         del d[key]
     return lod
+    
+def lod_keys(lod_):
+    """
+        Return the keys of the list of dicts
+        Return None if length of lod is 0. 
+        Retuurn the keys of the first dictionary as a list
+    """
+    if len(lod_)>0:
+        return list(lod_[0].keys())
+    return None
