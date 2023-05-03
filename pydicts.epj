@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project pydicts",
     "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-04-19, 20:03:31"
+    "saved": "2023-05-03, 19:42:36"
   },
   "project": {
     "AUTHOR": "",
@@ -79,9 +79,11 @@
       "pydicts/lod.py",
       "pydicts/lod_xyv.py",
       "pydicts/lod_ymv.py",
+      "pydicts/pylatex.py",
       "pydicts/tests/__init__.py",
       "pydicts/tests/test_lod.py",
-      "pydicts/tests/test_lod_ymv.py"
+      "pydicts/tests/test_lod_ymv.py",
+      "pydicts/tests/test_pylatex.py"
     ],
     "SPELLEXCLUDES": "",
     "SPELLLANGUAGE": "en_US",
