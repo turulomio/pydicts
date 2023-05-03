@@ -6,7 +6,7 @@
 
 from pylatex import Tabular
 from pylatex.basic import NewLine
-from pylatex.utils import NoEscape
+from pylatex.utils import NoEscape, bold
 from pydicts import lod
 def pylatex_table_header(
     doc, 
@@ -22,12 +22,15 @@ def pylatex_table_header(
     @param code_ |c|r|l|
     """
     
-    headers=lod.lod_keys(lod_)
-    
-    if headers is None:
+    keys= lod.lod_keys(lod_)
+    if keys is None:
         doc.append(text_no_results)
         doc.append(NewLine())
         return
+        
+    headers=[]
+    for key in keys:
+        headers.append(NoEscape(bold(key)))
     
     
     # Generate data table
@@ -64,14 +67,16 @@ def pylatex_table_with_matched_values(
     @param lod 
     @param code_ |c|r|l|
     """
-    
-    headers=lod.lod_keys(lod_)
-    
-    if headers is None:
+    keys= lod.lod_keys(lod_)
+    if keys is None:
         doc.append(text_no_results)
         doc.append(NewLine())
         return
-    
+        
+    headers=[]
+    for key in keys:
+        headers.append(NoEscape(bold(key)))
+  
     
     # Generate data table
     if code_ is None:

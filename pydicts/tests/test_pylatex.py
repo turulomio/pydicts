@@ -1,7 +1,7 @@
 from pydicts import pylatex
 from pylatex import Document, Section, Subsection
 from pylatex.package import Package
-from pylatex.utils import italic
+from pylatex.utils import italic, NoEscape
 lod=[
         {"year": 2022, "month": 1, "my_sum": 12},
         {"year": 2021, "month": 2, "my_sum": 123},
@@ -20,6 +20,7 @@ def tests_pylatex_table_header():
         with doc.create(Subsection('A subsection')):
             doc.append('Also some crazy characters: $&#{}')
             
+    doc.append(NoEscape("\\centering"))
     pylatex.pylatex_table_header(doc, lod, code_="|l|c|r|")
     pylatex.pylatex_table_header(doc, [])
     pylatex.pylatex_table_with_matched_values(doc,  [2022, 2, 12], lod, code_="|l|c|r|", match_color="teal", unmatch_color="red")
