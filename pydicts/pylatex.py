@@ -4,9 +4,9 @@
 """
 
 
-from pylatex import Tabular
+from pylatex import LongTable, MultiColumn
 from pylatex.basic import NewLine
-from pylatex.utils import NoEscape, bold
+from pylatex.utils import NoEscape, bold, escape_latex
 from pydicts import lod
 def pylatex_table_header(
     doc, 
@@ -53,8 +53,8 @@ def pylatex_table_with_matched_values(
     lod_, 
     code_=None, 
     text_no_results="No data to show", 
-    match_color="green", 
-    unmatch_color="black"
+    match_color="teal", 
+    unmatch_color="red"
 ):
     """
     Creates a table in a pylatex document
@@ -82,20 +82,29 @@ def pylatex_table_with_matched_values(
     if code_ is None:
         code_="|l"*len(headers)+"|"
         
-    with doc.create(Tabular(code_)) as data_table:
+    with doc.create(LongTable(code_)) as data_table:
         data_table.add_hline()
         data_table.add_row(headers)
         data_table.add_hline()
-        
+        data_table.end_table_header()
+        data_table.add_hline()
+        data_table.add_row((MultiColumn(len(headers), align='r', data='La tabla continúa en la siguiente página'),))
+        data_table.add_hline()
+        data_table.end_table_footer()
+#        data_table.add_hline()
+#        data_table.add_row((MultiColumn(len(headers), align='r', data='Ya no continua en la siguiente página'),))
+#        data_table.add_hline()
+        data_table.end_table_last_footer()
+
         #Prepare cells
         matched_list=[]
         for list_ in lod.lod2lol(lod_):
             row=[]
             for column in range(len(headers)):
                 if list_[column]==values_to_match[column]:
-                    row.append(NoEscape(f"\\textcolor{{{match_color}}}{{{values_to_match[column]}}}"))
+                    row.append(NoEscape(f"\\textcolor{{{match_color}}}{{{escape_latex(list_[column])}}}"))
                 else:
-                    row.append(NoEscape(f"\\textcolor{{{unmatch_color}}}{{{values_to_match[column]}}}"))
+                    row.append(NoEscape(f"\\textcolor{{{unmatch_color}}}{{{escape_latex(list_[column])}}}"))
             matched_list.append(row)
                 
         
@@ -104,4 +113,4 @@ def pylatex_table_with_matched_values(
             data_table.add_hline()
             
 
-    doc.append(NewLine())
+#    doc.append(NewLine())
