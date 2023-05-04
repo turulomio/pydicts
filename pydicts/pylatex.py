@@ -8,7 +8,7 @@ from pylatex import LongTabularx, MultiColumn
 from pylatex.basic import NewLine
 from pylatex.utils import NoEscape, bold, escape_latex
 from pydicts import lod
-def pylatex_table_header(
+def pylatex_table(
     doc, 
     lod_, 
     code_=None, 
@@ -32,20 +32,32 @@ def pylatex_table_header(
     for key in keys:
         headers.append(NoEscape(bold(key)))
     
-    
     # Generate data table
+    number=0.9/len(headers)
     if code_ is None:
-        code_=f"|l"*len(headers)+"|"
+        code_=f"|p{{{number}\\linewidth}}"*len(headers)+"|"
         
-    with doc.create(Tabular(code_, width_argument="5cm")) as data_table:
+    with doc.create(LongTabularx(code_)) as data_table:
         data_table.add_hline()
         data_table.add_row(headers)
         data_table.add_hline()
+        data_table.end_table_header()
+        data_table.add_hline()
+        data_table.add_row((MultiColumn(len(headers), align='r', data='La tabla continúa en la siguiente página'),))
+        data_table.end_table_footer()
+        data_table.end_table_last_footer()
+
+        escaped_list=[]
         for list_ in lod.lod2lol(lod_):
+            row=[]
+            for column in range(len(headers)):
+                row.append(escape_latex(list_[column]))#Escape values
+            escaped_list.append(row)
+
+        for list_ in escaped_list:
             data_table.add_row(list_)
             data_table.add_hline()
 
-    doc.append(NewLine())
     
 def pylatex_table_with_matched_values(
     doc, 
@@ -90,9 +102,6 @@ def pylatex_table_with_matched_values(
         data_table.add_hline()
         data_table.add_row((MultiColumn(len(headers), align='r', data='La tabla continúa en la siguiente página'),))
         data_table.end_table_footer()
-#        data_table.add_hline()
-#        data_table.add_row((MultiColumn(len(headers), align='r', data='Ya no continua en la siguiente página'),))
-#        data_table.add_hline()
         data_table.end_table_last_footer()
 
         #Prepare cells
