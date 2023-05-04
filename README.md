@@ -145,6 +145,9 @@ poetry run pytest
 
 ## CHANGELOG
 
+### 0.5.0 (2023-05-04)
+- Added support to latex tables from list of dictionaries
+
 ### 0.4.0 (2023-04-19)
 - Added poetry support
 - Added poethepoet support

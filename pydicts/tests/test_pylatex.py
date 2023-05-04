@@ -21,7 +21,7 @@ def tests_pylatex_table_header():
             doc.append('Also some crazy characters: $&#{}')
             
     doc.append(NoEscape("\\centering"))
-    pylatex.pylatex_table_header(doc, lod, code_="|l|c|r|")
-    pylatex.pylatex_table_header(doc, [])
+    pylatex.pylatex_table(doc, lod)
+    pylatex.pylatex_table(doc, [])
     pylatex.pylatex_table_with_matched_values(doc,  [2022, 2, 12], lod, code_="|l|c|r|", match_color="teal", unmatch_color="red")
     doc.generate_pdf('test_pylatex_table_header', clean_tex=False)
