@@ -88,24 +88,45 @@ def lod_ymv_transposition(ld, key_year="year", key_month="month", key_value="val
 
     return r
     
-def d_ymv_transposition_first_value(d):
+def is_noz(v):
+    if v is None:
+        return True
+    if v==0:
+        return True
+    return False
+    
+def ymv_transposition_first_value_not_noz(lod_ymv_transposition):
+    """
+        REturns a dict with the coords of the first value of the ymv_transposition not null
+        noz null or zero
+        
+    """
+    for d in lod_ymv_transposition:
+        for i in range(1, 13):
+            if not is_noz(d[f"m{i}"]):
+                return {"year": d["year"],  "month": i ,  "value":d[f"m{i}"]  }
+    return None
+    
+def d_ymv_transposition_first_key_not_noz(d):
     """
         REturns the first key mX not null in dictionary
+        noz null or zero
     """
     r=None
     for i in range(1, 13):
-        if d[f"m{i}"]!=0:
+        if not is_noz(d[f"m{i}"]):
             r= f"m{i}"
             break
     return r
 
-def d_ymv_transposition_last_value(d):
+def d_ymv_transposition_last_key_not_noz(d):
     """
         REturns the last key mX not null in dictionary
+        noz null or zero
     """
     r=None
     for i in reversed(range(1, 13)):
-        if d[f"m{i}"]!=0:
+        if not is_noz(d[f"m{i}"]):
             r= f"m{i}"
             break
     return r
@@ -122,8 +143,10 @@ def lod_ymv_transposition_with_percentages(lod_ymv_transposition):
             return None
         return (to_-from_)/from_
     ###########################
+    
+    first_value_not_noz=ymv_transposition_first_value_not_noz(lod_ymv_transposition)
     r=[]
-    if len(lod_ymv_transposition)==0:
+    if first_value_not_noz is None:
         return r
     for i, d in enumerate(lod_ymv_transposition):
         new_d={"year":d["year"]}
@@ -139,13 +162,14 @@ def lod_ymv_transposition_with_percentages(lod_ymv_transposition):
         new_d["m10"]=percentage(d["m9"], d["m10"])
         new_d["m11"]=percentage(d["m10"], d["m11"])
         new_d["m12"]=percentage(d["m11"], d["m12"])
+        key_first_value=d_ymv_transposition_first_key_not_noz(d)
+        key_last_value=d_ymv_transposition_last_key_not_noz(d)
         if i==0:
-            new_d["total"]=percentage(d[d_ymv_transposition_first_value(d)], d[d_ymv_transposition_last_value(d)])
-            new_d["from_first_quote"]=percentage
+            new_d["total"]=None if key_first_value is None or key_last_value is None else percentage(d[key_first_value], d[key_last_value])
         else:
-            new_d["total"]=percentage(lod_ymv_transposition[i-1]["m12"], d[d_ymv_transposition_last_value(d)])
-        new_d["from_first_quote"]=percentage(lod_ymv_transposition[0][d_ymv_transposition_first_value(lod_ymv_transposition[0])], d[d_ymv_transposition_last_value(d)])
-            
+            key_previous_last_value=d_ymv_transposition_last_key_not_noz(lod_ymv_transposition[i-1])
+            new_d["total"]=None if key_previous_last_value is None or key_last_value is None else percentage(lod_ymv_transposition[i-1][key_previous_last_value], d[key_last_value])
+        new_d["from_first_quote"]=None if key_last_value is None else percentage(first_value_not_noz["value"], d[key_last_value])
         r.append(new_d)
     return r
 
