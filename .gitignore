@@ -20,5 +20,4 @@ venv/
 env/
 .env/
 dist/
-poetry.lock
 .python3.10
