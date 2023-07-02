@@ -145,6 +145,9 @@ poetry run pytest
 
 ## CHANGELOG
 
+### 0.6.0 (2023-07-02)
+- Fixed a race condition bug in lod_ymv_transposition_with_percentages
+
 ### 0.5.0 (2023-05-04)
 - Added support to latex tables from list of dictionaries
 
