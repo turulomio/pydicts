@@ -18,6 +18,15 @@ pydicts uses several acronyms to call functions and parameters
 
 ### dod2lod
 
+Converts a dictionary of dictionaries (dod) to a list of dictionaries (lod), ignoring dictionary keys
+
+``` python
+>>> from pydicts import lod
+>>> dod={'key2': {'a': 1, 'b': 2}, 'key1': {'a': 1, 'b': 2}}
+>>> lod.dod2lod(dod)
+[{'a': 1, 'b': 2}, {'a': 1, 'b': 2}]
+
+```
 ### lod2dictkv
 
 ### lod2dod
@@ -34,7 +43,26 @@ Converts a list of dictionaries (lod) to a dictionary of dictionaries (dod) usin
 
 ### lod2list
 
+Converts a list of dictionaries (lod) to list using all values of key
+``` python
+>>> from pydicts import lod
+>>> lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
+>>> lod.lod2list(lod_,"a")
+[1, 3]
+```
+
 ### lod2list_distinct
+
+Converts a list of dictionaries (lod) to list using all distinct values of key
+``` python
+>>> from pydicts import lod
+>>> lod_= [{'a': 1, 'b': 2}, {'a': 3, 'b': 4}, {'a': 3, 'b': 4}]
+>>> lod.lod2list_distinct(lod_,"b")
+[2, 4]
+>>> lod.lod2list(lod_,"b")
+[2, 4, 4]
+```
+
 
 ### lod2lol
 
@@ -55,7 +83,7 @@ Returns a boolean. Checks if list of dictionaries has a key
 True
 >>> lod_has_key(lod,"d")
 False
->>> lod_has_key([],"d")
+>>> lod_has_key([ ],"d")
 False
 ```
 
@@ -68,7 +96,7 @@ Returns a list with the keys of the first dictionary in the list
 >>> a=[{"a":1,"b":2}, {"a":3,"b":4}]
 >>> lod.lod_keys(a)
 ['a', 'b']
->>> lod.lod_keys([]) is None
+>>> lod.lod_keys([ ]) is None
 True
 ```
 
@@ -81,7 +109,7 @@ Returns the maximum value of a key in a list of dictionaries (lod)
 >>> lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
 >>> lod.lod_max_value(lod_,"b")
 4
->>>lod.lod_max_value([],"b") is None
+>>>lod.lod_max_value([ ],"b") is None
 True
 ```
 
@@ -97,7 +125,7 @@ Returns the minimum value of a key in a list of dictionaries (lod)
 >>> lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
 >>> lod.lod_min_value(lod_,"b")
 2
->>>lod.lod_min_value([],"b") is None
+>>>lod.lod_min_value([ ],"b") is None
 True
 ```
 
@@ -120,6 +148,15 @@ Prints a list of dictionaries in a tabulated way
 ```
 
 ### lod_rename_key
+
+Renames a key name with other given as a parameter
+
+```python
+>>> from pydicts import lod
+>>> lod_=[{"a":1,"b":2}, {"a":3,"b":4}, {"a":3, "b": 4}]
+>>> lod.lod_rename_key(lod_,"b","new")
+[{'a': 1, 'new': 2}, {'a': 3, 'new': 4}, {'a': 3, 'new': 4}]
+```
 
 ### lod_remove_key
 
