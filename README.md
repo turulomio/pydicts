@@ -131,6 +131,20 @@ True
 
 ### lod_order_by
 
+Orders a list of dictionaries (lod) by a key. You can make reverse orders and set None values at the top or the bottom of the ordered list
+
+```python
+>>> from pydicts import lod
+>>> lod_=[{"a":1,"b":2}, {"a":3,"b":4}, {"a":3, "b": None}]
+>>> lod.lod_order_by(lod_,"b")
+[{'a': 3, 'b': None}, {'a': 1, 'b': 2}, {'a': 3, 'b': 4}]
+>>> lod.lod_order_by(lod_,"b",reverse=True)
+[{'a': 3, 'b': None}, {'a': 3, 'b': 4}, {'a': 1, 'b': 2}]
+>>> lod.lod_order_by(lod_,"b",reverse=True, none_at_top=False)
+[{'a': 3, 'b': 4}, {'a': 1, 'b': 2}, {'a': 3, 'b': None}]
+
+```
+
 ### lod_print
 
 Prints a list of dictionaries in a tabulated way
