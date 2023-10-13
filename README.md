@@ -22,6 +22,14 @@ pydicts uses several acronyms to call functions and parameters
 
 ### lod2dod
 
+Converts a list of dictionaries (lod) to a dictionary of dictionaries (dod) using a key as the dictionary key. This is a fast method to access dictionaries.
+``` python
+>>> from pydicts import lod
+>>> lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
+>>> lod.lod2dod(lod_,"b")
+{2: {'a': 1, 'b': 2}, 4: {'a': 3, 'b': 4}}
+```
+
 ### lod2dod_tuple
 
 ### lod2list
