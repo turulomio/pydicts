@@ -138,17 +138,6 @@ def lod2list_distinct(lod, key, sorted=False, cast=None):
         r.sort()
     return r
 
-def lod_max(lod, key):
-    """
-        Returns the max of a key in lod
-    """
-    return max(lod2list(lod,key))
-
-def lod_min(lod, key):
-    """
-        Returns the min of a key in lod
-    """
-    return min(lod2list(lod,key))
 
 ## Converts a list of ordereddict to a list of rows. ONLY DATA
 ## @params keys If None we must suppose is an ordered dict or keys will be randomized

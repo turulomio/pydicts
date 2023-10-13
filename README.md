@@ -72,15 +72,34 @@ Returns a list with the keys of the first dictionary in the list
 True
 ```
 
-### lod_max
-
 ### lod_max_value
+
+Returns the maximum value of a key in a list of dictionaries (lod)
+
+```python
+>>> from pydicts import lod
+>>> lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
+>>> lod.lod_max_value(lod_,"b")
+4
+>>>lod.lod_max_value([],"b") is None
+True
+```
+
 
 ### lod_median
 
-### lod_min
-
 ### lod_min_value
+
+Returns the minimum value of a key in a list of dictionaries (lod)
+
+```python
+>>> from pydicts import lod
+>>> lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
+>>> lod.lod_min_value(lod_,"b")
+2
+>>>lod.lod_min_value([],"b") is None
+True
+```
 
 ### lod_order_by
 
@@ -90,8 +109,8 @@ Prints a list of dictionaries in a tabulated way
 
 ```python
 >>> from pydicts.lod import lod_print
->>> lod=[{"a":1, "b":4},{"a":2, "b":None}]
->>> lod_print(lod)
+>>> lod_=[{"a":1, "b":4},{"a":2, "b":None}]
+>>> lod_print(lod_)
 +-----+-----+
 |   a |   b |
 |-----+-----|
