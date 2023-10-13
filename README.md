@@ -59,6 +59,19 @@ False
 False
 ```
 
+### lod_keys
+
+Returns a list with the keys of the first dictionary in the list
+
+```python
+>>> from pydicts import lod
+>>> a=[{"a":1,"b":2}, {"a":3,"b":4}]
+>>> lod.lod_keys(a)
+['a', 'b']
+>>> lod.lod_keys([]) is None
+True
+```
+
 ### lod_max
 
 ### lod_max_value
