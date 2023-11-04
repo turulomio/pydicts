@@ -292,6 +292,14 @@ poetry run pytest
 
 ## CHANGELOG
 
+### 0.7.0 (2023-11-04)
+- Improved documentation
+- Removed duplicated lod_min and lod_max methods
+- Added lod_filter_keys function
+- Added lod_filter_dictionaries function
+- Added lod_clone function
+- Added lod_calculate function
+
 ### 0.6.0 (2023-07-02)
 - Fixed a race condition bug in lod_ymv_transposition_with_percentages
 
