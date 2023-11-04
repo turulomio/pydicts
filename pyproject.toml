@@ -10,12 +10,12 @@ exclude = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = ">3.8"
 tabulate = "^0.9.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.0"
-poethepoet = "^0.20.0"
+poethepoet = "^0.24.1"
 pylatex = "^1.4.1"
 
 [build-system]
