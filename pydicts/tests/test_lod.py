@@ -37,3 +37,14 @@ def test_lod_filter_keys():
     assert "a" not in lod.lod_keys(new_lod)
     assert "g" in lod.lod_keys(new_lod)
     assert "h" in lod.lod_keys(new_lod)
+
+
+def test_lod_filter_dictionaries():
+    #Filtering by index
+    new_lod=lod.lod_filter_dictionaries(lod_, lambda d,  index: index==1)
+    lod.lod_print(new_lod)
+    assert len(new_lod)==1
+    
+    #Filtering by d
+    new_lod=lod.lod_filter_dictionaries(lod_, lambda d,  index: d["g"] is None)
+    assert len(new_lod)==0

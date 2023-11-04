@@ -72,6 +72,19 @@ Converts a list of dictionaries (lod) to list using all distinct values of key
 
 ### lod_average_ponderated
 
+
+### lod_filter_dictionaries
+
+Create a new lod leaving filtering dictionaries that returns True to lambda funcion
+```python
+>>> from pydicts import lod
+>>> lod_= [{'a': 1, 'b': 2, 'c':5}, {'a': 3, 'b': 4, 'c': 6}, {'a': 3, 'b': 4, 'c': 7}]
+>>> lod.lod_filter_dictionaries(lod_, lambda d, index: index >0 and d['c']> 6)
+[{'a': 3, 'b': 4, 'c': 7}]
+
+```
+
+
 ### lod_filter_keys
 
 Creates a new list of dictionaries with dictionaries that only have the keys passed as parameters

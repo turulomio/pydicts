@@ -230,6 +230,20 @@ def lod_filter_keys(lod_, keys):
             new_d[key]=d[key]
         new_lod.append(new_d)
     return new_lod
-            
+
+
+def lod_filter_dictionaries(lod_, lambda_function):
+    """
+        Create a new lod leaving filtering dictionaries that returns True to lambda funcion
+        @param lambda_function needs two parameters (d, index) where d is the dictionary used to iterate and index is the position of the dictionary in the list of dictionaries
+    """
+    new_lod=[]
+    for index,  d in enumerate(lod_):
+        if lambda_function(d, index) is True:
+            new_lod.append(d)
+    return new_lod
+
+
+
     
     
