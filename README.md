@@ -72,6 +72,36 @@ Converts a list of dictionaries (lod) to list using all distinct values of key
 
 ### lod_average_ponderated
 
+### lod_filter_keys
+
+Creates a new list of dictionaries with dictionaries that only have the keys passed as parameters
+
+``` python
+>>> from pydicts import lod
+>>> lod_= [{'a': 1, 'b': 2, 'c':5}, {'a': 3, 'b': 4, 'c': 6}, {'a': 3, 'b': 4, 'c': 7}]
+>>> lod.lod_print(lod_)
++-----+-----+-----+
+|   a |   b |   c |
+|-----+-----+-----|
+|   1 |   2 |   5 |
+|   3 |   4 |   6 |
+|   3 |   4 |   7 |
++-----+-----+-----+
+
+>>> new_lod=lod.lod_filter_keys(lod_,  ["a", "c"])
+>>> lod.lod_print(new_lod)
++-----+-----+
+|   a |   c |
+|-----+-----|
+|   1 |   5 |
+|   3 |   6 |
+|   3 |   7 |
++-----+-----+
+
+
+```
+    
+
 ### lod_has_key
 
 Returns a boolean. Checks if list of dictionaries has a key

@@ -216,3 +216,20 @@ def lod_keys(lod_):
     if len(lod_)>0:
         return list(lod_[0].keys())
     return None
+
+
+def lod_filter_keys(lod_, keys):
+    """
+        Create a new lod leaving only keys in parameter
+        @param keys List of keys to copy in new lod
+    """
+    new_lod=[]
+    for d in lod_:
+        new_d={}
+        for key in keys:
+            new_d[key]=d[key]
+        new_lod.append(new_d)
+    return new_lod
+            
+    
+    

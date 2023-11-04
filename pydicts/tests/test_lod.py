@@ -32,3 +32,8 @@ def test_lod_remove_key():
     lod.lod_remove_key(lod_, "d")
     assert not lod.lod_has_key(lod_, "d")
     
+def test_lod_filter_keys():
+    new_lod=lod.lod_filter_keys(lod_,  ["g", "h"])
+    assert "a" not in lod.lod_keys(new_lod)
+    assert "g" in lod.lod_keys(new_lod)
+    assert "h" in lod.lod_keys(new_lod)
