@@ -216,7 +216,15 @@ def lod_keys(lod_):
     if len(lod_)>0:
         return list(lod_[0].keys())
     return None
-
+    
+def lod_clone(lod_):
+    new_lod=[]
+    for d in lod_:
+        new_d={}
+        for key, value in d.items():
+            new_d[key]=value
+        new_lod.append(new_d)
+    return new_lod
 
 def lod_filter_keys(lod_, keys):
     """
@@ -242,6 +250,22 @@ def lod_filter_dictionaries(lod_, lambda_function):
         if lambda_function(d, index) is True:
             new_lod.append(d)
     return new_lod
+    
+def lod_calculate(lod_, key, lambda_function, clone=False):
+    """
+        Creates or replaces a column with the result of tthe lambda function in the lod passed as parameter
+        @param key  Dictionary key where lambda_function result is going to be set
+        @param lambda_function needs two parameters (d, index) where d is the dictionary used to iterate and index is the position of the dictionary in the list of dictionaries
+        @param clone if True returns a clone of the lod_ parameter
+    """
+    if clone is True:
+        l_o_d=lod_clone(lod_)
+    else:
+        l_o_d=lod_
+        
+    for index,  d in enumerate(l_o_d):
+        d[key]=lambda_function(d, index)
+    return l_o_d
 
 
 

@@ -72,6 +72,19 @@ Converts a list of dictionaries (lod) to list using all distinct values of key
 
 ### lod_average_ponderated
 
+### lod_calculate
+Makes calculations inside dictionary iterations
+```python
+>>> from pydicts import lod
+>>> lod_= [{'a': 1, 'b': 2, 'c':5}, {'a': 3, 'b': 4, 'c': 6}, {'a': 3, 'b': 4, 'c': 7}]
+>>> lod.lod_calculate(lod_, "d", lambda d, index: d['a']+d['b']+d['c'])
+[{'a': 1, 'b': 2, 'c': 5, 'd': 8}, {'a': 3, 'b': 4, 'c': 6, 'd': 13}, {'a': 3, 'b': 4, 'c': 7, 'd': 14}]
+
+```
+
+### lod_clone
+
+Makes a clone of the list of dictionaries createing a new list and new dictionaries
 
 ### lod_filter_dictionaries
 

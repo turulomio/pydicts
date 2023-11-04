@@ -1,13 +1,16 @@
 from datetime import datetime, date
 from decimal import Decimal
 from pydicts import lod
-from pytest import raises
+from pytest import raises, fixture
 
 empty_lod=[]
 
-lod_=[]
-lod_.append({"a": datetime.now(), "b": date.today(), "c": Decimal('12.32'), "d": None, "e": int(12), "f":None, "g":True, "h":False})
-lod_.append({"a": datetime.now(), "b": date.today(), "c": Decimal('-12.32'), "d": 16, "e": int(12), "f":None, "g":True, "h":False})
+@fixture(autouse=True)
+def reload_lod_():
+    global lod_
+    lod_=[]
+    lod_.append({"a": datetime.now(), "b": date.today(), "c": Decimal('12.32'), "d": None, "e": int(12), "f":None, "g":True, "h":False})
+    lod_.append({"a": datetime.now(), "b": date.today(), "c": Decimal('-12.32'), "d": 16, "e": int(12), "f":None, "g":True, "h":False})
 
 
 def tests_dictkv():
@@ -48,3 +51,15 @@ def test_lod_filter_dictionaries():
     #Filtering by d
     new_lod=lod.lod_filter_dictionaries(lod_, lambda d,  index: d["g"] is None)
     assert len(new_lod)==0
+
+def test_calculate_clone():
+    new_lod=lod.lod_calculate(lod_, "NEW C",   lambda d,  index: d['c']*100, clone=True)
+    lod.lod_print(new_lod)
+    assert "NEW C" in lod.lod_keys(new_lod)
+    assert "NEW C" not in lod.lod_keys(lod_)
+    
+def test_calculate():
+    new_lod=lod.lod_calculate(lod_, "NEW C",   lambda d,  index: d['c']*100)
+    lod.lod_print(new_lod)
+    assert "NEW C" in lod.lod_keys(new_lod)
+    assert "NEW C" in lod.lod_keys(lod_)
