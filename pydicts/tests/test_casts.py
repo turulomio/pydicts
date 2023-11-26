@@ -115,16 +115,12 @@ def test_dtaware_year_end():
 def test_dtnaive_day_end():
     assert casts.dtnaive_day_end(casts.dtnaive_now()).time()==time(23, 59, 59, 999999)
 
-### Returns the end of the day dtnaive from a date
-#def test_dtnaive_day_end_from_date(dat):
-#    dt=datetime(dat.year, dat.month, dat.day)
-#    return dt_day_end(dt)
-#
-### Returns the end of the day dtaware of the tz_name timezone from a date
-#def test_dtaware_day_end_from_date(date, tz_name):
-#    dt=dtaware(date, time(0, 0), tz_name)
-#    return dt_day_end(dt)    
-#    
+def test_dtnaive_day_end_from_date():
+    assert casts.dtnaive_day_end_from_date(date(2023, 12, 29))==datetime(2023, 12, 29, 23, 59, 59, 999999)
+
+def test_dtaware_day_end_from_date():
+    assert casts.dtaware_day_end_from_date(date(2023, 12, 29), "UTC")==datetime(2023, 12, 29, 23, 59, 59, 999999, ZoneInfo("UTC"))
+
 ### Returns a dtnaive or dtawre (as parameter) with the end of the day
 #def test_dt_day_start(dt):
 #    return dt.replace(hour=0, minute=0, second=0, microsecond=0)
