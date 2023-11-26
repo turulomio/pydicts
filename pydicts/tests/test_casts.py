@@ -1,14 +1,15 @@
-from datetime import date,  datetime
+from datetime import date
 from decimal import Decimal
 from pydicts import casts
 from pytest import raises
 from zoneinfo import ZoneInfo
 
-zoneinfo_madrid=ZoneInfo("Europe/Madrid")
+zonename_madrid="Europe/Madrid"
+#zoneinfo_madrid=ZoneInfo()
 zoneinfo_utc=ZoneInfo("UTC")
-dtnaive=datetime.now()
-dtaware_utc=datetime.utcnow().replace(tzinfo=zoneinfo_utc)
-dtaware_madrid=dtaware_utc.astimezone(zoneinfo_madrid)
+dtnaive=casts.dtnaive_now()
+dtaware_utc=casts.dtaware_now()
+dtaware_madrid=casts.dtaware_now(zonename_madrid)
 
 def test_valueORempty():
     assert casts.valueORempty(None)==""
@@ -29,6 +30,17 @@ def test_str2bool():
     assert casts.str2bool("True")==True
     assert casts.str2bool("false")==False
     assert casts.str2bool("False")==False
+    
+
+def test_date_first_of_the_next_x_months():
+    date_plus_3_months=casts.date_first_of_the_next_x_months(2023, 11, 3)
+    assert date_plus_3_months.year==2024
+    assert date_plus_3_months.month==2
+    assert date_plus_3_months.day==1
+    date_minus_12_months=casts.date_first_of_the_next_x_months(2023, 11, 3)
+    assert date_minus_12_months.year==2022
+    assert date_minus_12_months.month==11
+    assert date_minus_12_months.day==1
     
 ### Function that converts a None value into a Decimal('0')
 ### @param dec Should be a Decimal value or None
@@ -59,14 +71,6 @@ def test_is_naive():
     assert casts.is_naive(dtnaive)==True
     assert casts.is_naive(dtaware_utc)==False
 
-#    if dt.tzinfo is None or dt.tzinfo.utcoffset(dt) is None:
-#        return False
-#    return True
-#
-### Returns if a datetime is naive
-#def test_is_naive(dt):
-#    return not is_aware(dt)
-#
 ### Function to create a datetime aware object
 ### @param date datetime.date object
 ### @param hour hour object
