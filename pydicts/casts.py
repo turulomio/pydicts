@@ -4,7 +4,9 @@ from decimal import Decimal
 from datetime import timedelta, date, datetime, time
 from zoneinfo import ZoneInfo
 
-def valueORempty(v):
+_=str
+
+def object_or_empty(v):
     """
         Returns and empty string if None, else return value
     """
@@ -47,7 +49,7 @@ def str2bool(value):
 #        return alternative
 #    return value
 #
-def b2s(b, code='UTF-8'):
+def bytes2str(b, code='UTF-8'):
     """
         Bytes 2 string
     """ 
@@ -55,7 +57,7 @@ def b2s(b, code='UTF-8'):
         return None
     return b.decode(code)
     
-def s2b(s, code='UTF8'):
+def str2bytes(s, code='UTF8'):
     """
         String 2 bytes
     """
@@ -79,8 +81,8 @@ def is_naive(dt):
 ## @param hour hour object
 ## @param tz_name String with datetime tz_name name. For example "Europe/Madrid"
 ## @return datetime aware
-def dtaware(date, time_, tz_name):
-    dt_naive=dtnaive(date, time_)
+def dtaware(date_, time_, tz_name):
+    dt_naive=dtnaive(date_, time_)
     return dtnaive2dtaware(dt_naive, tz_name)
 
 def dtnaive2dtaware(dtnaive, tz_name):
@@ -104,8 +106,8 @@ def dtnaive_now():
 ## @param date datetime.date object
 ## @param hour hour object
 ## @return datetime naive
-def dtnaive(date, hour):
-    return datetime(date.year,  date.month,  date.day,  hour.hour,  hour.minute,  hour.second, hour.microsecond)
+def dtnaive(date_, hour):
+    return datetime(date_.year,  date_.month,  date_.day,  hour.hour,  hour.minute,  hour.second, hour.microsecond)
 
 
 ## Returns a date with the first date of the month
@@ -125,7 +127,7 @@ def date_last_of_the_month(year, month):
 ## Returns a date with the first date of the year
 ## @param year Year to search first day
 def date_first_of_the_year(year):
-    return date_first_of_the_month(year,12)
+    return date_first_of_the_month(year, 1)
 
 ## Returns a date with the last date of the year
 ## @param year Year to search last day
@@ -148,7 +150,6 @@ def date_first_of_the_next_x_months(year, month, x):
         for i in range(abs(x)):
             last_before=first-timedelta(days=1)
             first=date_first_of_the_month(last_before.year, last_before.month)
-            print(year, month, last_before, first)
         return first    
 
 ## Returns a date with the last date of the month after x months
@@ -170,35 +171,53 @@ def dtaware_year_start(year, tz_name):
 def dtaware_year_end(year, tz_name):
     return dtaware_day_end_from_date(date(year, 12, 31), tz_name)
     
-## Returns a dtnaive or dtawre (as parameter) with the end of the day
-def dt_day_end(dt):
+def dtaware_day_end(dt, tz_name):
+    """
+        Returns the last  datetime (microsecond  level) of the  day in tz_name zone
+    """
+    if is_naive():
+        raise Exception(_("Datetime parameter should be aware"))
+    dt=dtaware_changes_tz(dt, tz_name)
+    return dt.replace(hour=23, minute=59, second=59, microsecond=999999)
+    
+def dtnaive_day_end(dt):
+    """
+        Returns the last  datetime (microsecond  level) of the  day in naive format
+    """
+    if is_aware(dt):
+        raise Exception(_("Datetime parameter should be naive"))
     return dt.replace(hour=23, minute=59, second=59, microsecond=999999)
 
 ## Returns the end of the day dtnaive from a date
-def dtnaive_day_end_from_date(dat):
-    dt=datetime(dat.year, dat.month, dat.day)
-    return dt_day_end(dt)
+def dtnaive_day_end_from_date(date_):
+    dt=datetime(date_.year, date_.month, date_.day)
+    return dtnaive_day_end(dt)
 
-## Returns the end of the day dtaware of the tz_name timezone from a date
+## Returns the end of the day dtaware in utc format
 def dtaware_day_end_from_date(date, tz_name):
-    dt=dtaware(date, time(0, 0), tz_name)
-    return dt_day_end(dt)    
+    return dtaware(date, time(23, 59, 59, 999999), tz_name)
     
 ## Returns a dtnaive or dtawre (as parameter) with the end of the day
-def dt_day_start(dt):
+def dtnaive_day_start(dt):
+    return dt.replace(hour=0, minute=0, second=0, microsecond=0)
+
+## Returns a dtnaive or dtawre (as parameter) with the end of the day in zone tz_name
+def dtaware_day_start(dt, tz_name):
+    if is_naive():
+        raise Exception(_("Datetime parameter should be aware"))
+    dt=dtaware_changes_tz(dt, tz_name)
     return dt.replace(hour=0, minute=0, second=0, microsecond=0)
 
 ## Returns the end of the day dtnaive from a date
-def dtnaive_day_start_from_date(dat):
-    dt=datetime(dat.year, dat.month, dat.day)
-    return dt_day_start(dt)
+def dtnaive_day_start_from_date(date_):
+    dt=datetime(date_.year, date_.month, date_.day)
+    return dtnaive_day_start(dt)
 
 ## Returns the end of the day dtaware of the tz_name timezone from a date
 def dtaware_day_start_from_date(date, tz_name):
-    dt=dtaware(date, time(0, 0), tz_name)
-    return dt_day_start(dt)
+    return dtaware(date, time(0, 0, 0, 0), tz_name)
 
-## Returns the start of a month
+## Returns the start of a month in utc format
 def dtaware_month_start(year, month, tz_name):
     return dtaware_day_start_from_date(date(year, month, 1), tz_name)
 #    
@@ -230,47 +249,47 @@ def dtaware_month_start(year, month, tz_name):
 #        return 11
 #    if s in ["Dic", "Dec", "Diciembre", "December", "diciembre", "december"]:
 #        return 12
-#
-#def string2time(s, format="HH:MM"):
-#    allowed=["HH:MM", "HH:MM:SS","HH:MMxx"]
-#    if format in allowed:
-#        if format=="HH:MM":#12:12
-#            a=s.split(":")
-#            return time(int(a[0]), int(a[1]))
-#        elif format=="HH:MM:SS":#12:12:12
-#            a=s.split(":")
-#            return time(int(a[0]), int(a[1]), int(a[2]))
-#        elif format=="HH:MMxx": #5:12am o pm
-#            s=s.upper()
-#            s=s.replace("AM", "")
-#            if s.find("PM"):
-#                s=s.replace("PM", "")
-#                points=s.split(":")
-#                return time(int(points[0])+12, int(points[1]))
-#            else:#AM
-#                points=s.split(":")
-#                return time(int(points[0]), int(points[1]))
-#    else:
-#        error("I can't convert this format '{}'. I only support this {}".format(format, allowed))
-#
-### Converts a time to a string
-#def time2string(ti, format="HH:MM" ):
-#    allowed=["HH:MM", "HH:MM:SS","Xulpymoney"]
-#    if format in allowed:
-#        if ti==None:
-#            return None
-#        if format=="Xulpymoney":
-#            if ti.microsecond in (4, 5):
-#                return str(ti)[11:-13]
-#            else:
-#                return str(ti)[11:-6]
-#        elif format=="HH:MM":
-#            return ("{}:{}".format(str(ti.hour).zfill(2), str(ti.minute).zfill(2)))
-#        elif format=="HH:MM:SS":
-#            return ("{}:{}:{}".format(str(ti.hour).zfill(2), str(ti.minute).zfill(2), str(ti.second).zfill(2)))
-#
-#
-def string2date(iso, format="YYYY-MM-DD"):
+
+def str2time(s, format="HH:MM"):
+    allowed=["HH:MM", "HH:MM:SS","HH:MMxx"]
+    if format in allowed:
+        if format=="HH:MM":#12:12
+            a=s.split(":")
+            return time(int(a[0]), int(a[1]))
+        elif format=="HH:MM:SS":#12:12:12
+            a=s.split(":")
+            return time(int(a[0]), int(a[1]), int(a[2]))
+        elif format=="HH:MMxx": #5:12am o pm
+            s=s.upper()
+            s=s.replace("AM", "")
+            if s.find("PM"):
+                s=s.replace("PM", "")
+                points=s.split(":")
+                return time(int(points[0])+12, int(points[1]))
+            else:#AM
+                points=s.split(":")
+                return time(int(points[0]), int(points[1]))
+    else:
+        raise Exception(_("I can't convert this format '{}'. I only support this {}".format(format, allowed)))
+
+## Converts a time to a string
+def time2str(ti, format="HH:MM" ):
+    allowed=["HH:MM", "HH:MM:SS","Xulpymoney"]
+    if format in allowed:
+        if ti==None:
+            return None
+        if format=="Xulpymoney":
+            if ti.microsecond in (4, 5):
+                return str(ti)[11:-13]
+            else:
+                return str(ti)[11:-6]
+        elif format=="HH:MM":
+            return ("{}:{}".format(str(ti.hour).zfill(2), str(ti.minute).zfill(2)))
+        elif format=="HH:MM:SS":
+            return ("{}:{}:{}".format(str(ti.hour).zfill(2), str(ti.minute).zfill(2), str(ti.second).zfill(2)))
+
+
+def str2date(iso, format="YYYY-MM-DD"):
     allowed=["YYYY-MM-DD", "DD/MM/YYYY", "DD.MM.YYYY", "DD/MM"]
     if format in allowed:
         try:
@@ -291,7 +310,7 @@ def string2date(iso, format="YYYY-MM-DD"):
     else:
         raise Exception("I can't convert this format '{}'. I only support this {}".format(format, allowed))
 
-def string2dtnaive(s, format):
+def str2dtnaive(s, format):
     allowed=["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S']
     if format in allowed:
         if format=="%Y%m%d%H%M":
@@ -320,7 +339,7 @@ def string2dtnaive(s, format):
     else:
         raise Exception("I can't convert this format '{}'. I only support this {}".format(format, allowed))
 
-def string2dtaware(s, format, tz_name='UTC'):
+def str2dtaware(s, format, tz_name='UTC'):
     allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
     if format in allowed:
         if format=="%Y-%m-%d %H:%M:%S%z":#2017-11-20 23:00:00+00:00
@@ -337,12 +356,12 @@ def string2dtaware(s, format, tz_name='UTC'):
             return dtaware_changes_tz(dt, tz_name)
         if format=="JsUtcIso": #2021-08-21T06:27:38.294Z
             s=s.replace("T"," ").replace("Z","")
-            dtnaive=string2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
+            dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
             dtaware_utc=dtnaive2dtaware(dtnaive, 'UTC')
             return dtaware_changes_tz(dtaware_utc, tz_name)
 
 #    else:
-#        return timezone(tz_name).localize(string2dtnaive(s,format))
+#        return timezone(tz_name).localize(str2dtnaive(s,format))
 
 ## epoch is the time from 1,1,1970 in UTC
 ## return now(timezone(self.name))
@@ -369,17 +388,17 @@ def epochmicros2dtaware(n, tz="UTC"):
 ## Returns a formated string of a dtaware string formatting with a zone name
 ## @param dt datetime aware object
 ## @return String
-def dtaware2string(dt, format):
+def dtaware2str(dt, format):
     if is_naive(dt)==True:
         raise Exception("A dtaware is needed for {}".format(dt))
     else:
-        return dtnaive2string(dt, format)
+        return dtnaive2str(dt, format)
 
 ## Returns a formated string of a dtaware string formatting with a zone name
 ## @param dt datetime aware object
 ## @param format String in ["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M"]
 ## @return String
-def dtnaive2string(dt, format):
+def dtnaive2str(dt, format):
     allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"]
     if dt==None:
         return "None"

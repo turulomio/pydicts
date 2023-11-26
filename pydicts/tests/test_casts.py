@@ -1,19 +1,18 @@
-from datetime import date
+from datetime import date, time, datetime
 from decimal import Decimal
 from pydicts import casts
 from pytest import raises
 from zoneinfo import ZoneInfo
 
 zonename_madrid="Europe/Madrid"
-#zoneinfo_madrid=ZoneInfo()
 zoneinfo_utc=ZoneInfo("UTC")
 dtnaive=casts.dtnaive_now()
 dtaware_utc=casts.dtaware_now()
 dtaware_madrid=casts.dtaware_now(zonename_madrid)
 
-def test_valueORempty():
-    assert casts.valueORempty(None)==""
-    assert casts.valueORempty(1)==1
+def test_object_or_empty():
+    assert casts.object_or_empty(None)==""
+    assert casts.object_or_empty(1)==1
     
 def test_str2decimal():
     assert casts.str2decimal(None, 1)==None
@@ -42,6 +41,22 @@ def test_date_first_of_the_next_x_months():
     assert date_minus_12_months.month==11
     assert date_minus_12_months.day==1
     
+def test_date_last_of_the_next_x_months():
+    date_plus_3_months=casts.date_last_of_the_next_x_months(2023, 11, 3)
+    assert date_plus_3_months.year==2024
+    assert date_plus_3_months.month==2
+    assert date_plus_3_months.day==29
+    date_minus_12_months=casts.date_last_of_the_next_x_months(2023, 11, -12)
+    assert date_minus_12_months.year==2022
+    assert date_minus_12_months.month==11
+    assert date_minus_12_months.day==30
+
+def test_date_first_of_the_year():
+    assert casts.date_first_of_the_year(2022)==date(2022, 1, 1)
+    
+def test_date_last_of_the_year():
+    assert casts.date_last_of_the_year(2023)==date(2023, 12, 31)
+    
 ### Function that converts a None value into a Decimal('0')
 ### @param dec Should be a Decimal value or None
 ### @return Decimal
@@ -55,13 +70,13 @@ def test_date_first_of_the_next_x_months():
 #    return value
 #
 
-def test_b2s():
-    assert casts.b2s(None)==None
-    assert casts.b2s(b"Hello")=="Hello"
+def test_bytes2str():
+    assert casts.bytes2str(None)==None
+    assert casts.bytes2str(b"Hello")=="Hello"
     
-def test_s2b():
-    assert casts.s2b(None)==None
-    assert casts.s2b("Hello")==b"Hello"
+def test_str2bytes():
+    assert casts.str2bytes(None)==None
+    assert casts.str2bytes("Hello")==b"Hello"
 
 def test_is_aware():
     assert casts.is_aware(dtnaive)==False
@@ -71,35 +86,13 @@ def test_is_naive():
     assert casts.is_naive(dtnaive)==True
     assert casts.is_naive(dtaware_utc)==False
 
-### Function to create a datetime aware object
-### @param date datetime.date object
-### @param hour hour object
-### @param tz_name String with datetime tz_name name. For example "Europe/Madrid"
-### @return datetime aware
-#def test_dtaware(date, hour, tz_name):
-#    z=timezone(tz_name)
-#    a=dtnaive(date, hour)
-#    a=z.localize(a)
-#    return a
-#
-#def test_dtnaive2dtaware(dtnaive, tz_name):
-#    z=timezone(tz_name)
-#    return z.localize(dtnaive)
-#
-#
-#def test_dtaware_now(tzname='UTC'):
-#    return timezone(tzname).localize(dtnaive_now())
-#
-#def test_dtnaive_now():
-#    return datetime.now()
-#
-### Function to create a datetime aware object
-### @param date datetime.date object
-### @param hour hour object
-### @return datetime naive
-#def test_dtnaive(date, hour):
-#    return datetime(date.year,  date.month,  date.day,  hour.hour,  hour.minute,  hour.second, hour.microsecond)
-#
+def test_dtaware():
+    assert dtaware_utc==casts.dtaware(dtaware_utc.date(), dtaware_utc.time(), "UTC")
+
+def test_dtnaive2dtaware():
+    naive=datetime(2023, 1, 1, 0, 0, 0, 0)
+    assert casts.dtnaive2dtaware(naive, "Europe/Madrid")==naive.replace(tzinfo=ZoneInfo("Europe/Madrid"))
+
 def test_date_first_of_the_month():
     assert casts.date_first_of_the_month(2023, 11)==date(2023, 11, 1)
     with raises(ValueError):
@@ -110,39 +103,9 @@ def test_date_last_of_the_month():
     with raises(ValueError):
         casts.date_first_of_the_month(2023, 13)
 
-
-### Returns a date with the first date of the year
-### @param year Year to search first day
-#def test_date_first_of_the_year(year):
-#    return date_first_of_the_month(year,12)
-#
-### Returns a date with the last date of the year
-### @param year Year to search last day
-#def test_date_last_of_the_year(year):
-#    return date_last_of_the_month(year,12)
-#
-### Returns a date with the first date of the month after x months
-### @param year Year to search  day
-### @param month Month to search day
-### @param x Number of months after parameters. Must be positive
-#def test_date_first_of_the_next_x_months(year, month, x):
-#    last=date(year, month, 1)
-#    for i in range(x):
-#        last=date_last_of_the_month(last.year, last.month)
-#        last=last+timedelta(days=1)
-#    return last    
-#
-### Returns a date with the last date of the month after x months
-### @param year Year to search  day
-### @param month Month to search day
-### @param x Number of months after parameters. Must be positive
-#def test_date_last_of_the_next_x_months(year, month, x):
-#    first=date_first_of_the_next_x_months(year, month, x)
-#    return date_last_of_the_month(first.year, first.month)
-#
-#def test_dtaware_month_end(year, month, tz_name):
-#    return dtaware_day_end_from_date(date_last_of_the_month(year, month), tz_name)
-#    
+def test_dtaware_month_end():
+    assert casts.dtaware_month_end(2023, 11, "UTC")==datetime(2023, 11, 30, 23, 59, 59, 999999, ZoneInfo("UTC"))
+    
 ### Returns an aware datetime with the start of year
 #def test_dtaware_year_start(year, tz_name):
 #    return dtaware_day_start_from_date(date(year, 1, 1), tz_name)
@@ -151,10 +114,10 @@ def test_date_last_of_the_month():
 #def test_dtaware_year_end(year, tz_name):
 #    return dtaware_day_end_from_date(date(year, 12, 31), tz_name)
 #    
-### Returns a dtnaive or dtawre (as parameter) with the end of the day
-#def test_dt_day_end(dt):
-#    return dt.replace(hour=23, minute=59, second=59, microsecond=999999)
-#
+
+def test_dtnaive_day_end():
+    assert casts.dtnaive_day_end(casts.dtnaive_now()).time()==time(23, 59, 59, 999999)
+
 ### Returns the end of the day dtnaive from a date
 #def test_dtnaive_day_end_from_date(dat):
 #    dt=datetime(dat.year, dat.month, dat.day)
