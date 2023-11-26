@@ -1,5 +1,4 @@
-from logging import warning
-
+_=str
 ## LOR is a list of list. Naned List Of Rows, used in myqtablewidget for example
 ## @param rows LOR
 ## @param index int with the index of the position where we are going to insert row
@@ -11,6 +10,17 @@ def lol_add_column(rows, index, column):
     for i, row in enumerate(rows):
         r_rows.append(row[0:index] + [column[i],] + row[index:len(row)])
     return r_rows
+
+## Returns a list with object in positions removed
+def list_remove_positions(l, listindex):
+    if l is None:
+        raise Exception(_("I can't remove positions from a None list"))
+        return None
+    r=[]
+    for i, o in enumerate(l):
+        if i not in listindex:
+            r.append(o)
+    return r
 
 ## lol is a list of list. Naned List Of Rows, used in myqtablewidget
 ## @param listindex is a list of column indexes to remove
