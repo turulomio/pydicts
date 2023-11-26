@@ -1,7 +1,10 @@
+### If a function only can be used by dtaware or naive it will have its prefix dtaware_ or dtnaive_
+### If a function can use both of them its prefix will be dt_
 from decimal import Decimal
 #from logging import warning
 #
-#from datetime import timedelta, datetime, date, time
+from datetime import timedelta, date
+#from zoneinfo import ZoneInfo
 #from pytz import timezone
 #from logging import error
 
@@ -48,148 +51,32 @@ def str2bool(value):
 #        return alternative
 #    return value
 #
-### Bytes 2 string
-#def b2s(b, code='UTF-8'):
-#    return b.decode(code)
-#    
-#def s2b(s, code='UTF8'):
-#    """String 2 bytes"""
-#    if s==None:
-#        return "".encode(code)
-#    else:
-#        return s.encode(code)
-#
-#def c2b(state):
-#    """QCheckstate to python bool"""
-#    from PyQt5.QtCore import Qt
-#    if state==Qt.Checked:
-#        return True
-#    else:
-#        return False
-#
-#def b2c(booleano):
-#    """Bool to QCheckstate"""
-#    from PyQt5.QtCore import Qt
-#    if booleano==True:
-#        return Qt.Checked
-#    else:
-#        return Qt.Unchecked     
-#
-### Returns a list with object in positions removed
-#def list_remove_positions(l, listindex):
-#    if l is None:
-#        warning("I can't remove positions from a None list")
-#        return None
-#    r=[]
-#    for i, o in enumerate(l):
-#        if i not in listindex:
-#            r.append(o)
-#    return r
-#
-### LOR is a list of list. Naned List Of Rows, used in myqtablewidget for example
-### @param rows LOR
-### @param index int with the index of the position where we are going to insert row
-### @param column List with the values to add. Must be of the same size of rows
-#def lor_add_column(rows, index, column):
-#    if len(rows)!=len(column):
-#        warning("I can't add a column with different size of LOR")
-#        return
-#    r_rows=[]
-#    for i, row in enumerate(rows):
-#        r_rows.append(row[0:index] + [column[i],] + row[index:len(row)])
-#    return r_rows
-#
-### LOR is a list of list. Naned List Of Rows, used in myqtablewidget
-### @param listindex is a list of column indexes to remove
-#def lor_remove_columns(rows, listindex):
-#    r_rows=[]
-#    for i, row in enumerate(rows):
-#        r_rows.append(list_remove_positions(row,listindex))
-#    return r_rows
-#
-### LOR is a list of list. Naned List Of Rows, used in myqtablewidget
-### @param listindex is a list of column indexes to remove
-#def lor_remove_rows(rows, listindex):
-#    return list_remove_positions(rows, listindex) #It's a list but of row
-#
-### Return a lor transposed. Changed rows by columns
-#def lor_transposed(lor):
-#    if len(lor)==0:
-#        return []
-#    r=[]
-#    columns=len(lor[0])
-#    for column in range(columns):
-#        tran_row=[]
-#        for row in lor:
-#            tran_row.append(row[column])
-#        r.append(tran_row)
-#    return r
-#
-### Extract a column from the list of row
-#def lor_get_row(lor, row):
-#    return lor[row]
-#
-### Extract a column from the list of row
-#def lor_get_column(lor, column):
-#    r=[]
-#    for row in lor:
-#        r.append(row[column])
-#    return r
-#
-### Return sum of values of a column from and index to and other index position. This method ignores None values
-### This method can sum several objects
-### @param row
-### @param from_index
-### @param to_index
-### @param zerovalue 0 or Money(self.mem, 0, self.mem.localcurrency)....
-#def lor_sum_row(row, from_index, to_index, zerovalue=0):
-#    s=zerovalue
-#    for i, column in enumerate(row):
-#        if i>=from_index and i<=to_index:
-#            if column is not None:
-#                s=s + column
-#    return s
-#
-### Return sum of values of a column from and index to and other index position. This method ignores None values
-### This method can sum several objects
-### @zerovalue 0 or Money(self.mem, 0, self.mem.localcurrency)....
-#def lor_sum_column(lor, column, from_index, to_index, zerovalue=0):
-#    s=zerovalue
-#    for i, row in enumerate(lor):
-#        if i>=from_index and i<=to_index:
-#            if row[column] is not None:
-#                s=s + row[column]
-#    return s
-#
-#
-#    
-### Converts my common objects to its numeric value
-#def object2value(o):
-#    if o.__class__.__name__ in ["int", "float", "Decimal"]:
-#        return o
-#    elif o.__class__.__name__ in ["Currency",  "Money", "USD", "EUR"]:
-#        return o.amount
-#    elif o.__class__.__name__ == "Percentage":
-#        return o.value
-#    return o
-#        
-#
-### THIS IS FILE IS FROM https://github.com/turulomio/reusingcode/python/datetime_functions.py
-### IF YOU NEED TO UPDATE IT PLEASE MAKE A PULL REQUEST IN THAT PROJECT AND DOWNLOAD FROM IT
-### DO NOT UPDATE IT IN YOUR CODE
-#
-### If a function only can be used by dtaware or naive it will have its prefix dtaware_ or dtnaive_
-### If a function can use both of them its prefix will be dt_
-#
+def b2s(b, code='UTF-8'):
+    """
+        Bytes 2 string
+    """ 
+    if b is None:
+        return None
+    return b.decode(code)
+    
+def s2b(s, code='UTF8'):
+    """
+        String 2 bytes
+    """
+    if s is None:
+        return None
+    else:
+        return s.encode(code)
+
 ### Returns if a datetime is aware
-#def is_aware(dt):
-#    if dt.tzinfo is None or dt.tzinfo.utcoffset(dt) is None:
-#        return False
-#    return True
-#
-### Returns if a datetime is naive
-#def is_naive(dt):
-#    return not is_aware(dt)
+def is_aware(dt):
+    if dt.tzinfo is None or dt.tzinfo.utcoffset(dt) is None:
+        return False
+    return True
+
+## Returns if a datetime is naive
+def is_naive(dt):
+    return not is_aware(dt)
 #
 ### Function to create a datetime aware object
 ### @param date datetime.date object
@@ -220,41 +107,20 @@ def str2bool(value):
 #def dtnaive(date, hour):
 #    return datetime(date.year,  date.month,  date.day,  hour.hour,  hour.minute,  hour.second, hour.microsecond)
 #
-### Function that converts a number of days to a string showing years, months and days
-### @param days Integer with the number of days
-### @return String like " 0 years, 1 month and 3 days"
-#def days2string(days):
-#    from PyQt5.QtWidgets import QApplication
-#    years=days//365
-#    months=(days-years*365)//30
-#    days=int(days -years*365 -months*30)
-#    if years==1:
-#        stryears=QApplication.translate("Core", "year")
-#    else:
-#        stryears=QApplication.translate("Core", "years")
-#    if months==1:
-#        strmonths=QApplication.translate("Core", "month")
-#    else:
-#        strmonths=QApplication.translate("Core", "months")
-#    if days==1:
-#        strdays=QApplication.translate("Core", "day")
-#    else:
-#        strdays=QApplication.translate("Core", "days")
-#    return QApplication.translate("Core", "{} {}, {} {} and {} {}").format(years, stryears,  months,  strmonths, days,  strdays)
-#
-### Returns a date with the first date of the month
-### @param year Year to search fist day
-### @param month Month to search first day
-#def date_first_of_the_month(year, month):
-#    return date(year, month, 1)
-#
-### Returns a date with the last date of the month
-### @param year Year to search last day
-### @param month Month to search last day
-#def date_last_of_the_month(year, month):
-#    if month==12:
-#        return date(year, month, 31)
-#    return date(year, month+1, 1)-timedelta(days=1)
+
+## Returns a date with the first date of the month
+## @param year Year to search fist day
+## @param month Month to search first day
+def date_first_of_the_month(year, month):
+    return date(year, month, 1)
+
+## Returns a date with the last date of the month
+## @param year Year to search last day
+## @param month Month to search last day
+def date_last_of_the_month(year, month):
+    if month==12:
+        return date(year, month, 31)
+    return date(year, month+1, 1)-timedelta(days=1)
 #
 ### Returns a date with the first date of the year
 ### @param year Year to search first day

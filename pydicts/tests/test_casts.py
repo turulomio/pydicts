@@ -1,19 +1,14 @@
-
-## If a function only can be used by dtaware or naive it will have its prefix dtaware_ or dtnaive_
-## If a function can use both of them its prefix will be dt_
-#
-#from datetime import timedelta, datetime, date, time
-#from pytz import timezone
-#from logging import error
-#
-#from decimal import Decimal
-#from json import dumps
-#from logging import warning
-
+from datetime import date,  datetime
 from decimal import Decimal
 from pydicts import casts
 from pytest import raises
+from zoneinfo import ZoneInfo
 
+zoneinfo_madrid=ZoneInfo("Europe/Madrid")
+zoneinfo_utc=ZoneInfo("UTC")
+dtnaive=datetime.now()
+dtaware_utc=datetime.utcnow().replace(tzinfo=zoneinfo_utc)
+dtaware_madrid=dtaware_utc.astimezone(zoneinfo_madrid)
 
 def test_valueORempty():
     assert casts.valueORempty(None)==""
@@ -47,19 +42,23 @@ def test_str2bool():
 #        return alternative
 #    return value
 #
-### Bytes 2 string
-#def test_b2s(b, code='UTF-8'):
-#    return b.decode(code)
-#    
-#def test_s2b(s, code='UTF8'):
-#    """String 2 bytes"""
-#    if s==None:
-#        return "".encode(code)
-#    else:
-#        return s.encode(code)
 
-### Returns if a datetime is aware
-#def test_is_aware(dt):
+def test_b2s():
+    assert casts.b2s(None)==None
+    assert casts.b2s(b"Hello")=="Hello"
+    
+def test_s2b():
+    assert casts.s2b(None)==None
+    assert casts.s2b("Hello")==b"Hello"
+
+def test_is_aware():
+    assert casts.is_aware(dtnaive)==False
+    assert casts.is_aware(dtaware_utc)==True
+
+def test_is_naive():
+    assert casts.is_naive(dtnaive)==True
+    assert casts.is_naive(dtaware_utc)==False
+
 #    if dt.tzinfo is None or dt.tzinfo.utcoffset(dt) is None:
 #        return False
 #    return True
@@ -97,42 +96,17 @@ def test_str2bool():
 #def test_dtnaive(date, hour):
 #    return datetime(date.year,  date.month,  date.day,  hour.hour,  hour.minute,  hour.second, hour.microsecond)
 #
-### Function that converts a number of days to a string showing years, months and days
-### @param days Integer with the number of days
-### @return String like " 0 years, 1 month and 3 days"
-#def test_days2string(days):
-#    from PyQt5.QtWidgets import QApplication
-#    years=days//365
-#    months=(days-years*365)//30
-#    days=int(days -years*365 -months*30)
-#    if years==1:
-#        stryears=QApplication.translate("Core", "year")
-#    else:
-#        stryears=QApplication.translate("Core", "years")
-#    if months==1:
-#        strmonths=QApplication.translate("Core", "month")
-#    else:
-#        strmonths=QApplication.translate("Core", "months")
-#    if days==1:
-#        strdays=QApplication.translate("Core", "day")
-#    else:
-#        strdays=QApplication.translate("Core", "days")
-#    return QApplication.translate("Core", "{} {}, {} {} and {} {}").format(years, stryears,  months,  strmonths, days,  strdays)
-#
-### Returns a date with the first date of the month
-### @param year Year to search fist day
-### @param month Month to search first day
-#def test_date_first_of_the_month(year, month):
-#    return date(year, month, 1)
-#
-### Returns a date with the last date of the month
-### @param year Year to search last day
-### @param month Month to search last day
-#def test_date_last_of_the_month(year, month):
-#    if month==12:
-#        return date(year, month, 31)
-#    return date(year, month+1, 1)-timedelta(days=1)
-#
+def test_date_first_of_the_month():
+    assert casts.date_first_of_the_month(2023, 11)==date(2023, 11, 1)
+    with raises(ValueError):
+        casts.date_first_of_the_month(2023, 13)
+
+def test_date_last_of_the_month():
+    assert casts.date_last_of_the_month(2023, 11)==date(2023, 11, 30)
+    with raises(ValueError):
+        casts.date_first_of_the_month(2023, 13)
+
+
 ### Returns a date with the first date of the year
 ### @param year Year to search first day
 #def test_date_first_of_the_year(year):
