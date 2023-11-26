@@ -292,6 +292,10 @@ poetry run pytest
 
 ## CHANGELOG
 
+## 0.8.0 (2023-11-26)
+- Migrating casts and datetime_functions to pydicts.casts. Utils to make casting easy
+- Create lol (List of lists) module
+
 ### 0.7.0 (2023-11-04)
 - Improved documentation
 - Removed duplicated lod_min and lod_max methods

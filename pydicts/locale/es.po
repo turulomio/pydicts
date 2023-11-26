@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-19 19:15+0200\n"
+"POT-Creation-Date: 2023-11-26 17:54+0100\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -19,8 +19,20 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 19.12.3\n"
 
-msgid "You pressed 'Ctrl+C', exiting..."
-msgstr "Has pulsado 'Ctrl+C', saliendo..."
+msgid "Datetime parameter should be aware"
+msgstr ""
+
+msgid "Datetime parameter should be naive"
+msgstr ""
+
+msgid "I can't convert this format '{}'. I only support this {}"
+msgstr ""
+
+msgid "I can't remove positions from a None list"
+msgstr ""
+
+#~ msgid "You pressed 'Ctrl+C', exiting..."
+#~ msgstr "Has pulsado 'Ctrl+C', saliendo..."
 
 #~ msgid "Developed by Mariano Muñoz 2022-{}"
 #~ msgstr "Desarrollado por Mariano Muñoz 2022-{}"
