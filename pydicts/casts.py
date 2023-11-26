@@ -79,23 +79,23 @@ def is_naive(dt):
 ## @param hour hour object
 ## @param tz_name String with datetime tz_name name. For example "Europe/Madrid"
 ## @return datetime aware
-def dtaware(date, hour, tz_name):
-    z=ZoneInfo(tz_name)
-    a=dtnaive(date, hour)
-    a=z.replace(a)
-    return a
+def dtaware(date, time_, tz_name):
+    dt_naive=dtnaive(date, time_)
+    return dtnaive2dtaware(dt_naive, tz_name)
 
 def dtnaive2dtaware(dtnaive, tz_name):
-    return dtnaive.replace(ZoneInfo(tz_name))
+    return dtnaive.replace(tzinfo=ZoneInfo(tz_name))
 
 
-def dtaware_now(tzname='UTC'):
-    utc_aware=datetime.utcnow().replace(tzinfo=ZoneInfo("UTC"))
-    if tzname=="UTC":
+def dtaware_now(tzname=None):
+    """
+        If tzname is None: returns UTC dtaware
+    """
+    utc_aware=dtnaive2dtaware(dtnaive_now(), 'UTC')
+    if tzname is None:
         return utc_aware
     else:
-        return utc_aware.astimezone(ZoneInfo(tzname))
-    
+        return dtaware_changes_tz(utc_aware, tzname)
 
 def dtnaive_now():
     return datetime.now()
@@ -135,19 +135,26 @@ def date_last_of_the_year(year):
 ## Returns a date with the first date of the month after x months
 ## @param year Year to search  day
 ## @param month Month to search day
-## @param x Number of months after parameters. Must be positive
+## @param x Number of months after parameters. Cab be positive to add months or negative to substract months
 def date_first_of_the_next_x_months(year, month, x):
-    last=date(year, month, 1)
     if x>=0:
+        first=date(year, month, 1)
         for i in range(x):
-            last=date_last_of_the_month(last.year, last.month)
-            last=last+timedelta(days=1)
-    return last    
+            last=date_last_of_the_month(first.year, first.month)
+            first=last+timedelta(days=1)
+        return first
+    else:#<0
+        first=date(year, month, 1)
+        for i in range(abs(x)):
+            last_before=first-timedelta(days=1)
+            first=date_first_of_the_month(last_before.year, last_before.month)
+            print(year, month, last_before, first)
+        return first    
 
 ## Returns a date with the last date of the month after x months
 ## @param year Year to search  day
 ## @param month Month to search day
-## @param x Number of months after parameters. Must be positive
+## @param x Number of months after parameters. Cab be positive to add months or negative to substract months
 def date_last_of_the_next_x_months(year, month, x):
     first=date_first_of_the_next_x_months(year, month, x)
     return date_last_of_the_month(first.year, first.month)

@@ -37,7 +37,7 @@ def test_date_first_of_the_next_x_months():
     assert date_plus_3_months.year==2024
     assert date_plus_3_months.month==2
     assert date_plus_3_months.day==1
-    date_minus_12_months=casts.date_first_of_the_next_x_months(2023, 11, 3)
+    date_minus_12_months=casts.date_first_of_the_next_x_months(2023, 11, -12)
     assert date_minus_12_months.year==2022
     assert date_minus_12_months.month==11
     assert date_minus_12_months.day==1
