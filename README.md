@@ -9,27 +9,9 @@ I've developed this module because I needed this kind of methods developing with
 - https://github.com/turulomio/pydicts/
 - https://pypi.org/project/pydicts/
 
-
 ## Documentation
 
 You can access documentation in [Github Pydicts Wiki](https://github.com/turulomio/pydicts/wiki)
-
-PyDicts uses several acronyms to call modulues, functions and parameters
-
-- lod: List of dictionaries `[{"a":1,"b":2}, {"a":3,"b":4}]`
-- lood: List of ordered dictionaries (OrderedDicts from collections module) `[OrderedDict([('a', 1), ('b', 2)]), OrderedDict([('a', 3), ('b', 4)])]`
-- lol: List of lists `[[1, 2, 3], [4, 5, 6]]` 
-- dod: Dictionary of dictionaries `{'key2': {'a': 1, 'b': 2}, 'key1': {'a': 1, 'b': 2}}`
-- lod_ymv: List of dictionaries with year-month-value keys `[{'year': 2021, 'month': 1, 'value': 12.12}, {'year': 2023, 'month': 3, 'value': 13.03}]`
-- lod_xyv: List of dictionaries with x-y-value keys `[{'X': 21, 'Y': 12, 'value': 180}, {'X': 2, 'Y': 122, 'value': 170}]`
-
-You can read modules documentation:
-
-- [lod](docs/LOD.md)
-- [lod_xyv](docs/LOD_XYV.md)
-- [lod_ymv](docs/LOD_YMV.md)
-- [lol](docs/LOL.md)
-
 
 ## CHANGELOG
 
