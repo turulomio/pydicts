@@ -1,11 +1,20 @@
-_=str
+from gettext import translation
+from importlib.resources import files
+        
+try:
+    t=translation('pydicts', files("pydicts") / 'locale')
+    _=t.gettext
+except:
+    _=str
+
+
 ## LOR is a list of list. Naned List Of Rows, used in myqtablewidget for example
 ## @param rows LOR
 ## @param index int with the index of the position where we are going to insert row
 ## @param column List with the values to add. Must be of the same size of rows
 def lol_add_column(rows, index, column):
     if len(rows)!=len(column):
-        raise Exception("I can't add a column with different size of lol")
+        raise Exception(_("I can't add a column with different size of lol"))
     r_rows=[]
     for i, row in enumerate(rows):
         r_rows.append(row[0:index] + [column[i],] + row[index:len(row)])

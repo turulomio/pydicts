@@ -1,5 +1,13 @@
 from datetime import date
 from pydicts import lod
+from gettext import translation
+from importlib.resources import files
+
+try:
+    t=translation('pydicts', files("pydicts") / 'locale')
+    _=t.gettext
+except:
+    _=str
 """
     lod_ymv example:
     +------------------+-------------------+---------+
@@ -67,7 +75,7 @@ def lod_ymv_transposition(ld, key_year="year", key_month="month", key_value="val
        return []
 
     if not key_year in ld[0] or not key_month in ld[0] or not key_value in ld[0]:
-        print("Keys names are not correct in dictionary in lod_ymv_transposition function")
+        print(_("Keys names are not correct in dictionary in lod_ymv_transposition function"))
         return None
 
     min_year=lod.lod_min_value(ld, key_year)

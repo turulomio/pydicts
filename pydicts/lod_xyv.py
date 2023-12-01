@@ -1,4 +1,11 @@
+from gettext import translation
+from importlib.resources import files
 
+try:
+    t=translation('pydicts', files("pydicts") / 'locale')
+    _=t.gettext
+except:
+    _=str
 
 
 ## Converts a tipical groyp by lor with A, B, value, value into an other lod with A as rows, B as columns and value as AxB list of dic
@@ -8,7 +15,7 @@ def lod_xyv_transformation(ld, key_x, key_y, key_value, order=None):
        return []
 
     if not key_x in ld[0] or not key_y in ld[0] or not key_value in ld[0]:
-        print("Keys names are not correct in dictionary in lod_year_month_value_transposition function")
+        print(_("Keys names are not correct in dictionary in lod_year_month_value_transposition function"))
         return None
 
     #Searches for all diferent keys

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-26 17:54+0100\n"
+"POT-Creation-Date: 2023-12-01 04:41+0100\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -19,6 +19,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 19.12.3\n"
 
+#, python-brace-format
+msgid "Method str2bool couldn't convert {0} ({1}) to a boolean"
+msgstr "El método str2bool no pudo convertir {0} ({1}) a booleano"
+
 msgid "Datetime parameter should be aware"
 msgstr ""
 
@@ -26,64 +30,32 @@ msgid "Datetime parameter should be naive"
 msgstr ""
 
 msgid "I can't convert this format '{}'. I only support this {}"
+msgstr "No puedo convertir este formato '{}'. Solo soporte estos {}"
+
+msgid "Dtaware needed"
+msgstr ""
+
+msgid "You must set your lod in {}"
+msgstr "Debe establecer su lod en {}"
+
+msgid "This list of dictionaries hasn't data to print"
+msgstr "Esta lista de diccionarios no tiene datos para imprimir"
+
+msgid "Keys names are not correct in dictionary in lod_year_month_value_transposition function"
+msgstr ""
+
+msgid "Keys names are not correct in dictionary in lod_ymv_transposition function"
+msgstr ""
+
+msgid "I can't add a column with different size of lol"
 msgstr ""
 
 msgid "I can't remove positions from a None list"
 msgstr ""
 
-#~ msgid "You pressed 'Ctrl+C', exiting..."
-#~ msgstr "Has pulsado 'Ctrl+C', saliendo..."
+msgid "No data to show"
+msgstr "Sin datos que mostrar"
 
-#~ msgid "Developed by Mariano Muñoz 2022-{}"
-#~ msgstr "Desarrollado por Mariano Muñoz 2022-{}"
+msgid "This table continues in the next page"
+msgstr "Esta tabla continúa en la siguiente página"
 
-#~ msgid "(Without subject)"
-#~ msgstr "(sin asunto)"
-
-#~ msgid "Error parsing subject"
-#~ msgstr "Error al obtener el asunto"
-
-#~ msgid "[Error detected. Won't be renamed]"
-#~ msgstr "[Error detectado. No será renombrado]"
-
-#~ msgid "[Error detected. Not Renamed]"
-#~ msgstr "[Error detectado. No renombrado]"
-
-#~ msgid "[Will be renamed]"
-#~ msgstr "[Será renombrado]"
-
-#~ msgid "[Renamed]"
-#~ msgstr "[Renombrado]"
-
-#~ msgid "[Format detected. Won't de renamed]"
-#~ msgstr "[Formato detectado. No será renombrado]"
-
-#~ msgid "[Format detected. Not renamed]"
-#~ msgstr "[Formato detectado. No renombrado]"
-
-#~ msgid "Script renames all eml files in a directory using mail metadata "
-#~ msgstr "Este comando renombra todos los ficheros eml en un directorio usando los metadatos del correo"
-
-#~ msgid "Forces subject update when 'YYYMMDD HHMM [from]' format is detected"
-#~ msgstr "Fuerza la modificación del asunto cuando el formato 'YYYYMMDD HHMM [Desde]' es detectado"
-
-#, python-brace-format
-#~ msgid "Maximum length allowed to final name using 'YYYMMDD HHMM [from]'. Default: {0}"
-#~ msgstr "Máxima longitud permitida al nombre final usando 'YYYYMMDD HHMM [Desde]'. Por defecto: {0}"
-
-#~ msgid "Without this parameter files won't be renamed. Script only pretend the result"
-#~ msgstr "Sin este parámetro los ficheros no serán renombrados. El comando solo adivina el resultado"
-
-#~ msgid "Processing eml files"
-#~ msgstr "Procesando ficheros eml"
-
-#, python-brace-format
-#~ msgid "{0} files were renamed."
-#~ msgstr "{0} ficheros fueron renombrados."
-
-#, python-brace-format
-#~ msgid "Process was simulated, files weren't renamed. Use --save to rename {0} files."
-#~ msgstr "El proceso fue simulado, los ficheros no fueron renombrados. Usa --save para renombrar {0} ficheros."
-
-#~ msgid "It took {}"
-#~ msgstr "Tardó {}"

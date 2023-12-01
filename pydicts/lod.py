@@ -1,5 +1,13 @@
 from collections import OrderedDict
 from tabulate import tabulate
+from gettext import translation
+from importlib.resources import files
+        
+try:
+    t=translation('pydicts', files("pydicts") / 'locale')
+    _=t.gettext
+except:
+    _=str
 
 def lod_has_key(lod, key):
     if len(lod)==0:
@@ -33,7 +41,7 @@ def lod_print(lod, number=None):
     """
     number=len(lod) if number is None else number
     if len(lod)==0:
-        print("No data to print_batch")
+        print(_("This list of dictionaries hasn't data to print"))
     print(tabulate(lod[0:number], headers="keys", tablefmt="psql"))
 
 def lod_sum(lod, key, ignore_nones=True):
