@@ -4,6 +4,12 @@ Module to use dictionaries, list of dictionaries and other data structures
 
 I've developed this module because I needed this kind of methods developing with Django and python
 
+## Links
+
+- https://github.com/turulomio/pydicts/
+- https://pypi.org/project/pydicts/
+
+
 ## Acronyms
 pydicts uses several acronyms to call functions and parameters
 
