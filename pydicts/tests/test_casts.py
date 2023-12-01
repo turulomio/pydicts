@@ -1,6 +1,6 @@
 from datetime import date, time, datetime
 from decimal import Decimal
-from pydicts import casts
+from pydicts import casts, exceptions
 from pytest import raises
 from zoneinfo import ZoneInfo
 
@@ -19,11 +19,11 @@ def test_str2decimal():
     assert casts.str2decimal("2.123,25", 1)==Decimal("2123.25")
 
 def test_str2bool():
-    with raises(Exception):
+    with raises(exceptions.CastException):
         casts.str2bool(None)==None
-    with raises(Exception):
+    with raises(exceptions.CastException):
         assert casts.str2bool(1)==True
-    with raises(Exception):
+    with raises(exceptions.CastException):
         assert casts.str2bool(0)==False
     assert casts.str2bool("true")==True
     assert casts.str2bool("True")==True
@@ -255,5 +255,5 @@ def test_dtaware_changes_tz():
 
 def test_months():
     assert casts.months(2023, 11, 2024, 1)== [(2023, 11), (2023, 12), (2024, 1)]
-    assert casts.months(2023, 9)== [(2023, 9), (2023, 10), (2023, 11)]
+    assert casts.months(2023, 9,  2023, 9)== [(2023, 9)]
 
