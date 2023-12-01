@@ -35,7 +35,7 @@ def str2bool(value):
         @return Boolean
     """
     def exception():
-        raise Exception(_("Method str2bool couldn't convert {0} ({1} to a boolean").format(value, value.__class__))
+        raise Exception(_("Method str2bool couldn't convert {0} ({1}) to a boolean").format(value, value.__class__))
     if not value.__class__ is str:
         exception()
         
