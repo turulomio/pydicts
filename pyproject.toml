@@ -5,18 +5,15 @@ description = "Module to use dictionaries in various situations"
 authors = ["turulomio <turulomio@yahoo.es>"]
 license = "GPL-3.0"
 readme = "README.md"
-exclude = [
-    "pydicts/devscripts.py"
-]
 
 [tool.poetry.dependencies]
-python = ">3.8"
-tabulate = "^0.9.0"
-pylatex = "^1.4.1"
+python = ">=3.8"
+tabulate = ">=0.9.0"
+pylatex = ">=1.4.1"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^7.3.0"
-poethepoet = "^0.24.1"
+pytest = ">=7.3.0"
+poethepoet = ">=0.24.1"
 
 [build-system]
 requires = ["poetry-core"]
