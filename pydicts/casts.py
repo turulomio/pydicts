@@ -2,9 +2,16 @@
 ### If a function can use both of them its prefix will be dt_
 from decimal import Decimal
 from datetime import timedelta, date, datetime, time
+from gettext import translation
+from importlib.resources import files
 from zoneinfo import ZoneInfo
+        
+try:
+    t=translation('pydicts', files("pydicts") / 'locale')
+    _=t.gettext
+except:
+    _=str
 
-_=str
 
 def object_or_empty(v):
     """
@@ -28,7 +35,7 @@ def str2bool(value):
         @return Boolean
     """
     def exception():
-        raise Exception(f"Method str2bool couldn't convert {value} ({value.__class__} to a boolean")
+        raise Exception(_("Method str2bool couldn't convert {0} ({1} to a boolean").format(value, value.__class__))
     if not value.__class__ is str:
         exception()
         
@@ -270,7 +277,7 @@ def str2time(s, format="HH:MM"):
                 points=s.split(":")
                 return time(int(points[0]), int(points[1]))
     else:
-        raise Exception(_("I can't convert this format '{}'. I only support this {}".format(format, allowed)))
+        raise Exception(_("I can't convert this format '{}'. I only support this {}").format(format, allowed))
 
 ## Converts a time to a string
 def time2str(ti, format="HH:MM" ):
@@ -308,7 +315,7 @@ def str2date(iso, format="YYYY-MM-DD"):
         except:
             return None
     else:
-        raise Exception("I can't convert this format '{}'. I only support this {}".format(format, allowed))
+        raise Exception(_("I can't convert this format '{}'. I only support this {}").format(format, allowed))
 
 def str2dtnaive(s, format):
     allowed=["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S']
@@ -337,7 +344,7 @@ def str2dtnaive(s, format):
             s=f"{date.today().year} {s}"
             return datetime.strptime(s, '%Y %b %d %H:%M:%S')
     else:
-        raise Exception("I can't convert this format '{}'. I only support this {}".format(format, allowed))
+        raise Exception(_("I can't convert this format '{}'. I only support this {}").format(format, allowed))
 
 def str2dtaware(s, format, tz_name='UTC'):
     allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
@@ -390,7 +397,7 @@ def epochmicros2dtaware(n, tz="UTC"):
 ## @return String
 def dtaware2str(dt, format):
     if is_naive(dt)==True:
-        raise Exception("A dtaware is needed for {}".format(dt))
+        raise Exception("A dtaware is needed for {}").format(dt)
     else:
         return dtnaive2str(dt, format)
 
@@ -414,7 +421,7 @@ def dtnaive2str(dt, format):
         elif format=="JsUtcIso":
             return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
     else:
-        raise Exception("I can't convert this format '{}'. I only support this {}".format(format, allowed))
+        raise Exception(_("I can't convert this format '{}'. I only support this {}").format(format, allowed))
 
 ## Changes zoneinfo from a dtaware object
 ## For example:
@@ -430,7 +437,7 @@ def dtaware_changes_tz(dt,  tzname):
     if is_aware(dt):
         return dt.astimezone(ZoneInfo(tzname))
     else:
-        raise Exception("Dtaware needed")
+        raise Exception(_("Dtaware needed"))
 
 ## Returns a list of tuples (year, month) from a month to another month, both included
 ## @param year_from Integer

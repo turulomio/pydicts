@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-26 17:54+0100\n"
+"POT-Creation-Date: 2023-12-01 04:41+0100\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -19,6 +19,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Lokalize 19.12.3\n"
 
+#, python-brace-format
+msgid "Method str2bool couldn't convert {0} ({1} to a boolean"
+msgstr ""
+
 msgid "Datetime parameter should be aware"
 msgstr ""
 
@@ -28,7 +32,31 @@ msgstr ""
 msgid "I can't convert this format '{}'. I only support this {}"
 msgstr ""
 
+msgid "Dtaware needed"
+msgstr ""
+
+msgid "You must set your lod in {}"
+msgstr ""
+
+msgid "This list of dictionaries hasn't data to print"
+msgstr ""
+
+msgid "Keys names are not correct in dictionary in lod_year_month_value_transposition function"
+msgstr ""
+
+msgid "Keys names are not correct in dictionary in lod_ymv_transposition function"
+msgstr ""
+
+msgid "I can't add a column with different size of lol"
+msgstr ""
+
 msgid "I can't remove positions from a None list"
+msgstr ""
+
+msgid "No data to show"
+msgstr ""
+
+msgid "This table continues in the next page"
 msgstr ""
 
 #~ msgid "You pressed 'Ctrl+C', exiting..."

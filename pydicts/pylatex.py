@@ -8,11 +8,20 @@ from pylatex import LongTabularx, MultiColumn
 from pylatex.basic import NewLine
 from pylatex.utils import NoEscape, bold, escape_latex
 from pydicts import lod
+from gettext import translation
+from importlib.resources import files
+        
+try:
+    t=translation('pydicts', files("pydicts") / 'locale')
+    _=t.gettext
+except:
+    _=str
+
 def pylatex_table(
     doc, 
     lod_, 
     code_=None, 
-    text_no_results="No data to show", 
+    text_no_results=_("No data to show"), 
 ):
     """
     Creates a table in a pylatex document
@@ -43,7 +52,7 @@ def pylatex_table(
         data_table.add_hline()
         data_table.end_table_header()
         data_table.add_hline()
-        data_table.add_row((MultiColumn(len(headers), align='r', data='La tabla continúa en la siguiente página'),))
+        data_table.add_row((MultiColumn(len(headers), align='r', data=_('This table continues in the next page')),))
         data_table.end_table_footer()
         data_table.end_table_last_footer()
 
@@ -64,7 +73,7 @@ def pylatex_table_with_matched_values(
     values_to_match, 
     lod_, 
     code_=None, 
-    text_no_results="No data to show", 
+    text_no_results=_("No data to show" ), 
     match_color="teal", 
     unmatch_color="red"
 ):
@@ -77,7 +86,7 @@ def pylatex_table_with_matched_values(
     @param doc pylatex document object
     @param values_to_match Values to match is a list
     @param lod 
-    @param code_ |c|r|l|   Para usar wrapping |p{.20\\linewidth\p{.80\\linewidth}|
+    @param code_ |c|r|l|   Para usar wrapping |p{.20\\linewidth\\p{.80\\linewidth}|
     """
     keys= lod.lod_keys(lod_)
     if keys is None:
@@ -100,7 +109,7 @@ def pylatex_table_with_matched_values(
         data_table.add_hline()
         data_table.end_table_header()
         data_table.add_hline()
-        data_table.add_row((MultiColumn(len(headers), align='r', data='La tabla continúa en la siguiente página'),))
+        data_table.add_row((MultiColumn(len(headers), align='r', data=_('This table continues in the next page')),))
         data_table.end_table_footer()
         data_table.end_table_last_footer()
 

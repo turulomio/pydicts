@@ -1,4 +1,12 @@
 from pydicts.lod import lod_has_key, lod_print, lod_print_first, lod_sum, lod2list, lod_average_ponderated
+from gettext import translation
+from importlib.resources import files
+        
+try:
+    t=translation('pydicts', files("pydicts") / 'locale')
+    _=t.gettext
+except:
+    _=str
 ## El objetivo es crear un objeto list_dict que se almacenera en self.ld con funciones set
 ## set_from_db #Todo se carga desde base de datos con el minimo parametro posible
 ## set_from_db_and_variables #Preguntara a base datos aquellas variables que falten. Aunque no estén en los parámetros p.e. money_convert
@@ -66,7 +74,7 @@ class LOD:
     def is_set(self):
         if hasattr(self, "ld"):
             return True
-        print(f"You must set your lod in {self.name}")
+        print(_("You must set your lod in {}").format(self.name))
         return False
 
     def append(self,o):
