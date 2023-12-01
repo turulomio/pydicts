@@ -24,6 +24,9 @@ PyDicts uses several acronyms to call modulues, functions and parameters
 You can read modules documentation:
 
 - [lod](docs/LOD.md)
+- [lod_xyv](docs/LOD_XYV.md)
+- [lod_ymv](docs/LOD_YMV.md)
+- [lol](docs/LOL.md)
 
 
 ## CHANGELOG
