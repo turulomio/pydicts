@@ -10,7 +10,9 @@ I've developed this module because I needed this kind of methods developing with
 - https://pypi.org/project/pydicts/
 
 
-## MODULES
+## Documentation
+
+You can access documentation in [Github Pydicts Wiki](https://github.com/turulomio/pydicts/wiki)
 
 PyDicts uses several acronyms to call modulues, functions and parameters
 
