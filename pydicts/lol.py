@@ -1,5 +1,6 @@
 from gettext import translation
 from importlib.resources import files
+from pydicts import exceptions
         
 try:
     t=translation('pydicts', files("pydicts") / 'locale')
@@ -14,7 +15,7 @@ except:
 ## @param column List with the values to add. Must be of the same size of rows
 def lol_add_column(rows, index, column):
     if len(rows)!=len(column):
-        raise Exception(_("I can't add a column with different size of lol"))
+        raise exceptions.LolException(_("I can't add a column with different size of lol"))
     r_rows=[]
     for i, row in enumerate(rows):
         r_rows.append(row[0:index] + [column[i],] + row[index:len(row)])
@@ -23,7 +24,7 @@ def lol_add_column(rows, index, column):
 ## Returns a list with object in positions removed
 def list_remove_positions(l, listindex):
     if l is None:
-        raise Exception(_("I can't remove positions from a None list"))
+        raise exceptions.LolException(_("I can't remove positions from a None list"))
         return None
     r=[]
     for i, o in enumerate(l):
