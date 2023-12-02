@@ -1,25 +1,27 @@
 #from datetime import datetime, date
 #from decimal import Decimal
-from pydicts import lol
-#from pytest import raises, fixture
+from pydicts import lol, exceptions
+from pytest import raises
 
 
 lol_=[]
 for i in range(10):
     lol_.append([1*i,2*i,3*i])
-    
-print(lol_)
-
 
 def test_lol_add_column():
     lol.lol_add_column(lol_, 2,  [1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
+
+def test_lol_print():
+    lol.lol_print(lol_)
+    lol.lol_print(lol_,0)
+    lol.lol_print(lol_,-1)
     
-#
-#if __name__ == "__main__":
-#    def print_lor(lor):
-#        print("")
-#        for row in lor:
-#            print(row)
+def test_lol_transposed():
+    transposed=lol.lol_transposed(lol_)
+    transposed=lol.lol_transposed([])
+    with raises(exceptions.LolException):
+        transposed=lol.lol_transposed(None)
+
 #
 #    lor=[]
 #    column_to_add=[]
