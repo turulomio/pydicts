@@ -1,6 +1,7 @@
 from gettext import translation
 from importlib.resources import files
 from pydicts import exceptions
+from tabulate import tabulate
         
 try:
     t=translation('pydicts', files("pydicts") / 'locale')
@@ -25,7 +26,6 @@ def lol_add_column(rows, index, column):
 def list_remove_positions(l, listindex):
     if l is None:
         raise exceptions.LolException(_("I can't remove positions from a None list"))
-        return None
     r=[]
     for i, o in enumerate(l):
         if i not in listindex:
@@ -47,6 +47,8 @@ def lol_remove_rows(rows, listindex):
 
 ## Return a lol transposed. Changed rows by columns
 def lol_transposed(lol):
+    if lol is None:
+        raise exceptions.LolException(_("I can't traspaso a None object"))
     if len(lol)==0:
         return []
     r=[]
@@ -93,3 +95,22 @@ def lol_sum_column(lol, column, from_index, to_index, zerovalue=0):
             if row[column] is not None:
                 s=s + row[column]
     return s
+
+def lol_print(lod, number=None):
+    """
+    Function Prints a list of list with tabulate module.
+
+    @param lol
+    @type List of lists
+    @param number Number of lists to print. If None prints all lod. (defaults to None)
+    @type Integer
+    """
+    number=len(lod) if number is None else number
+
+    if len(lod)==0:
+        print(_("lol_print: This list of lists hasn't data to print"))
+        return
+    if number==0:
+        print(_("lol_print: No data was printed due to you selected 0 rows"))
+        return
+    print(tabulate(lod[0:number], tablefmt="psql"))
