@@ -1,5 +1,6 @@
 from decimal import Decimal
-from datetime import timezone, date, datetime, time, timedelta
+from datetime import date, datetime, time, timedelta
+from zoneinfo import ZoneInfo
 from pydicts import myjsonencoder
 d={}
 d["None"]=None
@@ -9,7 +10,7 @@ d["Date"]=date.today()
 d["Datetime"]=datetime.now()
 d["Timedelta"]=timedelta(hours=4, days=2, minutes=12,  seconds=12)
 d["Time"]=time(12, 12, 12, 123456)
-d["Datetime aware"]=d["Datetime"].replace(tzinfo=timezone.utc)
+d["Datetime aware"]=d["Datetime"].replace(tzinfo=ZoneInfo("UTC"))
 d["Bytes"]=b"Byte array"
 d["Decimal"]=Decimal("12.12123414")
 
