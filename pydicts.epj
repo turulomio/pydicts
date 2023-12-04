@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project pydicts",
     "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-11-26, 17:52:26"
+    "saved": "2023-12-04, 13:17:59"
   },
   "project": {
     "AUTHOR": "",
@@ -77,10 +77,12 @@
       "pydicts/casts.py",
       "pydicts/classes.py",
       "pydicts/devscripts.py",
+      "pydicts/exceptions.py",
       "pydicts/lod.py",
       "pydicts/lod_xyv.py",
       "pydicts/lod_ymv.py",
       "pydicts/lol.py",
+      "pydicts/myjsonencoder.py",
       "pydicts/pylatex.py",
       "pydicts/tests/__init__.py",
       "pydicts/tests/test_casts.py",
