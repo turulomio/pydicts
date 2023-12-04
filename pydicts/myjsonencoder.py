@@ -2,6 +2,7 @@ from datetime import datetime, date, timedelta, time
 from decimal import Decimal
 from json import JSONEncoder, dumps, loads
 from base64 import b64encode, b64decode
+from pydicts import casts
 
 # Forma en que debe parsearse los Decimals
 class DecimalsWay:
@@ -96,7 +97,6 @@ def MyJSONEncoderDecimalsAsFloat_dumps(r, indent=4):
 
 
 def MyJSONEncoder_loads(s):
-    
     def hooks_MyJSONEncoder(iter_value):
         return hooks(iter_value, DecimalsWay.Decimal)
     ##############################
@@ -127,10 +127,17 @@ def hooks(iter_value, decimals_way):
         except:
             return None 
             
-    def get_datetime(s):
+    def get_dtaware(s):
         try:
-            print(datetime.fromisoformat(s))
-            return datetime.fromisoformat(s)
+            print(s, casts.str2dtaware(s,"JsUtcIso"))
+            return casts.str2dtaware(s,"JsUtcIso")
+        except:
+            return None 
+
+    def get_dtnaive(s):
+        try:
+            print(s, casts.str2dtnaive(s,"JsIso"))
+            return casts.str2dtnaive(s,"JsIso")
         except:
             return None 
             
@@ -187,11 +194,7 @@ def hooks(iter_value, decimals_way):
             return None
 
         
-    def guess_cast(o, decimal_way):
-
-        ################################################
-        
-        
+    def guess_cast(o, decimal_way):        
         if decimal_way==DecimalsWay.Decimal:
             r=get_Decimal(o)
             if r is not None:
@@ -201,7 +204,11 @@ def hooks(iter_value, decimals_way):
         if r is not None:
             return  r
             
-        r=get_datetime(o)
+        r=get_dtnaive(o)
+        if r is not None:
+            return  r
+            
+        r=get_dtaware(o)
         if r is not None:
             return  r
             

@@ -196,7 +196,8 @@ def test_str2dtnaive():
 #    assert casts.str2dtnaive("2023-11-26 17:05:05", "%Y-%m-%d %H:%M:%S")==datetime(2023, 11, 26, 17, 5, 5)
 #    assert casts.str2dtnaive("20231126 1705", "%Y%m%d %H%M")==datetime(2023, 11, 26, 17, 5, 5)
     assert casts.str2dtnaive("202311261705", "%Y%m%d%H%M")==datetime(2023, 11, 26, 17, 5)
-#    assert casts.str2dtnaive("2023-11-26T17:05:05Z", "JsUtcIso")==datetime(2023, 11, 26, 17, 5, 5)
+    assert casts.str2dtnaive("2023-11-26T17:05:05.123456", "JsIso")==datetime(2023, 11, 26, 17, 5, 5, 123456)
+    assert casts.str2dtnaive("2023-11-26T17:05:05", "JsIso")==datetime(2023, 11, 26, 17, 5, 5)
 
 
 def test_str2dtaware():
