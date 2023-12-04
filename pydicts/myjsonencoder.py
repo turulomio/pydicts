@@ -129,6 +129,7 @@ def hooks(iter_value, decimals_way):
             
     def get_datetime(s):
         try:
+            print(datetime.fromisoformat(s))
             return datetime.fromisoformat(s)
         except:
             return None 

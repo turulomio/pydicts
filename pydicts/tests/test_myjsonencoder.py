@@ -24,6 +24,7 @@ def test_myjsonencoder():
     assert json_["Datetime aware"]==d["Datetime aware"]
     assert json_["Bytes"]==d["Bytes"]
     assert json_["Decimal"]==d["Decimal"]
+    assert False
 #    assert json_["Time"]==d["Time"]
 #    assert json_["Timedelta"]==d["Timedelta"] 
     
