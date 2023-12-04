@@ -218,38 +218,3 @@ def hooks_MyJSONEncoderAsFloat(iter_value):
 def hooks_MyJSONEncoderAsString(iter_value):
     return hooks(iter_value, DecimalsWay.String)
 
-
-if __name__ == '__main__':
-    from datetime import timezone    
-    d={}
-    d["None"]=None
-    d["Integer"]=12112
-    d["Float"]=12121.1212
-    d["Date"]=date.today()
-    d["Datetime"]=datetime.now()
-    d["Timedelta"]=timedelta(hours=4, days=2, minutes=12,  seconds=12)
-    d["Time"]=time(12, 12, 12, 123456)
-    d["Datetime aware"]=d["Datetime"].replace(tzinfo=timezone.utc)
-    d["Bytes"]=b"Byte array"
-    d["Decimal"]=Decimal("12.12123414")
-    print ("Dictionary")
-    print(d)
-    print()
-    print ("MyJSONEncoder_dumps")
-    print (MyJSONEncoder_dumps(d))
-    print()
-    print ("MyJSONEncoder_loads")
-    print(MyJSONEncoder_loads(MyJSONEncoder_dumps(d)))
-    print()
-    print ("MyJSONEncoderDecimalsAsFloat_dumps")
-    print (MyJSONEncoderDecimalsAsFloat_dumps(d))
-    print()
-    print ("MyJSONEncoderDecimalsAsFloat_loads")
-    print(MyJSONEncoderDecimalsAsFloat_loads(MyJSONEncoderDecimalsAsFloat_dumps(d)))
-    print()
-    print ("MyJSONEncoderDecimalsAsString_dumps")
-    print (MyJSONEncoderDecimalsAsString_dumps(d))
-    print()
-    print ("MyJSONEncoderDecimalsAsString_loads")
-    print(MyJSONEncoderDecimalsAsString_loads(MyJSONEncoderDecimalsAsString_dumps(d)))
-    print()
