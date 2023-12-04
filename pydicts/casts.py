@@ -321,7 +321,7 @@ def str2date(iso, format="YYYY-MM-DD"):
         raise exceptions.CastException(_("I can't convert this format '{}'. I only support this {}").format(format, allowed))
 
 def str2dtnaive(s, format):
-    allowed=["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S']
+    allowed=["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S', "JsIso"]
     if format in allowed:
         if format=="%Y%m%d%H%M":
             dat=datetime.strptime( s, format )
@@ -346,6 +346,10 @@ def str2dtnaive(s, format):
         if format=='%b %d %H:%M:%S': #Apr 26 07:50:44. Year is missing so I set to current
             s=f"{date.today().year} {s}"
             return datetime.strptime(s, '%Y %b %d %H:%M:%S')
+        if format=="JsIso": #2021-08-21T06:27:38.294
+            s=s.replace("T"," ")
+            dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
+            return dtnaive
     else:
         raise exceptions.CastException(_("I can't convert this format '{}'. I only support this {}").format(format, allowed))
 
