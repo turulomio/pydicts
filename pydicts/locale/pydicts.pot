@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-01 04:45+0100\n"
+"POT-Creation-Date: 2023-12-04 20:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,19 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #, python-brace-format
+msgid "Method str2decimal couln't convert {0} ({1}) to a Decimal"
+msgstr ""
+
+#, python-brace-format
 msgid "Method str2bool couldn't convert {0} ({1}) to a boolean"
 msgstr ""
 
-msgid "Datetime parameter should be aware"
+msgid "A datetime with timezone is needed"
 msgstr ""
 
-msgid "Datetime parameter should be naive"
+msgid "A datetime without timezone is needed"
 msgstr ""
 
 msgid "I can't convert this format '{}'. I only support this {}"
-msgstr ""
-
-msgid "Dtaware needed"
 msgstr ""
 
 msgid "You must set your lod in {}"
@@ -49,6 +50,15 @@ msgid "I can't add a column with different size of lol"
 msgstr ""
 
 msgid "I can't remove positions from a None list"
+msgstr ""
+
+msgid "I can't traspaso a None object"
+msgstr ""
+
+msgid "lol_print: This list of lists hasn't data to print"
+msgstr ""
+
+msgid "lol_print: No data was printed due to you selected 0 rows"
 msgstr ""
 
 msgid "No data to show"

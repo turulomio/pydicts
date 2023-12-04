@@ -15,7 +15,15 @@ You can access documentation in [Github Pydicts Wiki](https://github.com/turulom
 
 ## CHANGELOG
 
-## 0.8.0 (2023-11-26)
+### 0.9.0 (2023-12-04)
+- Added gettext support
+- Improved spanish translation
+- Added custom exceptions for each module
+- Improved documentation
+- Added lol_print method
+- myjsonencoder has been included to convert from json to dictionaries
+
+### 0.8.0 (2023-11-26)
 - Migrating casts and datetime_functions to pydicts.casts. Utils to make casting easy
 - Create lol (List of lists) module
 
