@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-01 04:41+0100\n"
+"POT-Creation-Date: 2023-12-04 20:05+0100\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -20,20 +20,21 @@ msgstr ""
 "X-Generator: Lokalize 19.12.3\n"
 
 #, python-brace-format
+msgid "Method str2decimal couln't convert {0} ({1}) to a Decimal"
+msgstr ""
+
+#, python-brace-format
 msgid "Method str2bool couldn't convert {0} ({1}) to a boolean"
 msgstr "El método str2bool no pudo convertir {0} ({1}) a booleano"
 
-msgid "Datetime parameter should be aware"
+msgid "A datetime with timezone is needed"
 msgstr ""
 
-msgid "Datetime parameter should be naive"
+msgid "A datetime without timezone is needed"
 msgstr ""
 
 msgid "I can't convert this format '{}'. I only support this {}"
 msgstr "No puedo convertir este formato '{}'. Solo soporte estos {}"
-
-msgid "Dtaware needed"
-msgstr ""
 
 msgid "You must set your lod in {}"
 msgstr "Debe establecer su lod en {}"
@@ -53,9 +54,17 @@ msgstr ""
 msgid "I can't remove positions from a None list"
 msgstr ""
 
+msgid "I can't traspaso a None object"
+msgstr ""
+
+msgid "lol_print: This list of lists hasn't data to print"
+msgstr ""
+
+msgid "lol_print: No data was printed due to you selected 0 rows"
+msgstr ""
+
 msgid "No data to show"
 msgstr "Sin datos que mostrar"
 
 msgid "This table continues in the next page"
 msgstr "Esta tabla continúa en la siguiente página"
-
