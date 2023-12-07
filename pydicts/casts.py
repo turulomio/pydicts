@@ -20,16 +20,26 @@ def object_or_empty(v):
     """
     return "" if v is None else v
 
-## Converts a string  to a decimal
-def str2decimal(s, type):
+def str2decimal(s, decimal_separator="."):
+    """
+        Converts a string  to a decimal
+        Parameters:
+            - decimal_separator. Symbol to separate decimals. For example 12.121212 (decimal_separator=".") 12.122,1223 (decimal_separator=",")
+    """
+    original=s
     if s is None:
         return None
-    if type==1: #2.123,25
-        try:
-            return Decimal(s.replace(".","").replace(",", "."))
-        except:
-            raise exceptions.CastException(_("Method str2decimal couln't convert {0} ({1}) to a Decimal"))
 
+    if decimal_separator==".":
+        s=s.replace(",", "") #Removes thousand separator
+    else: #","
+        s=s.replace(".", "") #Removes thousand separator
+        s=s.replace(",", ".")#Convert to decimal_separator "."
+
+    try:
+        return Decimal(s)
+    except:
+        raise exceptions.CastException(_("Method str2decimal couln't convert {0} ({1}), after changing it to {2} to a Decimal").format(original, original.__class__,  s))
 
 def str2bool(value):
     """

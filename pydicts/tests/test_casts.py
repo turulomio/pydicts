@@ -15,8 +15,10 @@ def test_object_or_empty():
     assert casts.object_or_empty(1)==1
     
 def test_str2decimal():
-    assert casts.str2decimal(None, 1)==None
-    assert casts.str2decimal("2.123,25", 1)==Decimal("2123.25")
+    assert casts.str2decimal(None)==None
+    assert casts.str2decimal("2.123,25")==Decimal("2.12325")
+    assert casts.str2decimal("2.123,25", decimal_separator=",")==Decimal("2123.25")
+    assert casts.str2decimal("2,123.25")==Decimal("2123.25")
 
 def test_str2bool():
     with raises(exceptions.CastException):
