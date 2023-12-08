@@ -15,6 +15,10 @@ You can access documentation in [Github Pydicts Wiki](https://github.com/turulom
 
 ## CHANGELOG
 
+### 0.10.0 (2023-12-08)
+- Improving str2decimal conversions. Changed type parameter to decimal_separator.
+- Added Percentage and Currency classes to manage this objects
+
 ### 0.9.0 (2023-12-04)
 - Added gettext support
 - Improved spanish translation
