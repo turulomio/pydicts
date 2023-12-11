@@ -26,6 +26,13 @@ def manage_exception(value,   ignore_exception, ignore_exception_value):
     calframe = getouterframes(curframe, 2)
     function=calframe[1][3]
     raise exceptions.CastException(f"Error in Pydicts.cast.{function} method. Value: {value}  Value class: {value.__class__.__name__}" )
+def manage_exception_with_format(value, format,    ignore_exception, ignore_exception_value):
+    if ignore_exception is True:
+        return ignore_exception_value
+    curframe = currentframe()
+    calframe = getouterframes(curframe, 2)
+    function=calframe[1][3]
+    raise exceptions.CastException(f"Error in Pydicts.cast.{function} method. Value: {value} Value class: {value.__class__.__name__} Format: {format}" )
 
 
 def manage_allowed_formats(format, allowed):
@@ -324,7 +331,7 @@ def str2time(value, format="HH:MM", ignore_exception=False, ignore_exception_val
                 points=value.split(":")
                 return time(int(points[0]), int(points[1]))
     except:
-        return manage_exception(original, ignore_exception, ignore_exception_value)
+        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
 
 ## Converts a time to a string
 def time2str(ti, format="HH:MM" , ignore_exception=False, ignore_exception_value=None):
@@ -343,10 +350,10 @@ def time2str(ti, format="HH:MM" , ignore_exception=False, ignore_exception_value
         elif format=="HH:MM:SS":
             return ("{}:{}:{}".format(str(ti.hour).zfill(2), str(ti.minute).zfill(2), str(ti.second).zfill(2)))
     except:
-        return manage_exception(original, ignore_exception, ignore_exception_value)
+        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
 
 
-def str2date(iso, format="YYYY-MM-DD", ignore_exception=True, ignore_exception_value=None):
+def str2date(iso, format="YYYY-MM-DD", ignore_exception=False, ignore_exception_value=None):
     original=iso
     manage_allowed_formats(format, ["YYYY-MM-DD", "DD/MM/YYYY", "DD.MM.YYYY", "DD/MM"])
     try:
@@ -363,7 +370,7 @@ def str2date(iso, format="YYYY-MM-DD", ignore_exception=True, ignore_exception_v
             d=iso.split("/")
             return date(date.today().year, int(d[1]),  int(d[0]))
     except:
-        return manage_exception(original, ignore_exception, ignore_exception_value)
+        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
 
 def str2dtnaive(s, format, ignore_exception=False, ignore_exception_value=False):
     original=s
@@ -399,7 +406,7 @@ def str2dtnaive(s, format, ignore_exception=False, ignore_exception_value=False)
             dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
             return dtnaive
     except:
-        return manage_exception(original, ignore_exception, ignore_exception_value)
+        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
 
 def str2dtaware(s, format, tz_name='UTC', ignore_exception=False, ignore_exception_value=None):
     original=s
@@ -425,7 +432,7 @@ def str2dtaware(s, format, tz_name='UTC', ignore_exception=False, ignore_excepti
             dtaware_utc=dtnaive2dtaware(dtnaive, 'UTC')
             return dtaware_changes_tz(dtaware_utc, tz_name)
     except:
-        return manage_exception(original, ignore_exception, ignore_exception_value)
+        return manage_exception_with_format(original, format,  ignore_exception, ignore_exception_value)
 
 #    else:
 #        return timezone(tz_name).localize(str2dtnaive(s,format))
@@ -482,7 +489,7 @@ def dtnaive2str(dt, format, ignore_exception=False, ignore_exception_value=None)
         elif format=="JsUtcIso":
             return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
     except:
-        return manage_exception(original, ignore_exception, ignore_exception_value)
+        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
 
 ## Changes zoneinfo from a dtaware object
 ## For example:
