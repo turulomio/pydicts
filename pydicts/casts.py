@@ -1,17 +1,31 @@
-### If a function only can be used by dtaware or naive it will have its prefix dtaware_ or dtnaive_
-### If a function can use both of them its prefix will be dt_
+"""
+    All cast will raise a CastException(message) if cast fails
+    All cast will have a parameter ignore_exception=False, to ignore exceptions and return ignore_exception_value
+    All cast hava a method ignore_exception_value=None
+"""
+
 from decimal import Decimal
 from datetime import timedelta, date, datetime, time
 from gettext import translation
 from importlib.resources import files
+from inspect import currentframe, getouterframes
 from pydicts import exceptions
 from zoneinfo import ZoneInfo
-        
+
+
 try:
     t=translation('pydicts', files("pydicts") / 'locale')
     _=t.gettext
 except:
     _=str
+
+def manage_exception(value,   ignore_exception, ignore_exception_value):
+    if ignore_exception is True:
+        return ignore_exception_value
+    curframe = currentframe()
+    calframe = getouterframes(curframe, 2)
+    function=calframe[1][3]
+    raise exceptions.CastException(f"Error in Pydicts.cast.{function} method. Value: {value}  Value class: {value.__class__.__name__}" )
 
 
 def object_or_empty(v):
@@ -20,26 +34,19 @@ def object_or_empty(v):
     """
     return "" if v is None else v
 
-def str2decimal(s, decimal_separator="."):
+def str2decimal(s, ignore_exception=False, ignore_exception_value=None):
     """
         Converts a string  to a decimal
         Parameters:
             - decimal_separator. Symbol to separate decimals. For example 12.121212 (decimal_separator=".") 12.122,1223 (decimal_separator=",")
     """
-    if is_noe(s):
-        return None
-
-    original=s
-    if decimal_separator==".":
-        s=s.replace(",", "") #Removes thousand separator
-    else: #","
-        s=s.replace(".", "") #Removes thousand separator
-        s=s.replace(",", ".")#Convert to decimal_separator "."
+    if is_noe(s) or not s.__class__ ==str:
+        return manage_exception(s, ignore_exception, ignore_exception_value)
 
     try:
         return Decimal(s)
     except:
-        raise exceptions.CastException(_("Method str2decimal couln't convert {0} ({1}), after changing it to {2} to a Decimal").format(original, original.__class__,  s))
+        return manage_exception(s, ignore_exception, ignore_exception_value)
 
 def str2bool(value):
     """

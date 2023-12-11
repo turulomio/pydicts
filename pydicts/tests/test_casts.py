@@ -1,6 +1,6 @@
 from datetime import date, time, datetime
 from decimal import Decimal
-from pydicts import casts
+from pydicts import casts, exceptions
 from pytest import raises
 from zoneinfo import ZoneInfo
 
@@ -20,13 +20,29 @@ def test_object_or_empty():
     assert casts.object_or_empty(None)==""
     assert casts.object_or_empty(1)==1
     assert casts.object_or_empty("")==""
-    
+
 def test_str2decimal():
-    assert casts.str2decimal(None)==None
-    assert casts.str2decimal("")==None
-    assert casts.str2decimal("2.123,25")==Decimal("2.12325")
-    assert casts.str2decimal("2.123,25", decimal_separator=",")==Decimal("2123.25")
-    assert casts.str2decimal("2,123.25")==Decimal("2123.25")
+    with raises(exceptions.CastException):
+        assert casts.str2decimal(None)
+    assert casts.str2decimal("", ignore_exception=True)==None
+    
+    with raises(exceptions.CastException):
+        assert casts.str2decimal("")
+    assert casts.str2decimal("", ignore_exception=True)==None
+    
+    with raises(exceptions.CastException):
+        assert casts.str2decimal("2.123,25")
+    assert casts.str2decimal("2.123,25", ignore_exception=True)==None
+    
+    with raises(exceptions.CastException):
+        assert casts.str2decimal("2.123,25")
+    assert casts.str2decimal("2.123,25", ignore_exception=True)==None
+    
+    with raises(exceptions.CastException):
+        assert casts.str2decimal("2,123.25")
+    assert casts.str2decimal("2,123.25", ignore_exception=True)==None
+    
+    assert casts.str2decimal("121212.123")==Decimal("121212.123")
 
 def test_str2bool():
     casts.str2bool(None)==None
