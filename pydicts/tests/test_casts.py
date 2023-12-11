@@ -10,12 +10,20 @@ dtnaive=casts.dtnaive_now()
 dtaware_utc=casts.dtaware_now()
 dtaware_madrid=casts.dtaware_now(zonename_madrid)
 
+def test_is_noe():
+    assert casts.is_noe(None)==True
+    assert casts.is_noe(1)==False
+    assert casts.is_noe("")==True
+    assert casts.is_noe("HOLA")==False
+    
 def test_object_or_empty():
     assert casts.object_or_empty(None)==""
     assert casts.object_or_empty(1)==1
+    assert casts.object_or_empty("")==""
     
 def test_str2decimal():
     assert casts.str2decimal(None)==None
+    assert casts.str2decimal("")==None
     assert casts.str2decimal("2.123,25")==Decimal("2.12325")
     assert casts.str2decimal("2.123,25", decimal_separator=",")==Decimal("2123.25")
     assert casts.str2decimal("2,123.25")==Decimal("2123.25")

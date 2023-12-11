@@ -26,10 +26,10 @@ def str2decimal(s, decimal_separator="."):
         Parameters:
             - decimal_separator. Symbol to separate decimals. For example 12.121212 (decimal_separator=".") 12.122,1223 (decimal_separator=",")
     """
-    original=s
-    if s is None:
+    if is_noe(s):
         return None
 
+    original=s
     if decimal_separator==".":
         s=s.replace(",", "") #Removes thousand separator
     else: #","
@@ -95,6 +95,16 @@ def is_aware(dt):
 ## Returns if a datetime is naive
 def is_naive(dt):
     return not is_aware(dt)
+
+def is_noe(value):
+    """
+        Returns a boolean. True if value is null or empty.
+    """
+    if value is None:
+        return True
+    if value =="":
+        return True
+    return False
 
 ## Function to create a datetime aware object
 ## @param date datetime.date object
