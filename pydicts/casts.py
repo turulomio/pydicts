@@ -75,22 +75,30 @@ def str2bool(value, ignore_exception=False, ignore_exception_value=None):
 #        return alternative
 #    return value
 #
-def bytes2str(b, code='UTF-8'):
+def bytes2str(value, code='UTF-8', ignore_exception=False, ignore_exception_value=None):
     """
         Bytes 2 string
     """ 
-    if b is None:
-        return None
-    return b.decode(code)
+    if value is None or not value.__class__==bytes:
+        return manage_exception(value, ignore_exception, ignore_exception_value)
+
+    try:
+        return value.decode(code)
+    except:
+        return manage_exception(value, ignore_exception, ignore_exception_value)
+        
     
-def str2bytes(s, code='UTF8'):
+def str2bytes(value, code='UTF8', ignore_exception=False, ignore_exception_value=None):
     """
         String 2 bytes
     """
-    if s is None:
-        return None
-    else:
-        return s.encode(code)
+    if value is None or not value.__class__==str:
+        return manage_exception(value, ignore_exception, ignore_exception_value)
+
+    try:
+        return value.encode(code)
+    except:
+        return manage_exception(value, ignore_exception, ignore_exception_value)
 
 ### Returns if a datetime is aware
 def is_aware(dt):

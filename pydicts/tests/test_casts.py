@@ -108,11 +108,15 @@ def test_date_last_of_the_year():
 #
 
 def test_bytes2str():
-    assert casts.bytes2str(None)==None
+    with raises(exceptions.CastException):
+        assert casts.bytes2str(None)==None
+    assert casts.bytes2str(None, ignore_exception=True)==None
     assert casts.bytes2str(b"Hello")=="Hello"
     
 def test_str2bytes():
-    assert casts.str2bytes(None)==None
+    with raises(exceptions.CastException):
+        assert casts.str2bytes(None)==None
+    assert casts.str2bytes(None, ignore_exception=True)==None
     assert casts.str2bytes("Hello")==b"Hello"
 
 def test_is_aware():
