@@ -6,9 +6,9 @@ from pydicts import casts
 
 # Forma en que debe parsearse los Decimals
 class DecimalsWay:
-    Decimal=1  #Uses a String with decimal to detect decimals
-    String=2
-    Float=3
+    DecimalString=1  #Uses a String with decimal to detect decimals "Decimal('12.122')"
+    String=2  #"12.122"
+    Float=3  # 12.122
 
 ## Usa
 class MyJSONEncoder(JSONEncoder):
@@ -98,7 +98,7 @@ def MyJSONEncoderDecimalsAsFloat_dumps(r, indent=4):
 
 def MyJSONEncoder_loads(s):
     def hooks_MyJSONEncoder(iter_value):
-        return hooks(iter_value, DecimalsWay.Decimal)
+        return hooks(iter_value, DecimalsWay.DecimalString)
     ##############################
     return loads(s, object_hook=hooks_MyJSONEncoder)
 
@@ -122,21 +122,16 @@ def hooks(iter_value, decimals_way):
     """
     
     def get_date(s):
-        try:
-            return date.fromisoformat(s)
-        except:
-            return None 
+            return casts.str2date(s)
             
     def get_dtaware(s):
         try:
-            print(s, casts.str2dtaware(s,"JsUtcIso"))
             return casts.str2dtaware(s,"JsUtcIso")
         except:
             return None 
 
     def get_dtnaive(s):
         try:
-            print(s, casts.str2dtnaive(s,"JsIso"))
             return casts.str2dtnaive(s,"JsIso")
         except:
             return None 
@@ -189,16 +184,17 @@ def hooks(iter_value, decimals_way):
             
     def get_Decimal(s):
         try:
-            return eval(s)
+            return casts.str2decimal(s)
         except:
             return None
 
         
     def guess_cast(o, decimal_way):        
-        if decimal_way==DecimalsWay.Decimal:
-            r=get_Decimal(o)
-            if r is not None:
-                return  r
+        if decimal_way==DecimalsWay.DecimalString:
+            if o.__class__==str and o.startswith("Decimal("):
+                r=get_Decimal(o)
+                if r is not None:
+                    return  str(r)
 
         r=get_date(o)
         if r is not None:

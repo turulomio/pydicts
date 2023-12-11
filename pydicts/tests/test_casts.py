@@ -183,8 +183,9 @@ def test_time2str():
     assert casts.time2str(time_, "HH:MM:SS")=="09:05:54"
 
 def test_str2date():
-#    allowed=["YYYY-MM-DD", "DD/MM/YYYY", "DD.MM.YYYY", "DD/MM"]
-
+    assert casts.str2date(None)==None
+    assert casts.str2date("2023")==None
+    assert casts.str2date(2023)==None
     assert casts.str2date("2023-11-26")==date(2023, 11, 26)
     assert casts.str2date("2023-11-26", "YYYY-MM-DD")==date(2023, 11, 26)
     assert casts.str2date("26/11/2023", "DD/MM/YYYY")==date(2023, 11, 26)
@@ -199,6 +200,7 @@ def test_str2dtnaive():
 #    assert casts.str2dtnaive("20231126 1705", "%Y%m%d %H%M")==datetime(2023, 11, 26, 17, 5, 5)
     assert casts.str2dtnaive("202311261705", "%Y%m%d%H%M")==datetime(2023, 11, 26, 17, 5)
     assert casts.str2dtnaive("2023-11-26T17:05:05.123456", "JsIso")==datetime(2023, 11, 26, 17, 5, 5, 123456)
+    assert casts.str2dtnaive("2023-11-26T17:05:05.123456Z", "JsIso")==None
     assert casts.str2dtnaive("2023-11-26T17:05:05", "JsIso")==datetime(2023, 11, 26, 17, 5, 5)
 
 
@@ -206,7 +208,10 @@ def test_str2dtaware():
 #    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
     #assert casts.str2dtaware("2023-11-26", "%Y-%m-%d")==datetime(2023, 11, 26, tzinfo=ZoneInfo('UTC'))
     #assert casts.str2dtaware("202311261705", "%Y%m%d%H%M")==datetime(2023, 11, 26, 17, 5)
+    
+    assert casts.str2dtaware("2023-11-26T17:05:05Z", "YYYY-mm-dd")==None
     assert casts.str2dtaware("2023-11-26T17:05:05Z", "JsUtcIso")==datetime(2023, 11, 26, 17, 5, 5, tzinfo=ZoneInfo('UTC'))
+    assert casts.str2dtaware("2023-11-26T17:05:05", "JsUtcIso")==None
 
 ### epoch is the time from 1,1,1970 in UTC
 ### return now(timezone(self.name))
