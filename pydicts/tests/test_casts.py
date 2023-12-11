@@ -45,13 +45,23 @@ def test_str2decimal():
     assert casts.str2decimal("121212.123")==Decimal("121212.123")
 
 def test_str2bool():
-    casts.str2bool(None)==None
-    assert casts.str2bool(1)==None
-    assert casts.str2bool(0)==None
+    with raises(exceptions.CastException):
+        assert casts.str2bool(None)
+    casts.str2bool(None, ignore_exception=True)==None
+    
+    with raises(exceptions.CastException):
+        assert casts.str2bool(1)
+    assert casts.str2bool(1, ignore_exception=True)==None
+    
+    with raises(exceptions.CastException):
+        assert casts.str2bool(0)
+    assert casts.str2bool(0, ignore_exception=True)==None
     assert casts.str2bool("1")==True
     assert casts.str2bool("0")==False
-    assert casts.str2bool(True)==None
-    assert casts.str2bool(False)==None
+    with raises(exceptions.CastException):
+        assert casts.str2bool(True)
+    with raises(exceptions.CastException):
+        assert casts.str2bool(False)
     assert casts.str2bool("true")==True
     assert casts.str2bool("True")==True
     assert casts.str2bool("false")==False

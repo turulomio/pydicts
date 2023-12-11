@@ -34,34 +34,34 @@ def object_or_empty(v):
     """
     return "" if v is None else v
 
-def str2decimal(s, ignore_exception=False, ignore_exception_value=None):
+def str2decimal(value, ignore_exception=False, ignore_exception_value=None):
     """
         Converts a string  to a decimal
         Parameters:
             - decimal_separator. Symbol to separate decimals. For example 12.121212 (decimal_separator=".") 12.122,1223 (decimal_separator=",")
     """
-    if is_noe(s) or not s.__class__ ==str:
-        return manage_exception(s, ignore_exception, ignore_exception_value)
+    if is_noe(value) or not value.__class__ ==str:
+        return manage_exception(value, ignore_exception, ignore_exception_value)
 
     try:
-        return Decimal(s)
+        return Decimal(value)
     except:
-        return manage_exception(s, ignore_exception, ignore_exception_value)
+        return manage_exception(value, ignore_exception, ignore_exception_value)
 
-def str2bool(value):
+def str2bool(value, ignore_exception=False, ignore_exception_value=None):
     """
         Converts strings True or False to boolean
-        @param s String
+        @param value String
         @return Boolean
     """
-    if not value.__class__ is str:
-        return None
+    if is_noe(value) or not value.__class__ ==str:
+        return manage_exception(value, ignore_exception, ignore_exception_value)
         
     if value=="0" or value.lower()=="false":
         return False
     elif value=="1" or value.lower()=="true":
         return True
-    return None
+    return manage_exception(value, ignore_exception, ignore_exception_value)
 
 ### Function that converts a None value into a Decimal('0')
 ### @param dec Should be a Decimal value or None
