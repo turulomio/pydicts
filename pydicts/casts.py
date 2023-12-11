@@ -357,6 +357,8 @@ def str2dtnaive(s, format):
             s=f"{date.today().year} {s}"
             return datetime.strptime(s, '%Y %b %d %H:%M:%S')
         if format=="JsIso": #2021-08-21T06:27:38.294
+            if s.endswith("Z"):
+                return None
             s=s.replace("T"," ")
             dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
             return dtnaive
@@ -379,6 +381,8 @@ def str2dtaware(s, format, tz_name='UTC'):
             dt=dt+timedelta(microseconds=micro)
             return dtaware_changes_tz(dt, tz_name)
         if format=="JsUtcIso": #2021-08-21T06:27:38.294Z
+            if not "Z" in s:
+                return None
             s=s.replace("T"," ").replace("Z","")
             dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
             dtaware_utc=dtnaive2dtaware(dtnaive, 'UTC')
