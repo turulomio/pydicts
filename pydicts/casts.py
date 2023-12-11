@@ -28,6 +28,13 @@ def manage_exception(value,   ignore_exception, ignore_exception_value):
     raise exceptions.CastException(f"Error in Pydicts.cast.{function} method. Value: {value}  Value class: {value.__class__.__name__}" )
 
 
+def manage_allowed_formats(format, allowed):
+    if not format in allowed:
+        curframe = currentframe()
+        calframe = getouterframes(curframe, 2)
+        function=calframe[1][3]
+        raise exceptions.CastException(f"Error in Pydicts.cast.{function} method. Format '{format}' is not in {allowed}" )
+
 def object_or_empty(v):
     """
         Returns and empty string if None, else return value
@@ -294,32 +301,36 @@ def dtaware_month_start(year, month, tz_name):
 #    if s in ["Dic", "Dec", "Diciembre", "December", "diciembre", "december"]:
 #        return 12
 
-def str2time(s, format="HH:MM"):
-    allowed=["HH:MM", "HH:MM:SS","HH:MMxx"]
-    if format in allowed:
+
+def str2time(value, format="HH:MM", ignore_exception=False, ignore_exception_value=None):
+    original=value
+    manage_allowed_formats(format, ["HH:MM", "HH:MM:SS","HH:MMxx"] )
+
+    try:
         if format=="HH:MM":#12:12
-            a=s.split(":")
+            a=value.split(":")
             return time(int(a[0]), int(a[1]))
         elif format=="HH:MM:SS":#12:12:12
-            a=s.split(":")
+            a=value.split(":")
             return time(int(a[0]), int(a[1]), int(a[2]))
         elif format=="HH:MMxx": #5:12am o pm
-            s=s.upper()
-            s=s.replace("AM", "")
-            if s.find("PM"):
-                s=s.replace("PM", "")
-                points=s.split(":")
+            value=value.upper()
+            value=value.replace("AM", "")
+            if value.find("PM"):
+                value=value.replace("PM", "")
+                points=value.split(":")
                 return time(int(points[0])+12, int(points[1]))
             else:#AM
-                points=s.split(":")
+                points=value.split(":")
                 return time(int(points[0]), int(points[1]))
-    else:
-        raise exceptions.CastException(_("I can't convert this format '{}'. I only support this {}").format(format, allowed))
+    except:
+        return manage_exception(original, ignore_exception, ignore_exception_value)
 
 ## Converts a time to a string
-def time2str(ti, format="HH:MM" ):
-    allowed=["HH:MM", "HH:MM:SS","Xulpymoney"]
-    if format in allowed:
+def time2str(ti, format="HH:MM" , ignore_exception=False, ignore_exception_value=None):
+    original=ti
+    manage_allowed_formats(format, ["HH:MM", "HH:MM:SS","Xulpymoney"])
+    try:
         if ti==None:
             return None
         if format=="Xulpymoney":
@@ -331,32 +342,33 @@ def time2str(ti, format="HH:MM" ):
             return ("{}:{}".format(str(ti.hour).zfill(2), str(ti.minute).zfill(2)))
         elif format=="HH:MM:SS":
             return ("{}:{}:{}".format(str(ti.hour).zfill(2), str(ti.minute).zfill(2), str(ti.second).zfill(2)))
+    except:
+        return manage_exception(original, ignore_exception, ignore_exception_value)
 
 
-def str2date(iso, format="YYYY-MM-DD"):
-    allowed=["YYYY-MM-DD", "DD/MM/YYYY", "DD.MM.YYYY", "DD/MM"]
-    if format in allowed:
-        try:
-            if format=="YYYY-MM-DD": #YYYY-MM-DD
-                d=iso.split("-")
-                return date(int(d[0]), int(d[1]),  int(d[2]))
-            if format=="DD/MM/YYYY": #DD/MM/YYYY
-                d=iso.split("/")
-                return date(int(d[2]), int(d[1]),  int(d[0]))
-            if format=="DD.MM.YYYY": #DD.MM.YYYY
-                d=iso.split(".")
-                return date(int(d[2]), int(d[1]),  int(d[0]))
-            if format=="DD/MM": #DD/MM
-                d=iso.split("/")
-                return date(date.today().year, int(d[1]),  int(d[0]))
-        except:
-            return None
-    else:
-        raise exceptions.CastException(_("I can't convert this format '{}'. I only support this {}").format(format, allowed))
+def str2date(iso, format="YYYY-MM-DD", ignore_exception=True, ignore_exception_value=None):
+    original=iso
+    manage_allowed_formats(format, ["YYYY-MM-DD", "DD/MM/YYYY", "DD.MM.YYYY", "DD/MM"])
+    try:
+        if format=="YYYY-MM-DD": #YYYY-MM-DD
+            d=iso.split("-")
+            return date(int(d[0]), int(d[1]),  int(d[2]))
+        if format=="DD/MM/YYYY": #DD/MM/YYYY
+            d=iso.split("/")
+            return date(int(d[2]), int(d[1]),  int(d[0]))
+        if format=="DD.MM.YYYY": #DD.MM.YYYY
+            d=iso.split(".")
+            return date(int(d[2]), int(d[1]),  int(d[0]))
+        if format=="DD/MM": #DD/MM
+            d=iso.split("/")
+            return date(date.today().year, int(d[1]),  int(d[0]))
+    except:
+        return manage_exception(original, ignore_exception, ignore_exception_value)
 
-def str2dtnaive(s, format):
-    allowed=["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S', "JsIso"]
-    if format in allowed:
+def str2dtnaive(s, format, ignore_exception=False, ignore_exception_value=False):
+    original=s
+    manage_allowed_formats(format, ["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S', "JsIso"])
+    try:
         if format=="%Y%m%d%H%M":
             dat=datetime.strptime( s, format )
             return dat
@@ -386,12 +398,13 @@ def str2dtnaive(s, format):
             s=s.replace("T"," ")
             dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
             return dtnaive
-    else:
-        raise exceptions.CastException(_("I can't convert this format '{}'. I only support this {}").format(format, allowed))
+    except:
+        return manage_exception(original, ignore_exception, ignore_exception_value)
 
-def str2dtaware(s, format, tz_name='UTC'):
-    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
-    if format in allowed:
+def str2dtaware(s, format, tz_name='UTC', ignore_exception=False, ignore_exception_value=None):
+    original=s
+    manage_allowed_formats(format, ["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"])
+    try:
         if format=="%Y-%m-%d %H:%M:%S%z":#2017-11-20 23:00:00+00:00
             s=s[:-3]+s[-2:]
             dt=datetime.strptime( s, format )
@@ -411,6 +424,8 @@ def str2dtaware(s, format, tz_name='UTC'):
             dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
             dtaware_utc=dtnaive2dtaware(dtnaive, 'UTC')
             return dtaware_changes_tz(dtaware_utc, tz_name)
+    except:
+        return manage_exception(original, ignore_exception, ignore_exception_value)
 
 #    else:
 #        return timezone(tz_name).localize(str2dtnaive(s,format))
@@ -450,11 +465,12 @@ def dtaware2str(dt, format):
 ## @param dt datetime aware object
 ## @param format String in ["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M"]
 ## @return String
-def dtnaive2str(dt, format):
-    allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"]
+def dtnaive2str(dt, format, ignore_exception=False, ignore_exception_value=None):
+    original=dt
+    manage_allowed_formats(format,["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"])
     if dt==None:
-        return "None"
-    elif format in allowed:
+        return manage_exception(original, ignore_exception, ignore_exception_value)
+    try:
         if format=="%Y-%m-%d":
             return dt.strftime("%Y-%m-%d")
         elif format=="%Y-%m-%d %H:%M:%S": 
@@ -465,8 +481,8 @@ def dtnaive2str(dt, format):
             return dt.strftime("%Y%m%d%H%M")
         elif format=="JsUtcIso":
             return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
-    else:
-        raise exceptions.CastException(_("I can't convert this format '{}'. I only support this {}").format(format, allowed))
+    except:
+        return manage_exception(original, ignore_exception, ignore_exception_value)
 
 ## Changes zoneinfo from a dtaware object
 ## For example:
