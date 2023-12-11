@@ -47,16 +47,15 @@ def str2bool(value):
         @param s String
         @return Boolean
     """
-    def exception():
-        raise exceptions.CastException(_("Method str2bool couldn't convert {0} ({1}) to a boolean").format(value, value.__class__))
     if not value.__class__ is str:
-        exception()
+        return None
         
     if value=="0" or value.lower()=="false":
         return False
     elif value=="1" or value.lower()=="true":
         return True
-    exception()
+    return None
+
 ### Function that converts a None value into a Decimal('0')
 ### @param dec Should be a Decimal value or None
 ### @return Decimal

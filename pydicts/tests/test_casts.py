@@ -1,6 +1,6 @@
 from datetime import date, time, datetime
 from decimal import Decimal
-from pydicts import casts, exceptions
+from pydicts import casts
 from pytest import raises
 from zoneinfo import ZoneInfo
 
@@ -29,12 +29,13 @@ def test_str2decimal():
     assert casts.str2decimal("2,123.25")==Decimal("2123.25")
 
 def test_str2bool():
-    with raises(exceptions.CastException):
-        casts.str2bool(None)==None
-    with raises(exceptions.CastException):
-        assert casts.str2bool(1)==True
-    with raises(exceptions.CastException):
-        assert casts.str2bool(0)==False
+    casts.str2bool(None)==None
+    assert casts.str2bool(1)==None
+    assert casts.str2bool(0)==None
+    assert casts.str2bool("1")==True
+    assert casts.str2bool("0")==False
+    assert casts.str2bool(True)==None
+    assert casts.str2bool(False)==None
     assert casts.str2bool("true")==True
     assert casts.str2bool("True")==True
     assert casts.str2bool("false")==False
