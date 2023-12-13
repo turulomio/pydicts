@@ -5,6 +5,8 @@ def release():
     print("""Nueva versión:
   * Cambiar la version en pyproject.toml
   * Cambiar la versión y la fecha en __init__.py
+  * Ejecutar otra vez poe release
+  * git checkout -b pydicts-{0}
   * Modificar el Changelog en README
   * poe translate
   * linguist
@@ -12,7 +14,10 @@ def release():
   * poe test
   * git commit -a -m 'pydicts-{0}'
   * git push
+  * Hacer un pull request con los cambios a main
   * Hacer un nuevo tag en GitHub
+  * git checkout main
+  * git pull
   * poetry build
   * poetry publish
   * Crea un nuevo ebuild de pydicts en Gentoo con la nueva versión

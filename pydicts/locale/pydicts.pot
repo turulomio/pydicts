@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-08 09:40+0100\n"
+"POT-Creation-Date: 2023-12-13 19:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,21 +17,10 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#, python-brace-format
-msgid "Method str2decimal couln't convert {0} ({1}), after changing it to {2} to a Decimal"
-msgstr ""
-
-#, python-brace-format
-msgid "Method str2bool couldn't convert {0} ({1}) to a boolean"
-msgstr ""
-
 msgid "A datetime with timezone is needed"
 msgstr ""
 
 msgid "A datetime without timezone is needed"
-msgstr ""
-
-msgid "I can't convert this format '{}'. I only support this {}"
 msgstr ""
 
 msgid "You must set your lod in {}"
