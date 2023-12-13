@@ -2,6 +2,7 @@ from decimal import Decimal
 from datetime import date, datetime, time, timedelta
 from zoneinfo import ZoneInfo
 from pydicts import myjsonencoder
+
 d={}
 d["None"]=None
 d["Boolean"]=True
@@ -30,7 +31,7 @@ def test_myjsonencoder():
     assert json_["Datetime aware"]==d["Datetime aware"]
     assert json_["Bytes"]==d["Bytes"]
     assert json_["Decimal"]==d["Decimal"]
-#    assert json_["Time"]==d["Time"]
+    assert json_["Time"]==d["Time"]
 #    assert json_["Timedelta"]==d["Timedelta"] 
 
 def test_myjsonencoder_decimals_as_float():
@@ -44,7 +45,7 @@ def test_myjsonencoder_decimals_as_float():
     assert json_["Datetime aware"]==d["Datetime aware"]
     assert json_["Bytes"]==d["Bytes"]
     assert json_["Decimal"]==float(d["Decimal"])
-#    assert json_["Time"]==d["Time"]
+    assert json_["Time"]==d["Time"]
 #    assert json_["Timedelta"]==d["Timedelta"] 
 
 
@@ -59,5 +60,5 @@ def test_myjsonencoder_decimals_as_string():
     assert json_["Datetime aware"]==d["Datetime aware"]
     assert json_["Bytes"]==d["Bytes"]
     assert json_["Decimal"]==str(d["Decimal"])
-#    assert json_["Time"]==d["Time"]
+    assert json_["Time"]==d["Time"]
 #    assert json_["Timedelta"]==d["Timedelta"] 
