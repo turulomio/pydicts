@@ -482,7 +482,6 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
             return ignore_exception_value
 
     try:
-        print("DTNAIVE", value)
         if format=="%Y%m%d%H%M":
             dat=datetime.strptime( value, format )
             return dat
@@ -509,7 +508,6 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
             if "Z" in value:
                 raise exceptions.CastException(error)
             value=value.replace("T"," ")
-            print("SINT T", value)
             dtnaive=str2dtnaive(value,"%Y-%m-%d %H:%M:%S.")
             return dtnaive
     except:
@@ -583,7 +581,6 @@ def dtaware2str(value, format="JsUtcIso", ignore_exception=False, ignore_excepti
     allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"]
     error=f"Error in Pydicts.cast.dtaware2str method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     
-    print ( format not in  allowed ,  value.__class__!=datetime , is_naive(value))
     if format not in  allowed or value.__class__!=datetime or is_naive(value):
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -600,7 +597,6 @@ def dtaware2str(value, format="JsUtcIso", ignore_exception=False, ignore_excepti
             return value.strftime("%Y%m%d%H%M")
         elif format=="JsUtcIso":
             value=dtaware_changes_tz(value, "UTC")
-            print("DTAWARE2str", value)
             return value.isoformat().replace("+00:00","Z")
     except:
         if ignore_exception is False:
@@ -632,7 +628,6 @@ def dtnaive2str(value, format="JsIso", ignore_exception=False, ignore_exception_
         elif format=="%Y%m%d%H%M":
             return value.strftime("%Y%m%d%H%M")
         elif format=="JsIso":
-            print("DTNAIVE2str", value)
             return value.strftime("%Y-%m-%dT%H:%M:%S")+"."+str(value.microsecond).zfill(6)
     except:
         if ignore_exception is False:
@@ -731,5 +726,4 @@ def str2timedelta(s):
         n_mo = float(s_mo) * 30.4
         n_wk = float(s_wk) * 7
         dt = datetime.timedelta(days=n_yr+n_mo+n_wk+float(s_dy), hours=float(s_hr), minutes=float(s_mi), seconds=float(s_sc))
-        print(dt)
         return int(dt.total_seconds()*1000) ## int(dt.total_seconds()) | dt

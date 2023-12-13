@@ -4,12 +4,6 @@ from pydicts import casts, exceptions
 from pytest import raises
 from zoneinfo import ZoneInfo
 
-zonename_madrid="Europe/Madrid"
-zoneinfo_utc=ZoneInfo("UTC")
-dtnaive=casts.dtnaive_now()
-dtaware_utc=casts.dtaware_now()
-dtaware_madrid=casts.dtaware_now(zonename_madrid)
-
 def test_is_noe():
     assert casts.is_noe(None)==True
     assert casts.is_noe(1)==False
@@ -113,21 +107,22 @@ def test_str2bytes():
     assert casts.str2bytes("Hello")==b"Hello"
 
 def test_is_aware():
-    assert casts.is_aware(dtnaive)==False
-    assert casts.is_aware(dtaware_utc)==True
+    assert casts.is_aware(casts.dtnaive_now())==False
+    assert casts.is_aware(casts.dtaware_now())==True
 
 def test_is_naive():
-    assert casts.is_naive(dtnaive)==True
-    assert casts.is_naive(dtaware_utc)==False
+    assert casts.is_naive(casts.dtnaive_now())==True
+    assert casts.is_naive(casts.dtaware_now())==False
 
 def test_dtaware():
+    dtaware_utc=casts.dtaware_now()
     assert dtaware_utc==casts.dtaware(dtaware_utc.date(), dtaware_utc.time(), "UTC")
     
 def test_dtaware2dtnaive():
     dt_naive=  datetime(2023, 11, 26, 17, 5, 5, 123456)
     dt_aware=casts.dtnaive2dtaware(dt_naive, "UTC")
     with raises(exceptions.CastException):
-        casts.dtaware2dtnaive(dtnaive)
+        casts.dtaware2dtnaive(dt_naive)
     assert dt_naive==casts.dtaware2dtnaive(dt_aware)
 
 def test_dtnaive():

@@ -15,12 +15,9 @@ class MyJSONEncoder(JSONEncoder):
     def default(self, o):
         # See "Date Time String Format" in the ECMA-262 specification.
         if isinstance(o, datetime):
-            print("Ahora", o, o.__class__)
             if casts.is_aware(o):
-                print("AWARE")
                 return casts.dtaware2str(o)
             else: #naive
-                print("NAIVE")
                 return casts.dtnaive2str(o)
         elif isinstance(o, date):
             return o.isoformat()
@@ -102,13 +99,11 @@ def hooks(iter_value, decimals_way):
                 except:
                     pass
                     
-                    
         # Guess date
         try:
             return casts.str2date(o)
         except exceptions.CastException:
             pass
-            
             
         #Guess dtaware
         try:
