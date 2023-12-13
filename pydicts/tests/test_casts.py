@@ -8,8 +8,7 @@ def test_is_noe():
     assert casts.is_noe(None)==True
     assert casts.is_noe(1)==False
     assert casts.is_noe("")==True
-    assert casts.is_noe("HOLA")==False
-    
+    assert casts.is_noe("HELLO")==False    
     
 def test_none2alternative():
     assert casts.none2alternative(1, 1)==1
