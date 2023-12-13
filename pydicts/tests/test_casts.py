@@ -99,19 +99,6 @@ def test_date_first_of_the_year():
     
 def test_date_last_of_the_year():
     assert casts.date_last_of_the_year(2023)==date(2023, 12, 31)
-    
-### Function that converts a None value into a Decimal('0')
-### @param dec Should be a Decimal value or None
-### @return Decimal
-#def test_none2decimal0(dec):
-#    return none2alt(dec,Decimal('0'))
-#
-### If a value is None, returns an alternative
-#def test_none2alt(value, alternative):
-#    if value==None:
-#        return alternative
-#    return value
-#
 
 def test_bytes2str():
     with raises(exceptions.CastException):
@@ -196,53 +183,6 @@ def test_dtaware_day_start():
 def test_dtaware_day_start_from_date():
     pass
 
-### Returns a dtnaive or dtawre (as parameter) with the end of the day
-#def test_dt_day_start(dt):
-#    return dt.replace(hour=0, minute=0, second=0, microsecond=0)
-#
-### Returns the end of the day dtnaive from a date
-#def test_dtnaive_day_start_from_date(dat):
-#    dt=datetime(dat.year, dat.month, dat.day)
-#    return dt_day_start(dt)
-#
-### Returns the end of the day dtaware of the tz_name timezone from a date
-#def test_dtaware_day_start_from_date(date, tz_name):
-#    dt=dtaware(date, time(0, 0), tz_name)
-#    return dt_day_start(dt)
-#
-### Returns the start of a month
-#def test_dtaware_month_start(year, month, tz_name):
-#    return dtaware_day_start_from_date(date(year, month, 1), tz_name)
-#    
-#def test_month2int(s):
-#    """
-#        Converts a month string to a int
-#    """
-#    if s in ["Jan", "Ene", "Enero", "January", "enero", "january"]:
-#        return 1
-#    if s in ["Feb", "Febrero", "February", "febrero", "february"]:
-#        return 2
-#    if s in ["Mar", "Marzo", "March", "marzo", "march"]:
-#        return 3
-#    if s in ["Apr", "Abr", "April", "Abril", "abril", "april"]:
-#        return 4
-#    if s in ["May", "Mayo", "mayo", "may"]:
-#        return 5
-#    if s in ["Jun", "June", "Junio", "junio", "june"]:
-#        return 6
-#    if s in ["Jul", "July", "Julio", "julio", "july"]:
-#        return 7
-#    if s in ["Aug", "Ago", "August", "Agosto", "agosto", "august"]:
-#        return 8
-#    if s in ["Sep", "Septiembre", "September", "septiembre", "september"]:
-#        return 9
-#    if s in ["Oct", "October", "Octubre", "octubre", "october"]:
-#        return 10
-#    if s in ["Nov", "Noviembre", "November", "noviembre", "november"]:
-#        return 11
-#    if s in ["Dic", "Dec", "Diciembre", "December", "diciembre", "december"]:
-#        return 12
-#
 def test_str2time():
 #    allowed=["HH:MM", "HH:MM:SS","HH:MMxx"]
     with raises(exceptions.CastException):
@@ -304,29 +244,6 @@ def test_str2dtaware():
     assert casts.str2dtaware("2023-11-26T17:05:05Z", "YYYY-mm-dd", ignore_exception=True)==None
     assert casts.str2dtaware("2023-11-26T17:05:05Z")==datetime(2023, 11, 26, 17, 5, 5, tzinfo=ZoneInfo('UTC'))
     assert casts.str2dtaware("2023-11-26T17:05:05", "JsUtcIso", ignore_exception=True)==None
-
-### epoch is the time from 1,1,1970 in UTC
-### return now(timezone(self.name))
-#def test_dtaware2epochms(d):
-#    return d.timestamp()*1000
-#    
-### Return a UTC datetime aware
-#def test_epochms2dtaware(n, tz="UTC"):
-#    utc_unaware=datetime.utcfromtimestamp(n/1000)
-#    utc_aware=utc_unaware.replace(tzinfo=timezone('UTC'))#Due to epoch is in UTC
-#    return dtaware_changes_tz(utc_aware, tz)
-#
-### epoch is the time from 1,1,1970 in UTC
-### return now(timezone(self.name))
-#def test_dtaware2epochmicros(d):
-#    return int(d.timestamp()*1000000)
-### Return a UTC datetime aware
-#def test_epochmicros2dtaware(n, tz="UTC"):
-#    utc_unaware=datetime.utcfromtimestamp(n/1000000)
-#    utc_aware=utc_unaware.replace(tzinfo=timezone('UTC'))#Due to epoch is in UTC
-#    return dtaware_changes_tz(utc_aware, tz)
-#
-#
 
 def test_dtaware2str():    
     dt_naive=  datetime(2023, 11, 26, 17, 5, 5, 123456)
