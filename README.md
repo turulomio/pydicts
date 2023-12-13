@@ -15,6 +15,11 @@ You can access documentation in [Github Pydicts Wiki](https://github.com/turulom
 
 ## CHANGELOG
 
+### 0.11.0 (2023-12-13)
+- Added in casts ignore_exceptions parameter in all methods
+- Added a lot of tests. Test coverage is now 73%.
+- Added more stability to casts
+
 ### 0.10.0 (2023-12-08)
 - Improving str2decimal conversions. Changed type parameter to decimal_separator.
 - Added Percentage and Currency classes to manage this objects
