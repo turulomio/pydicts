@@ -20,6 +20,10 @@ def release():
 
 """.format(__version__))
 
+    
+def coverage():
+    system("coverage run --omit='*uno.py' -m pytest && coverage report && coverage html")
+
 
 def translate():
     #es
