@@ -252,6 +252,13 @@ def test_str2time():
     assert casts.str2time("09:05:54.123")==time(9, 5, 54, 123000)
     assert casts.str2time("09:05:54.000123")==time(9, 5, 54, 123)
     assert casts.str2time("09:05pm", "HH:MMxx")==time(21, 5)
+    
+    
+def test_str2timedelta():
+    pass
+    
+def test_timedelta2str():
+    pass
 
 def test_time2str():
     with raises(exceptions.CastException):
