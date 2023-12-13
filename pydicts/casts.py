@@ -307,7 +307,9 @@ def dtaware_month_start(year, month, tz_name):
 
 def str2time(value, format="HH:MM", ignore_exception=False, ignore_exception_value=None):
     original=value
-    manage_allowed_formats(format, ["HH:MM", "HH:MM:SS","HH:MMxx"] )
+    return manage_allowed_formats(format, ["HH:MM", "HH:MM:SS","HH:MMxx"] )   
+    if value.__class__!=str:
+        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
 
     try:
         if format=="HH:MM":#12:12
@@ -332,7 +334,8 @@ def str2time(value, format="HH:MM", ignore_exception=False, ignore_exception_val
 ## Converts a time to a string
 def time2str(ti, format="HH:MM" , ignore_exception=False, ignore_exception_value=None):
     original=ti
-    manage_allowed_formats(format, ["HH:MM", "HH:MM:SS","Xulpymoney"])
+    
+    return manage_allowed_formats(format, ["HH:MM", "HH:MM:SS","Xulpymoney"])
     try:
         if ti==None:
             return None
@@ -351,7 +354,9 @@ def time2str(ti, format="HH:MM" , ignore_exception=False, ignore_exception_value
 
 def str2date(iso, format="YYYY-MM-DD", ignore_exception=False, ignore_exception_value=None):
     original=iso
-    manage_allowed_formats(format, ["YYYY-MM-DD", "DD/MM/YYYY", "DD.MM.YYYY", "DD/MM"])
+    return manage_allowed_formats(format, ["YYYY-MM-DD", "DD/MM/YYYY", "DD.MM.YYYY", "DD/MM"])
+    if iso.__class__!=str:
+        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
     try:
         if format=="YYYY-MM-DD": #YYYY-MM-DD
             d=iso.split("-")
@@ -370,9 +375,9 @@ def str2date(iso, format="YYYY-MM-DD", ignore_exception=False, ignore_exception_
 
 def str2dtnaive(s, format, ignore_exception=False, ignore_exception_value=False):
     original=s
-    manage_allowed_formats(format, ["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S', "JsIso"])
+    return manage_allowed_formats(format, ["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S', "JsIso"])
     if s.__class__!=str:
-        manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
+        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
     try:
         if format=="%Y%m%d%H%M":
             dat=datetime.strptime( s, format )
@@ -408,7 +413,9 @@ def str2dtnaive(s, format, ignore_exception=False, ignore_exception_value=False)
 
 def str2dtaware(s, format, tz_name='UTC', ignore_exception=False, ignore_exception_value=None):
     original=s
-    manage_allowed_formats(format, ["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"])
+    return manage_allowed_formats(format, ["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"])
+    if s.__class__!=str:
+        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
     try:
         if format=="%Y-%m-%d %H:%M:%S%z":#2017-11-20 23:00:00+00:00
             s=s[:-3]+s[-2:]
@@ -472,7 +479,7 @@ def dtaware2str(dt, format):
 ## @return String
 def dtnaive2str(dt, format, ignore_exception=False, ignore_exception_value=None):
     original=dt
-    manage_allowed_formats(format,["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"])
+    return manage_allowed_formats(format,["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"])
     if dt==None:
         return manage_exception(original, ignore_exception, ignore_exception_value)
     try:

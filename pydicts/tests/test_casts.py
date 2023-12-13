@@ -228,7 +228,9 @@ def test_time2str():
     assert casts.time2str(time_, "HH:MM:SS")=="09:05:54"
 
 def test_str2date():
-    assert casts.str2date(None)==None
+    with raises(exceptions.CastException):
+        assert casts.str2date(None)
+    assert casts.str2date(None, ignore_exception=True)==None
     assert casts.str2date("2023")==None
     assert casts.str2date(2023)==None
     assert casts.str2date("2023-11-26")==date(2023, 11, 26)
