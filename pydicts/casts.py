@@ -399,45 +399,53 @@ def str2date(value, format="YYYY-MM-DD", ignore_exception=False, ignore_exceptio
         else:
             return ignore_exception_value
 
-def str2dtnaive(s, format, ignore_exception=False, ignore_exception_value=False):
-    original=s
-    return manage_allowed_formats(format, ["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S', "JsIso"])
-    if s.__class__!=str:
-        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
+def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_value=None):
+    original=value
+    allowed=["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S', "JsIso"]
+    error=f"Error in Pydicts.cast.str2dtnaive method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
+    if format not in  allowed or value.__class__!=str:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+
     try:
         if format=="%Y%m%d%H%M":
-            dat=datetime.strptime( s, format )
+            dat=datetime.strptime( value, format )
             return dat
         if format=="%Y-%m-%d %H:%M:%S":#2017-11-20 23:00:00
-            return datetime.strptime( s, format )
+            return datetime.strptime( value, format )
         if format=="%d/%m/%Y %H:%M":#20/11/2017 23:00
-            return datetime.strptime( s, format )
+            return datetime.strptime( value, format )
         if format=="%d %m %H:%M %Y":#27 1 16:54 2017. 1 es el mes convertido con month2int
-            return datetime.strptime( s, format)
+            return datetime.strptime( value, format)
         if format=="%Y-%m-%d %H:%M:%S.":#2017-11-20 23:00:00.000000  ==>  microsecond. Notice the point in format
-            arrPunto=s.split(".")
-            s=arrPunto[0]
+            arrPunto=value.split(".")
             micro=int(arrPunto[1]) if len(arrPunto)==2 else 0
-            dt=datetime.strptime( s, "%Y-%m-%d %H:%M:%S" )
+            dt=datetime.strptime( arrPunto[0],  "%Y-%m-%d %H:%M:%S" )
             dt=dt+timedelta(microseconds=micro)
             return dt
         if format=="%H:%M:%S": 
             tod=date.today()
-            a=s.split(":")
+            a=value.split(":")
             return datetime(tod.year, tod.month, tod.day, int(a[0]), int(a[1]), int(a[2]))
         if format=='%b %d %H:%M:%S': #Apr 26 07:50:44. Year is missing so I set to current
-            s=f"{date.today().year} {s}"
+            s=f"{date.today().year} {value}"
             return datetime.strptime(s, '%Y %b %d %H:%M:%S')
         if format=="JsIso": #2021-08-21T06:27:38.294
-            if s.endswith("Z"):
-                return None
-            s=s.replace("T"," ")
-            dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
-            return dtnaive
+            if "Z" in value:
+                raise exceptions.CastException(error)
+            else:
+                value=value.replace("T"," ")
+                dtnaive=str2dtnaive(value,"%Y-%m-%d %H:%M:%S.")
+                return dtnaive
     except:
-        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
-def str2dtaware(s, format, tz_name='UTC', ignore_exception=False, ignore_exception_value=None):
+def str2dtaware(value, format, tz_name='UTC', ignore_exception=False, ignore_exception_value=None):
     original=s
     return manage_allowed_formats(format, ["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"])
     if s.__class__!=str:
@@ -445,21 +453,21 @@ def str2dtaware(s, format, tz_name='UTC', ignore_exception=False, ignore_excepti
     try:
         if format=="%Y-%m-%d %H:%M:%S%z":#2017-11-20 23:00:00+00:00
             s=s[:-3]+s[-2:]
-            dt=datetime.strptime( s, format )
+            dt=datetime.strptime( value, format )
             return dtaware_changes_tz(dt, tz_name)
         if format=="%Y-%m-%d %H:%M:%S.%z":#2017-11-20 23:00:00.000000+00:00  ==>  microsecond. Notice the point in format
             s=s[:-3]+s[-2:]#quita el :
             arrPunto=s.split(".")
             s=arrPunto[0]+s[-5:]
             micro=int(arrPunto[1][:-5])
-            dt=datetime.strptime( s, "%Y-%m-%d %H:%M:%S%z" )
+            dt=datetime.strptime( value, "%Y-%m-%d %H:%M:%S%z" )
             dt=dt+timedelta(microseconds=micro)
             return dtaware_changes_tz(dt, tz_name)
         if format=="JsUtcIso": #2021-08-21T06:27:38.294Z
             if not "Z" in s:
                 return None
             s=s.replace("T"," ").replace("Z","")
-            dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
+            dtnaive=str2dtnaive(value,"%Y-%m-%d %H:%M:%S.")
             dtaware_utc=dtnaive2dtaware(dtnaive, 'UTC')
             return dtaware_changes_tz(dtaware_utc, tz_name)
     except:

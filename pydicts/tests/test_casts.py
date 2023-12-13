@@ -251,17 +251,15 @@ def test_str2date():
     assert casts.str2date("26/11/2023", "DD/MM/YYYY")==date(2023, 11, 26)
     assert casts.str2date("26.11.2023", "DD.MM.YYYY")==date(2023, 11, 26)
     assert casts.str2date("26/11", "DD/MM")==date(2023, 11, 26)
-#
-def test_str2dtnaive():
-#    allowed=["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S']
 
-#    assert casts.str2dtnaive("2023-11-26", "%Y-%m-%d")==datetime(2023, 11, 26)
-#    assert casts.str2dtnaive("2023-11-26 17:05:05", "%Y-%m-%d %H:%M:%S")==datetime(2023, 11, 26, 17, 5, 5)
-#    assert casts.str2dtnaive("20231126 1705", "%Y%m%d %H%M")==datetime(2023, 11, 26, 17, 5, 5)
+def test_str2dtnaive():
     assert casts.str2dtnaive("202311261705", "%Y%m%d%H%M")==datetime(2023, 11, 26, 17, 5)
+    assert casts.str2dtnaive("2023-11-26T17:05:05")==datetime(2023, 11, 26, 17, 5, 5)
     assert casts.str2dtnaive("2023-11-26T17:05:05.123456", "JsIso")==datetime(2023, 11, 26, 17, 5, 5, 123456)
-    assert casts.str2dtnaive("2023-11-26T17:05:05.123456Z", "JsIso")==None
-    assert casts.str2dtnaive("2023-11-26T17:05:05", "JsIso")==datetime(2023, 11, 26, 17, 5, 5)
+    with raises(exceptions.CastException):
+        casts.str2dtnaive("2023-11-26T17:05:05.123456Z")
+    
+    assert casts.str2dtnaive("2023-11-26T17:05:05.123456Z", ignore_exception=True)==None
 
 
 def test_str2dtaware():
