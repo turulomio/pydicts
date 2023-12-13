@@ -177,25 +177,27 @@ def hooks(iter_value, decimals_way):
 #        except:
 #            return None 
             
-    def get_bytes(s):
-        try:
-            return b64decode(s)
-        except:
-            return None
+#    def get_bytes(s):
+#        try:
+#            return b64decode(s)
+#        except:
+#            return None
             
-    def get_Decimal(s):
-        try:
-            return casts.str2decimal(s)
-        except:
-            return None
+#    def get_Decimal(s):
+#        try:
+#            return casts.str2decimal(s)
+#        except:
+#            return None
 
         
     def guess_cast(o, decimal_way):
+        print("ENTERING ", o)
         if decimal_way==DecimalsWay.DecimalString:
             if o.__class__==str and o.startswith("Decimal("):
-                r=get_Decimal(o)
-                if r is not None:
-                    return  str(r)
+                try:
+                    return eval(o)
+                except:
+                    pass
                     
                     
         # Guess date
@@ -209,7 +211,6 @@ def hooks(iter_value, decimals_way):
         try:
             return casts.str2dtaware(o,"JsUtcIso")
         except exceptions.CastException:
-#            print (e)
             pass
             
         #Guess dtnaive
@@ -220,15 +221,16 @@ def hooks(iter_value, decimals_way):
 
         #Guess time
         try:
-            if not ":" in o:
-                return None
-            return time.fromisoformat(o)
-        except:
+            return casts.str2time(o)
+        except exceptions.CastException:
             pass
 
         #Guess Bytes
         try:
-            return b64decode(o)
+            print("string", o)
+            b64bytes=casts.str2bytes(o)# o is a b64 string
+            print("string bytes", b64bytes)
+            return casts.base64bytes2bytes(b64bytes)
         except:
             pass
     

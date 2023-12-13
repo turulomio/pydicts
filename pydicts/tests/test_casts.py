@@ -135,6 +135,13 @@ def test_is_naive():
 
 def test_dtaware():
     assert dtaware_utc==casts.dtaware(dtaware_utc.date(), dtaware_utc.time(), "UTC")
+    
+def test_dtaware2dtnaive():
+    dt_naive=  datetime(2023, 11, 26, 17, 5, 5, 123456)
+    dt_aware=casts.dtnaive2dtaware(dt_naive, "UTC")
+    with raises(exceptions.CastException):
+        casts.dtaware2dtnaive(dtnaive)
+    assert dt_naive==casts.dtaware2dtnaive(dt_aware)
 
 def test_dtnaive2dtaware():
     naive=datetime(2023, 1, 1, 0, 0, 0, 0)
@@ -295,7 +302,7 @@ def test_str2dtaware():
 
 def test_dtaware2str():    
     dt_naive=  datetime(2023, 11, 26, 17, 5, 5, 123456)
-    dt_aware=casts.dtnaive2dtaware(dtnaive, "UTC")
+    dt_aware=casts.dtnaive2dtaware(dt_naive, "UTC")
     with raises(exceptions.CastException):
         casts.dtaware2str(dt_naive)
     assert casts.dtaware2str(dt_aware, "%Y-%m-%d")=="2023-11-26"
@@ -307,7 +314,7 @@ def test_dtaware2str():
 
 def test_dtnaive2str():
     dt_naive=  datetime(2023, 11, 26, 17, 5, 5, 123456)
-    dt_aware=casts.dtnaive2dtaware(dtnaive, "UTC")
+    dt_aware=casts.dtnaive2dtaware(dt_naive, "UTC")
     with raises(exceptions.CastException):
         casts.dtnaive2str(dt_aware)
     
@@ -329,3 +336,10 @@ def test_months():
     assert casts.months(2023, 11, 2024, 1)== [(2023, 11), (2023, 12), (2024, 1)]
     assert casts.months(2023, 9,  2023, 9)== [(2023, 9)]
 
+def test_bytes2base64bytes():
+    s="Elvis Presley"
+    bytes=casts.str2bytes(s)
+    base64bytes=casts.bytes2base64bytes(bytes)
+    bytes2=casts.base64bytes2bytes(base64bytes)
+    assert s==casts.bytes2str(bytes2)
+    

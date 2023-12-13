@@ -11,6 +11,7 @@ from importlib.resources import files
 from inspect import currentframe, getouterframes
 from pydicts import exceptions
 from zoneinfo import ZoneInfo
+from base64 import b64encode, b64decode
 
 
 try:
@@ -89,6 +90,7 @@ def bytes2str(value, code='UTF-8', ignore_exception=False, ignore_exception_valu
     """
         Bytes 2 string
     """ 
+    
     if value is None or not value.__class__==bytes:
         return manage_exception(value, ignore_exception, ignore_exception_value)
 
@@ -96,19 +98,76 @@ def bytes2str(value, code='UTF-8', ignore_exception=False, ignore_exception_valu
         return value.decode(code)
     except:
         return manage_exception(value, ignore_exception, ignore_exception_value)
-        
+
     
 def str2bytes(value, code='UTF8', ignore_exception=False, ignore_exception_value=None):
     """
         String 2 bytes
-    """
+    """       
+    original=value
+    error=f"Error in Pydicts.cast.str2bytes method. Value: {original} Value class: {value.__class__.__name__}"
+
     if value is None or not value.__class__==str:
-        return manage_exception(value, ignore_exception, ignore_exception_value)
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
     try:
         return value.encode(code)
     except:
-        return manage_exception(value, ignore_exception, ignore_exception_value)
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+            
+        
+def base64bytes2bytes(value, ignore_exception=False, ignore_exception_value=None):
+    """
+        Bytes 2 string
+    """ 
+    
+    original=value
+    error=f"Error in Pydicts.cast.base642bytes method. Value: {original} Value class: {value.__class__.__name__}"
+
+    if value is None or not value.__class__==bytes:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+
+    try:
+        return b64decode(value)
+    except:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+
+    
+def bytes2base64bytes(value, ignore_exception=False, ignore_exception_value=None):
+    """
+        String 2 bytes
+    """       
+    original=value
+    error=f"Error in Pydicts.cast.bytes2base64 method. Value: {original} Value class: {value.__class__.__name__}"
+
+    if value is None or not value.__class__==bytes:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+
+    try:
+        return b64encode(value)
+    except:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value    
+            
+            
+            
 
 ### Returns if a datetime is aware
 def is_aware(dt):
@@ -142,6 +201,10 @@ def dtaware(date_, time_, tz_name):
 def dtnaive2dtaware(dtnaive, tz_name):
     return dtnaive.replace(tzinfo=ZoneInfo(tz_name))
 
+def dtaware2dtnaive(dtaware):
+    if not is_aware(dtaware): 
+        raise exceptions.CastException(f"{dtaware} should be a dtaware")
+    return dtaware.replace(tzinfo=None)
 
 def dtaware_now(tzname=None):
     """
@@ -505,11 +568,36 @@ def epochmicros2dtaware(n, tz="UTC"):
 ## Returns a formated string of a dtaware string formatting with a zone name
 ## @param dt datetime aware object
 ## @return String
-def dtaware2str(dt, format):
-    if is_naive(dt)==True:
-        raise exceptions.CastException("A datetime with timezone is needed for {}").format(dt)
-    else:
-        return dtnaive2str(dt, format)
+def dtaware2str(value, format="jsUtcIso", ignore_exception=False, ignore_exception_value=None):
+    original=value
+    allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"]
+    error=f"Error in Pydicts.cast.dtaware2str method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
+    if format not in  allowed or value.__class__!=datetime or is_naive(value):
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+
+    try:
+        print(value)
+        if format=="%Y-%m-%d":
+            return value.strftime("%Y-%m-%d")
+        elif format=="%Y-%m-%d %H:%M:%S": 
+            return value.strftime("%Y-%m-%d %H:%M:%S")
+        elif format=="%Y%m%d %H%M": 
+            return value.strftime("%Y%m%d %H%M")
+        elif format=="%Y%m%d%H%M":
+            return value.strftime("%Y%m%d%H%M")
+        elif format=="JsUtcIso":
+            print(value)
+            value=dtaware_changes_tz(value, "UTC")
+            print(value)
+            print(value.isoformat()+"Z")
+    except:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
 ## Returns a formated string of a dtaware string formatting with a zone name
 ## @param dt datetime aware object
