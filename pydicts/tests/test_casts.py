@@ -131,7 +131,9 @@ def test_dtaware2dtnaive():
     assert dt_naive==casts.dtaware2dtnaive(dt_aware)
 
 def test_dtnaive():
-    pass
+    assert casts.dtnaive(date(2020,1 , 1), time(1, 1, 1, 1))==datetime(2020, 1, 1, 1, 1, 1, 1)
+    with raises(ValueError):
+        casts.dtnaive(date(2020,1 , 61), time(1, 1, 1, 1))
 
 def test_dtnaive2dtaware():
     naive=datetime(2023, 1, 1, 0, 0, 0, 0)
