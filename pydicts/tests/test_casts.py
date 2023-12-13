@@ -217,8 +217,11 @@ def test_dtaware_day_end_from_date():
 #
 def test_str2time():
 #    allowed=["HH:MM", "HH:MM:SS","HH:MMxx"]
+    with raises(exceptions.CastException):
+        assert casts.str2time(None)
     assert casts.str2time("09:05", "HH:MM")==time(9, 5)
     assert casts.str2time("09:05:54", "HH:MM:SS")==time(9, 5, 54)
+    assert casts.str2time("09:05:54.123", "HH:MM:SS.")==time(9, 5, 54, 123)
     assert casts.str2time("09:05pm", "HH:MMxx")==time(21, 5)
 
 def test_time2str():

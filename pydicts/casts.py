@@ -308,7 +308,7 @@ def dtaware_month_start(year, month, tz_name):
 def str2time(value, format="HH:MM", ignore_exception=False, ignore_exception_value=None):
     original=value
     error=f"Error in Pydicts.cast.str2time method. Value: {original} Value class: {value.__class__.__name__} Format: {format}"
-    if format not in ["HH:MM", "HH:MM:SS","HH:MMxx"] or value.__class__!=str:
+    if format not in ["HH:MM", "HH:MM:SS","HH:MM:SS.","HH:MMxx"] or value.__class__!=str:
         if ignore_exception is False:
             raise exceptions.CastException(error)
         else:
@@ -331,6 +331,13 @@ def str2time(value, format="HH:MM", ignore_exception=False, ignore_exception_val
             else:#AM
                 points=value.split(":")
                 return time(int(points[0]), int(points[1]))
+        elif format=="HH:MM:SS.":#23:00:00.000000  ==>  microsecond. Notice the point in format
+            arrPunto=value.split(".")
+            s=arrPunto[0]
+            micro=int(arrPunto[1]) if len(arrPunto)==2 else 0
+            time_=str2time(s, "HH:MM:SS")
+            time_=time_+timedelta(microseconds=micro)
+            return time_
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
