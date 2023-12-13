@@ -12,35 +12,6 @@ class DecimalsWay:
 
 ## Usa
 class MyJSONEncoder(JSONEncoder):
-    # Part of this code is from https://github.com/django/django/blob/main/django/core/serializers/json.py
-    # JSONEncoder subclass that knows how to encode date/time, decimal types, and UUIDs.
-    def _get_duration_components(self, duration):
-        days = duration.days
-        seconds = duration.seconds
-        microseconds = duration.microseconds
-
-        minutes = seconds // 60
-        seconds %= 60
-
-
-        hours = minutes // 60
-        minutes %= 60
-
-        return days, hours, minutes, seconds, microseconds
-    
-    def _duration_iso_string(self, duration):
-        if duration < timedelta(0):
-            sign = "-"
-            duration *= -1
-        else:
-            sign = ""
-
-        days, hours, minutes, seconds, microseconds = self._get_duration_components(duration)
-        ms = ".{:06d}".format(microseconds) if microseconds else ""
-        return "{}P{}DT{:02d}H{:02d}M{:02d}{}S".format(
-            sign, days, hours, minutes, seconds, ms
-        )
-    
     def default(self, o):
         # See "Date Time String Format" in the ECMA-262 specification.
         if isinstance(o, datetime):
@@ -58,7 +29,7 @@ class MyJSONEncoder(JSONEncoder):
                 raise ValueError("JSON can't represent timezone-aware times.")
             return casts.time2str(o)
         elif isinstance(o, timedelta):
-            return self._duration_iso_string(o)
+            return casts.timedelta2str(o)
         elif isinstance(o, Decimal):
             return f"Decimal('{o}')"
         elif o.__class__.__name__ in ("Promise", "__proxy__"): #django.utils.functional

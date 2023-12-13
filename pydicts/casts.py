@@ -667,3 +667,33 @@ def months(year_from, month_from, year_to=None, month_to=None):
         r.append((current.year,current.month))
         current=date_first_of_the_next_x_months(current.year, current.month, 1)
     return r
+
+
+    
+def timedelta2str(td):
+        # Part of this code is from https://github.com/django/django/blob/main/django/core/serializers/json.py
+    # JSONEncoder subclass that knows how to encode date/time, decimal types, and UUIDs.
+    def _get_duration_components(duration):
+        days = duration.days
+        seconds = duration.seconds
+        microseconds = duration.microseconds
+
+        minutes = seconds // 60
+        seconds %= 60
+
+
+        hours = minutes // 60
+        minutes %= 60
+
+        return days, hours, minutes, seconds, microseconds
+    if td < timedelta(0):
+        sign = "-"
+        td *= -1
+    else:
+        sign = ""
+
+    days, hours, minutes, seconds, microseconds = _get_duration_components(td)
+    ms = ".{:06d}".format(microseconds) if microseconds else ""
+    return "{}P{}DT{:02d}H{:02d}M{:02d}{}S".format(
+        sign, days, hours, minutes, seconds, ms
+    )
