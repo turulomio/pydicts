@@ -350,9 +350,6 @@ def time2str(value, format="jsIso" , ignore_exception=False, ignore_exception_va
             raise exceptions.CastException(error)
         else:
             return ignore_exception_value
-            
-    if value is None:
-        return None
 
     try:
         if format=="Xulpymoney":
@@ -373,26 +370,34 @@ def time2str(value, format="jsIso" , ignore_exception=False, ignore_exception_va
             return ignore_exception_value
 
 
-def str2date(iso, format="YYYY-MM-DD", ignore_exception=False, ignore_exception_value=None):
-    original=iso
-    return manage_allowed_formats(format, ["YYYY-MM-DD", "DD/MM/YYYY", "DD.MM.YYYY", "DD/MM"])
-    if iso.__class__!=str:
-        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
+def str2date(value, format="YYYY-MM-DD", ignore_exception=False, ignore_exception_value=None):
+    original=value
+    allowed=["YYYY-MM-DD", "DD/MM/YYYY", "DD.MM.YYYY", "DD/MM", "jsIso"]
+    error=f"Error in Pydicts.cast.str2date method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
+    if format not in  allowed or value.__class__!=str:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+
     try:
-        if format=="YYYY-MM-DD": #YYYY-MM-DD
-            d=iso.split("-")
+        if format in ["YYYY-MM-DD", "jsIso"]:
+            d=value.split("-")
             return date(int(d[0]), int(d[1]),  int(d[2]))
         if format=="DD/MM/YYYY": #DD/MM/YYYY
-            d=iso.split("/")
+            d=value.split("/")
             return date(int(d[2]), int(d[1]),  int(d[0]))
         if format=="DD.MM.YYYY": #DD.MM.YYYY
-            d=iso.split(".")
+            d=value.split(".")
             return date(int(d[2]), int(d[1]),  int(d[0]))
         if format=="DD/MM": #DD/MM
-            d=iso.split("/")
+            d=value.split("/")
             return date(date.today().year, int(d[1]),  int(d[0]))
     except:
-        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
 def str2dtnaive(s, format, ignore_exception=False, ignore_exception_value=False):
     original=s

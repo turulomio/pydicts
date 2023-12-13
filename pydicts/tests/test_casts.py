@@ -226,7 +226,6 @@ def test_str2time():
     assert casts.str2time("09:05pm", "HH:MMxx")==time(21, 5)
 
 def test_time2str():
-#    allowed=["HH:MM", "HH:MM:SS","Xulpymoney"]
     with raises(exceptions.CastException):
         assert casts.time2str(None)
         
@@ -240,8 +239,13 @@ def test_str2date():
     with raises(exceptions.CastException):
         assert casts.str2date(None)
     assert casts.str2date(None, ignore_exception=True)==None
-    assert casts.str2date("2023")==None
-    assert casts.str2date(2023)==None
+    
+    with raises(exceptions.CastException):
+        assert casts.str2date("2023")
+        
+    with raises(exceptions.CastException):
+        assert casts.str2date(2023)
+    
     assert casts.str2date("2023-11-26")==date(2023, 11, 26)
     assert casts.str2date("2023-11-26", "YYYY-MM-DD")==date(2023, 11, 26)
     assert casts.str2date("26/11/2023", "DD/MM/YYYY")==date(2023, 11, 26)
