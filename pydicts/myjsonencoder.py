@@ -1,8 +1,8 @@
 from datetime import datetime, date, timedelta, time
 from decimal import Decimal
 from json import JSONEncoder, dumps, loads
-from base64 import b64encode, b64decode
-from pydicts import casts
+from base64 import b64encode
+from pydicts import casts, exceptions
 
 # Forma en que debe parsearse los Decimals
 class DecimalsWay:
@@ -12,50 +12,21 @@ class DecimalsWay:
 
 ## Usa
 class MyJSONEncoder(JSONEncoder):
-    # Part of this code is from https://github.com/django/django/blob/main/django/core/serializers/json.py
-    # JSONEncoder subclass that knows how to encode date/time, decimal types, and UUIDs.
-    def _get_duration_components(self, duration):
-        days = duration.days
-        seconds = duration.seconds
-        microseconds = duration.microseconds
-
-        minutes = seconds // 60
-        seconds %= 60
-
-
-        hours = minutes // 60
-        minutes %= 60
-
-        return days, hours, minutes, seconds, microseconds
-    
-    def _duration_iso_string(self, duration):
-        if duration < timedelta(0):
-            sign = "-"
-            duration *= -1
-        else:
-            sign = ""
-
-        days, hours, minutes, seconds, microseconds = self._get_duration_components(duration)
-        ms = ".{:06d}".format(microseconds) if microseconds else ""
-        return "{}P{}DT{:02d}H{:02d}M{:02d}{}S".format(
-            sign, days, hours, minutes, seconds, ms
-        )
-    
     def default(self, o):
         # See "Date Time String Format" in the ECMA-262 specification.
         if isinstance(o, datetime):
-            return o.isoformat().replace("+00:00","Z")
+            if casts.is_aware(o):
+                return casts.dtaware2str(o)
+            else: #naive
+                return casts.dtnaive2str(o)
         elif isinstance(o, date):
             return o.isoformat()
         elif isinstance(o, time):
             if o.utcoffset() is not None: #If it's aware
                 raise ValueError("JSON can't represent timezone-aware times.")
-            r = o.isoformat()
-            if o.microsecond:
-                r = r[:12]
-            return r
+            return casts.time2str(o)
         elif isinstance(o, timedelta):
-            return self._duration_iso_string(o)
+            return casts.timedelta2str(o)
         elif isinstance(o, Decimal):
             return f"Decimal('{o}')"
         elif o.__class__.__name__ in ("Promise", "__proxy__"): #django.utils.functional
@@ -120,104 +91,48 @@ def hooks(iter_value, decimals_way):
     """
         Iterates a dict or list to cast decimals and dtaware in json.loads using objeck_hook
     """
-    
-    def get_date(s):
-            return casts.str2date(s)
-            
-    def get_dtaware(s):
-        try:
-            return casts.str2dtaware(s,"JsUtcIso")
-        except:
-            return None 
-
-    def get_dtnaive(s):
-        try:
-            return casts.str2dtnaive(s,"JsIso")
-        except:
-            return None 
-            
-    #    Parse the ISO8601 duration string as hours, minutes, seconds
-    def get_timedelta(str):
-    #    try:
-    ## https://stackoverflow.com/questions/36976138/is-there-an-easy-way-to-convert-iso-8601-duration-to-timedelta
-    ## Parse the ISO8601 duration as years,months,weeks,days, hours,minutes,seconds
-    ## Returns: milliseconds
-    ## Examples: "PT1H30M15.460S", "P5DT4M", "P2WT3H"
-        def get_isosplit(str, split):
-            if split in str:
-                n, str = str.split(split, 1)
-            else:
-                n = '0'
-            return n.replace(',', '.'), str  # to handle like "P0,5Y"
-
-        str = str.split('P', 1)[-1]  # Remove prefix
-        s_yr, str = get_isosplit(str, 'Y')  # Step through letter dividers
-        s_mo, str = get_isosplit(str, 'M')
-        s_wk, str = get_isosplit(str, 'W')
-        s_dy, str = get_isosplit(str, 'D')
-        _, str    = get_isosplit(str, 'T')
-        s_hr, str = get_isosplit(str, 'H')
-        s_mi, str = get_isosplit(str, 'M')
-        s_sc, str = get_isosplit(str, 'S')
-        n_yr = float(s_yr) * 365   # approx days for year, month, week
-        n_mo = float(s_mo) * 30.4
-        n_wk = float(s_wk) * 7
-        dt = datetime.timedelta(days=n_yr+n_mo+n_wk+float(s_dy), hours=float(s_hr), minutes=float(s_mi), seconds=float(s_sc))
-        print(dt)
-        return int(dt.total_seconds()*1000) ## int(dt.total_seconds()) | dt
-    #    except:
-    #        return None 
-            
-    def get_time(s):
-        try:
-            if not ":" in s:
-                return None
-            return time.fromisoformat(s)
-        except:
-            return None 
-            
-    def get_bytes(s):
-        try:
-            return b64decode(s)
-        except:
-            return None
-            
-    def get_Decimal(s):
-        try:
-            return casts.str2decimal(s)
-        except:
-            return None
-
-        
-    def guess_cast(o, decimal_way):        
+    def guess_cast(o, decimal_way):
         if decimal_way==DecimalsWay.DecimalString:
             if o.__class__==str and o.startswith("Decimal("):
-                r=get_Decimal(o)
-                if r is not None:
-                    return  str(r)
+                try:
+                    return eval(o)
+                except:
+                    pass
+                    
+        # Guess date
+        try:
+            return casts.str2date(o)
+        except exceptions.CastException:
+            pass
+            
+        #Guess dtaware
+        try:
+            return casts.str2dtaware(o,"JsUtcIso")
+        except exceptions.CastException:
+            pass
 
-        r=get_date(o)
-        if r is not None:
-            return  r
-            
-        r=get_dtnaive(o)
-        if r is not None:
-            return  r
-            
-        r=get_dtaware(o)
-        if r is not None:
-            return  r
-            
-        r=get_time(o)
-        if r is not None:
-            return  r
-            
-        r=get_bytes(o)
-        if r is not None:
-            return  r
-        
+        #Guess dtnaive
+        try:
+            return casts.str2dtnaive(o,"JsIso")
+        except exceptions.CastException:
+            pass
+
+        #Guess time
+        try:
+            return casts.str2time(o)
+        except exceptions.CastException:
+            pass
+
+        #Guess Bytes
+        try:
+            b64bytes=casts.str2bytes(o)# o is a b64 string
+            return casts.base64bytes2bytes(b64bytes)
+        except:
+            pass
+
         return o
     ########################################################
+    
     if isinstance(iter_value, dict):
         for k, v in iter_value.items():
             if isinstance(v, dict):
@@ -226,7 +141,9 @@ def hooks(iter_value, decimals_way):
                 for i in v:
                     i=hooks(v, decimals_way)
             else:
-                iter_value[k]=guess_cast(v, decimals_way)
+                guessed=guess_cast(v, decimals_way)
+#                print("GUESS_CAST", iter_value[k], decimals_way, "GOT", guessed, guessed.__class__)
+                iter_value[k]=guessed
     elif isinstance(iter_value, list):
         for i in v:
             i=hooks(i, decimals_way)
