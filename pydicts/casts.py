@@ -20,29 +20,6 @@ try:
 except:
     _=str
 
-def manage_exception(value,   ignore_exception, ignore_exception_value):
-    if ignore_exception is True:
-        return ignore_exception_value
-    curframe = currentframe()
-    calframe = getouterframes(curframe, 2)
-    function=calframe[1][3]
-    raise exceptions.CastException(f"Error in Pydicts.cast.{function} method. Value: {value}  Value class: {value.__class__.__name__}" )
-
-def manage_exception_with_format(value, format,    ignore_exception, ignore_exception_value):
-    if ignore_exception is True:
-        return ignore_exception_value
-    curframe = currentframe()
-    calframe = getouterframes(curframe, 2)
-    function=calframe[1][3]
-    raise exceptions.CastException(f"Error in Pydicts.cast.{function} method. Value: {value} Value class: {value.__class__.__name__} Format: {format}" )
-
-def manage_allowed_formats(format, allowed):
-    if not format in allowed:
-        curframe = currentframe()
-        calframe = getouterframes(curframe, 2)
-        function=calframe[1][3]
-        raise exceptions.CastException(f"Error in Pydicts.cast.{function} method. Format '{format}' is not in {allowed}" )
-
 def object_or_empty(v):
     """
         Returns and empty string if None, else return value
@@ -55,13 +32,23 @@ def str2decimal(value, ignore_exception=False, ignore_exception_value=None):
         Parameters:
             - decimal_separator. Symbol to separate decimals. For example 12.121212 (decimal_separator=".") 12.122,1223 (decimal_separator=",")
     """
+    original=value
+    error=f"Error in Pydicts.cast.str2decimal method. Value: {original} Value class: {value.__class__.__name__}"
+
     if is_noe(value) or not value.__class__ ==str:
-        return manage_exception(value, ignore_exception, ignore_exception_value)
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
     try:
         return Decimal(value)
     except:
-        return manage_exception(value, ignore_exception, ignore_exception_value)
+
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
 def str2bool(value, ignore_exception=False, ignore_exception_value=None):
     """
@@ -69,14 +56,24 @@ def str2bool(value, ignore_exception=False, ignore_exception_value=None):
         @param value String
         @return Boolean
     """
+    original=value
+    error=f"Error in Pydicts.cast.str2bool method. Value: {original} Value class: {value.__class__.__name__}"
+
     if is_noe(value) or not value.__class__ ==str:
-        return manage_exception(value, ignore_exception, ignore_exception_value)
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
         
     if value=="0" or value.lower()=="false":
         return False
     elif value=="1" or value.lower()=="true":
         return True
-    return manage_exception(value, ignore_exception, ignore_exception_value)
+    else:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
 def none2alternative(value, alternative):
     """
@@ -91,13 +88,24 @@ def bytes2str(value, code='UTF-8', ignore_exception=False, ignore_exception_valu
         Bytes 2 string
     """ 
     
+    original=value
+    error=f"Error in Pydicts.cast.bytes2str method. Value: {original} Value class: {value.__class__.__name__}"
+
     if value is None or not value.__class__==bytes:
-        return manage_exception(value, ignore_exception, ignore_exception_value)
+
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
     try:
         return value.decode(code)
     except:
-        return manage_exception(value, ignore_exception, ignore_exception_value)
+
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
     
 def str2bytes(value, code='UTF8', ignore_exception=False, ignore_exception_value=None):

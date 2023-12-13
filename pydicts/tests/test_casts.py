@@ -143,6 +143,9 @@ def test_dtaware2dtnaive():
         casts.dtaware2dtnaive(dtnaive)
     assert dt_naive==casts.dtaware2dtnaive(dt_aware)
 
+def test_dtnaive():
+    pass
+
 def test_dtnaive2dtaware():
     naive=datetime(2023, 1, 1, 0, 0, 0, 0)
     assert casts.dtnaive2dtaware(naive, "Europe/Madrid")==naive.replace(tzinfo=ZoneInfo("Europe/Madrid"))
@@ -156,6 +159,15 @@ def test_date_last_of_the_month():
     assert casts.date_last_of_the_month(2023, 11)==date(2023, 11, 30)
     with raises(ValueError):
         casts.date_first_of_the_month(2023, 13)
+
+def test_dtaware_now():
+    pass
+    
+def test_dtnaive_now():
+    pass
+    
+def test_dtaware_month_start():
+    pass
 
 def test_dtaware_month_end():
     assert casts.dtaware_month_end(2023, 11, "UTC")==datetime(2023, 11, 30, 23, 59, 59, 999999, ZoneInfo("UTC"))
@@ -172,8 +184,17 @@ def test_dtnaive_day_end():
 def test_dtnaive_day_end_from_date():
     assert casts.dtnaive_day_end_from_date(date(2023, 12, 29))==datetime(2023, 12, 29, 23, 59, 59, 999999)
 
+def test_dtaware_day_end():
+    pass
+
 def test_dtaware_day_end_from_date():
     assert casts.dtaware_day_end_from_date(date(2023, 12, 29), "UTC")==datetime(2023, 12, 29, 23, 59, 59, 999999, ZoneInfo("UTC"))
+
+def test_dtaware_day_start():
+    pass
+
+def test_dtaware_day_start_from_date():
+    pass
 
 ### Returns a dtnaive or dtawre (as parameter) with the end of the day
 #def test_dt_day_start(dt):
@@ -343,3 +364,13 @@ def test_bytes2base64bytes():
     bytes2=casts.base64bytes2bytes(base64bytes)
     assert s==casts.bytes2str(bytes2)
     
+def test_base64bytes2bytes():
+    pass
+
+def test_dtaware2epochmicros():
+    pass
+    
+def test_epochmicros2dtaware():
+    pass
+def test_epochms2dtaware():
+    pass
