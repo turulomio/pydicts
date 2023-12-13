@@ -445,18 +445,22 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
         else:
             return ignore_exception_value
 
-def str2dtaware(value, format, tz_name='UTC', ignore_exception=False, ignore_exception_value=None):
-    original=s
-    return manage_allowed_formats(format, ["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"])
-    if s.__class__!=str:
-        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
+def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False, ignore_exception_value=None):
+    original=value
+    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
+    error=f"Error in Pydicts.cast.str2dtaware method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
+    if format not in  allowed or value.__class__!=str:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
     try:
         if format=="%Y-%m-%d %H:%M:%S%z":#2017-11-20 23:00:00+00:00
-            s=s[:-3]+s[-2:]
-            dt=datetime.strptime( value, format )
+            s=value[:-3]+value[-2:]
+            dt=datetime.strptime( s, format )
             return dtaware_changes_tz(dt, tz_name)
         if format=="%Y-%m-%d %H:%M:%S.%z":#2017-11-20 23:00:00.000000+00:00  ==>  microsecond. Notice the point in format
-            s=s[:-3]+s[-2:]#quita el :
+            s=value[:-3]+value[-2:]#quita el :
             arrPunto=s.split(".")
             s=arrPunto[0]+s[-5:]
             micro=int(arrPunto[1][:-5])
@@ -464,14 +468,17 @@ def str2dtaware(value, format, tz_name='UTC', ignore_exception=False, ignore_exc
             dt=dt+timedelta(microseconds=micro)
             return dtaware_changes_tz(dt, tz_name)
         if format=="JsUtcIso": #2021-08-21T06:27:38.294Z
-            if not "Z" in s:
-                return None
-            s=s.replace("T"," ").replace("Z","")
-            dtnaive=str2dtnaive(value,"%Y-%m-%d %H:%M:%S.")
+            if not "Z" in value:
+                raise exceptions.CastException(error)
+            s=value.replace("T"," ").replace("Z","")
+            dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
             dtaware_utc=dtnaive2dtaware(dtnaive, 'UTC')
             return dtaware_changes_tz(dtaware_utc, tz_name)
     except:
-        return manage_exception_with_format(original, format,  ignore_exception, ignore_exception_value)
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
 #    else:
 #        return timezone(tz_name).localize(str2dtnaive(s,format))
