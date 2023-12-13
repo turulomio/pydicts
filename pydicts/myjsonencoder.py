@@ -110,7 +110,7 @@ def hooks(iter_value, decimals_way):
             return casts.str2dtaware(o,"JsUtcIso")
         except exceptions.CastException:
             pass
-            
+
         #Guess dtnaive
         try:
             return casts.str2dtnaive(o,"JsIso")
@@ -129,7 +129,7 @@ def hooks(iter_value, decimals_way):
             return casts.base64bytes2bytes(b64bytes)
         except:
             pass
-    
+
         return o
     ########################################################
     

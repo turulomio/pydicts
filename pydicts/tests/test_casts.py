@@ -228,6 +228,7 @@ def test_str2dtnaive():
     assert casts.str2dtnaive("202311261705", "%Y%m%d%H%M")==datetime(2023, 11, 26, 17, 5)
     assert casts.str2dtnaive("2023-11-26T17:05:05")==datetime(2023, 11, 26, 17, 5, 5)
     assert casts.str2dtnaive("2023-11-26T17:05:05.123456", "JsIso")==datetime(2023, 11, 26, 17, 5, 5, 123456)
+
     with raises(exceptions.CastException):
         casts.str2dtnaive("2023-11-26T17:05:05.123456Z")
     

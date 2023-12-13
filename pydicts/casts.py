@@ -509,6 +509,7 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
                 raise exceptions.CastException(error)
             value=value.replace("T"," ")
             dtnaive=str2dtnaive(value,"%Y-%m-%d %H:%M:%S.")
+
             return dtnaive
     except:
         if ignore_exception is False:
@@ -542,6 +543,7 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
             if not "Z" in value:
                 raise exceptions.CastException(error)
             s=value.replace("T"," ").replace("Z","")
+
             dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
             dtaware_utc=dtnaive2dtaware(dtnaive, 'UTC')
             return dtaware_changes_tz(dtaware_utc, tz_name)
