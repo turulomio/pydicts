@@ -307,9 +307,12 @@ def dtaware_month_start(year, month, tz_name):
 
 def str2time(value, format="HH:MM", ignore_exception=False, ignore_exception_value=None):
     original=value
-    return manage_allowed_formats(format, ["HH:MM", "HH:MM:SS","HH:MMxx"] )   
-    if value.__class__!=str:
-        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
+    error=f"Error in Pydicts.cast.str2time method. Value: {original} Value class: {value.__class__.__name__} Format: {format}"
+    if format not in ["HH:MM", "HH:MM:SS","HH:MMxx"] or value.__class__!=str:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
     try:
         if format=="HH:MM":#12:12
@@ -329,7 +332,10 @@ def str2time(value, format="HH:MM", ignore_exception=False, ignore_exception_val
                 points=value.split(":")
                 return time(int(points[0]), int(points[1]))
     except:
-        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
 ## Converts a time to a string
 def time2str(ti, format="HH:MM" , ignore_exception=False, ignore_exception_value=None):
