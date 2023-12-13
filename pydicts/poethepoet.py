@@ -14,6 +14,7 @@ def release():
   * poe test
   * git commit -a -m 'pydicts-{0}'
   * git push
+  * Hacer un pull request con los cambios a main
   * Hacer un nuevo tag en GitHub
   * git checkout main
   * git pull
