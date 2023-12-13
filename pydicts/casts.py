@@ -26,6 +26,7 @@ def manage_exception(value,   ignore_exception, ignore_exception_value):
     calframe = getouterframes(curframe, 2)
     function=calframe[1][3]
     raise exceptions.CastException(f"Error in Pydicts.cast.{function} method. Value: {value}  Value class: {value.__class__.__name__}" )
+
 def manage_exception_with_format(value, format,    ignore_exception, ignore_exception_value):
     if ignore_exception is True:
         return ignore_exception_value
@@ -33,7 +34,6 @@ def manage_exception_with_format(value, format,    ignore_exception, ignore_exce
     calframe = getouterframes(curframe, 2)
     function=calframe[1][3]
     raise exceptions.CastException(f"Error in Pydicts.cast.{function} method. Value: {value} Value class: {value.__class__.__name__} Format: {format}" )
-
 
 def manage_allowed_formats(format, allowed):
     if not format in allowed:
@@ -77,18 +77,14 @@ def str2bool(value, ignore_exception=False, ignore_exception_value=None):
         return True
     return manage_exception(value, ignore_exception, ignore_exception_value)
 
-### Function that converts a None value into a Decimal('0')
-### @param dec Should be a Decimal value or None
-### @return Decimal
-#def none2decimal0(dec):
-#    return none2alt(dec,Decimal('0'))
-#
-### If a value is None, returns an alternative
-#def none2alt(value, alternative):
-#    if value==None:
-#        return alternative
-#    return value
-#
+def none2alternative(value, alternative):
+    """
+        If a value is None, returns an alternative
+    """
+    if value is None:
+        return alternative
+    return value
+
 def bytes2str(value, code='UTF-8', ignore_exception=False, ignore_exception_value=None):
     """
         Bytes 2 string
@@ -375,6 +371,8 @@ def str2date(iso, format="YYYY-MM-DD", ignore_exception=False, ignore_exception_
 def str2dtnaive(s, format, ignore_exception=False, ignore_exception_value=False):
     original=s
     manage_allowed_formats(format, ["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S', "JsIso"])
+    if s.__class__!=str:
+        manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
     try:
         if format=="%Y%m%d%H%M":
             dat=datetime.strptime( s, format )

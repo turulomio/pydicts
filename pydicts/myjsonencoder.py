@@ -2,7 +2,7 @@ from datetime import datetime, date, timedelta, time
 from decimal import Decimal
 from json import JSONEncoder, dumps, loads
 from base64 import b64encode, b64decode
-from pydicts import casts
+from pydicts import casts, exceptions
 
 # Forma en que debe parsearse los Decimals
 class DecimalsWay:
@@ -120,21 +120,22 @@ def hooks(iter_value, decimals_way):
     """
         Iterates a dict or list to cast decimals and dtaware in json.loads using objeck_hook
     """
-    
-    def get_date(s):
-            return casts.str2date(s)
+#    
+#    def get_bool(s):
+#            if s=="true":#ONly for load and id json true
+#                return True
+#            elif s=="false":
+#                return False
+#            return None
             
-    def get_dtaware(s):
-        try:
-            return casts.str2dtaware(s,"JsUtcIso")
-        except:
-            return None 
-
-    def get_dtnaive(s):
-        try:
-            return casts.str2dtnaive(s,"JsIso")
-        except:
-            return None 
+#    def get_date(s):
+#            return casts.str2date(s, ignore_exception=True)
+            
+#    def get_dtaware(s):
+#            return casts.str2dtaware(s,"JsUtcIso", ignore_exception=True)
+#
+#    def get_dtnaive(s):
+#            return casts.str2dtnaive(s,"JsIso", ignore_exception=True)
             
     #    Parse the ISO8601 duration string as hours, minutes, seconds
     def get_timedelta(str):
@@ -168,13 +169,13 @@ def hooks(iter_value, decimals_way):
     #    except:
     #        return None 
             
-    def get_time(s):
-        try:
-            if not ":" in s:
-                return None
-            return time.fromisoformat(s)
-        except:
-            return None 
+#    def get_time(s):
+#        try:
+#            if not ":" in s:
+#                return None
+#            return time.fromisoformat(s)
+#        except:
+#            return None 
             
     def get_bytes(s):
         try:
@@ -189,35 +190,51 @@ def hooks(iter_value, decimals_way):
             return None
 
         
-    def guess_cast(o, decimal_way):        
+    def guess_cast(o, decimal_way):
         if decimal_way==DecimalsWay.DecimalString:
             if o.__class__==str and o.startswith("Decimal("):
                 r=get_Decimal(o)
                 if r is not None:
                     return  str(r)
+                    
+                    
+        # Guess date
+        try:
+            return casts.str2date(o)
+        except exceptions.CastException:
+            pass
+            
+            
+        #Guess dtaware
+        try:
+            return casts.str2dtaware(o,"JsUtcIso")
+        except exceptions.CastException:
+#            print (e)
+            pass
+            
+        #Guess dtnaive
+        try:
+            return casts.str2dtnaive(o,"JsIso")
+        except exceptions.CastException:
+            pass
 
-        r=get_date(o)
-        if r is not None:
-            return  r
-            
-        r=get_dtnaive(o)
-        if r is not None:
-            return  r
-            
-        r=get_dtaware(o)
-        if r is not None:
-            return  r
-            
-        r=get_time(o)
-        if r is not None:
-            return  r
-            
-        r=get_bytes(o)
-        if r is not None:
-            return  r
-        
+        #Guess time
+        try:
+            if not ":" in o:
+                return None
+            return time.fromisoformat(o)
+        except:
+            pass
+
+        #Guess Bytes
+        try:
+            return b64decode(o)
+        except:
+            pass
+    
         return o
     ########################################################
+    
     if isinstance(iter_value, dict):
         for k, v in iter_value.items():
             if isinstance(v, dict):
@@ -226,7 +243,9 @@ def hooks(iter_value, decimals_way):
                 for i in v:
                     i=hooks(v, decimals_way)
             else:
-                iter_value[k]=guess_cast(v, decimals_way)
+                guessed=guess_cast(v, decimals_way)
+                print("GUESS_CAST", iter_value[k], decimals_way, "GOT", guessed, guessed.__class__)
+                iter_value[k]=guessed
     elif isinstance(iter_value, list):
         for i in v:
             i=hooks(i, decimals_way)

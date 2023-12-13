@@ -16,6 +16,12 @@ def test_is_noe():
     assert casts.is_noe("")==True
     assert casts.is_noe("HOLA")==False
     
+    
+def test_none2alternative():
+    assert casts.none2alternative(1, 1)==1
+    assert casts.none2alternative(None, Decimal(0))==Decimal(0)
+    assert casts.none2alternative(None, None)==None
+    
 def test_object_or_empty():
     assert casts.object_or_empty(None)==""
     assert casts.object_or_empty(1)==1
