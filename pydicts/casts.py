@@ -396,6 +396,8 @@ def str2time(value, format="JsIso", ignore_exception=False, ignore_exception_val
                 points=value.split(":")
                 return time(int(points[0]), int(points[1]))
         elif format=="JsIso":#23:00:00.000000  
+            if not ":" in value:
+                raise exceptions.CastException(error)
             return time.fromisoformat(value)
     except:
         if ignore_exception is False:
