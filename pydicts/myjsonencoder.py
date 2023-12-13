@@ -1,7 +1,7 @@
 from datetime import datetime, date, timedelta, time
 from decimal import Decimal
 from json import JSONEncoder, dumps, loads
-from base64 import b64encode, b64decode
+from base64 import b64encode
 from pydicts import casts, exceptions
 
 # Forma en que debe parsearse los Decimals
@@ -44,16 +44,19 @@ class MyJSONEncoder(JSONEncoder):
     def default(self, o):
         # See "Date Time String Format" in the ECMA-262 specification.
         if isinstance(o, datetime):
-            return o.isoformat().replace("+00:00","Z")
+            print("Ahora", o, o.__class__)
+            if casts.is_aware(o):
+                print("AWARE")
+                return casts.dtaware2str(o)
+            else: #naive
+                print("NAIVE")
+                return casts.dtnaive2str(o)
         elif isinstance(o, date):
             return o.isoformat()
         elif isinstance(o, time):
             if o.utcoffset() is not None: #If it's aware
                 raise ValueError("JSON can't represent timezone-aware times.")
-            r = o.isoformat()
-            if o.microsecond:
-                r = r[:12]
-            return r
+            return casts.time2str(o)
         elif isinstance(o, timedelta):
             return self._duration_iso_string(o)
         elif isinstance(o, Decimal):

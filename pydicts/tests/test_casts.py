@@ -309,7 +309,7 @@ def test_dtaware2str():
     assert casts.dtaware2str(dt_aware, "%Y-%m-%d %H:%M:%S")=="2023-11-26 17:05:05"
     assert casts.dtaware2str(dt_aware, "%Y%m%d %H%M")=="20231126 1705"
     assert casts.dtaware2str(dt_aware, "%Y%m%d%H%M")=="202311261705"
-    assert casts.dtaware2str(dt_aware, "JsUtcIso")=="2023-11-26T17:05:05Z"
+    assert casts.dtaware2str(dt_aware, "JsUtcIso")=="2023-11-26T17:05:05.123456Z"
 
 
 def test_dtnaive2str():

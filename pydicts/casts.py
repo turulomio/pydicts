@@ -406,9 +406,9 @@ def str2time(value, format="JsIso", ignore_exception=False, ignore_exception_val
             return ignore_exception_value
 
 ## Converts a time to a string
-def time2str(value, format="jsIso" , ignore_exception=False, ignore_exception_value=None):
+def time2str(value, format="JsIso" , ignore_exception=False, ignore_exception_value=None):
     original=value
-    allowed=["HH:MM", "HH:MM:SS","Xulpymoney", "jsIso"]
+    allowed=["HH:MM", "HH:MM:SS","Xulpymoney", "JsIso"]
     error=f"Error in Pydicts.cast.str2time method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     if format not in  allowed or value.__class__!=time:
         if ignore_exception is False:
@@ -426,7 +426,7 @@ def time2str(value, format="jsIso" , ignore_exception=False, ignore_exception_va
             return ("{}:{}".format(str(value.hour).zfill(2), str(value.minute).zfill(2)))
         elif format=="HH:MM:SS":
             return ("{}:{}:{}".format(str(value.hour).zfill(2), str(value.minute).zfill(2), str(value.second).zfill(2)))
-        elif format=="jsIso":
+        elif format=="JsIso":
             return(str(value))
     except:
         if ignore_exception is False:
@@ -437,7 +437,7 @@ def time2str(value, format="jsIso" , ignore_exception=False, ignore_exception_va
 
 def str2date(value, format="YYYY-MM-DD", ignore_exception=False, ignore_exception_value=None):
     original=value
-    allowed=["YYYY-MM-DD", "DD/MM/YYYY", "DD.MM.YYYY", "DD/MM", "jsIso"]
+    allowed=["YYYY-MM-DD", "DD/MM/YYYY", "DD.MM.YYYY", "DD/MM", "JsIso"]
     error=f"Error in Pydicts.cast.str2date method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     if format not in  allowed or value.__class__!=str:
         if ignore_exception is False:
@@ -446,7 +446,7 @@ def str2date(value, format="YYYY-MM-DD", ignore_exception=False, ignore_exceptio
             return ignore_exception_value
 
     try:
-        if format in ["YYYY-MM-DD", "jsIso"]:
+        if format in ["YYYY-MM-DD", "JsIso"]:
             d=value.split("-")
             return date(int(d[0]), int(d[1]),  int(d[2]))
         if format=="DD/MM/YYYY": #DD/MM/YYYY
@@ -570,18 +570,21 @@ def epochmicros2dtaware(n, tz="UTC"):
 ## Returns a formated string of a dtaware string formatting with a zone name
 ## @param dt datetime aware object
 ## @return String
-def dtaware2str(value, format="jsUtcIso", ignore_exception=False, ignore_exception_value=None):
+def dtaware2str(value, format="JsUtcIso", ignore_exception=False, ignore_exception_value=None):
+    print("ENTRANDO DTAWARE")
     original=value
     allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"]
     error=f"Error in Pydicts.cast.dtaware2str method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
+    
+    print("ENTRANDO DTAWARE")
+    print ( format not in  allowed ,  value.__class__!=datetime , is_naive(value))
     if format not in  allowed or value.__class__!=datetime or is_naive(value):
         if ignore_exception is False:
             raise exceptions.CastException(error)
         else:
             return ignore_exception_value
-
     try:
-        print(value)
+        print(value, "AWARE")
         if format=="%Y-%m-%d":
             return value.strftime("%Y-%m-%d")
         elif format=="%Y-%m-%d %H:%M:%S": 
@@ -591,10 +594,8 @@ def dtaware2str(value, format="jsUtcIso", ignore_exception=False, ignore_excepti
         elif format=="%Y%m%d%H%M":
             return value.strftime("%Y%m%d%H%M")
         elif format=="JsUtcIso":
-            print(value)
             value=dtaware_changes_tz(value, "UTC")
-            print(value)
-            print(value.isoformat()+"Z")
+            return value.isoformat().replace("+00:00","Z")
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
