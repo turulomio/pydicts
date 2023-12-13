@@ -480,9 +480,6 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
         else:
             return ignore_exception_value
 
-#    else:
-#        return timezone(tz_name).localize(str2dtnaive(s,format))
-
 ## epoch is the time from 1,1,1970 in UTC
 ## return now(timezone(self.name))
 def dtaware2epochms(d):
@@ -518,24 +515,32 @@ def dtaware2str(dt, format):
 ## @param dt datetime aware object
 ## @param format String in ["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M"]
 ## @return String
-def dtnaive2str(dt, format, ignore_exception=False, ignore_exception_value=None):
-    original=dt
-    return manage_allowed_formats(format,["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"])
-    if dt==None:
-        return manage_exception(original, ignore_exception, ignore_exception_value)
+def dtnaive2str(value, format="JsIso", ignore_exception=False, ignore_exception_value=None):
+    original=value
+    allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsIso"]
+    error=f"Error in Pydicts.cast.dtnaive2str method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
+    if format not in  allowed or value.__class__!=datetime or is_aware(value):
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+
     try:
         if format=="%Y-%m-%d":
-            return dt.strftime("%Y-%m-%d")
+            return value.strftime("%Y-%m-%d")
         elif format=="%Y-%m-%d %H:%M:%S": 
-            return dt.strftime("%Y-%m-%d %H:%M:%S")
+            return value.strftime("%Y-%m-%d %H:%M:%S")
         elif format=="%Y%m%d %H%M": 
-            return dt.strftime("%Y%m%d %H%M")
+            return value.strftime("%Y%m%d %H%M")
         elif format=="%Y%m%d%H%M":
-            return dt.strftime("%Y%m%d%H%M")
-        elif format=="JsUtcIso":
-            return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+            return value.strftime("%Y%m%d%H%M")
+        elif format=="JsIso":
+            return value.strftime("%Y-%m-%dT%H:%M:%S")
     except:
-        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
 ## Changes zoneinfo from a dtaware object
 ## For example:

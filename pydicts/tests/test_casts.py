@@ -293,22 +293,29 @@ def test_str2dtaware():
 #
 #
 
-def test_dtaware2string():    
-    dt_aware=datetime(2023, 11, 26, 17, 5, 5, 123456, tzinfo=ZoneInfo("Europe/Madrid"))
-    assert casts.dtnaive2str(dt_aware, "%Y-%m-%d")=="2023-11-26"
-    assert casts.dtnaive2str(dt_aware, "%Y-%m-%d %H:%M:%S")=="2023-11-26 17:05:05"
-    assert casts.dtnaive2str(dt_aware, "%Y%m%d %H%M")=="20231126 1705"
-    assert casts.dtnaive2str(dt_aware, "%Y%m%d%H%M")=="202311261705"
-    assert casts.dtnaive2str(dt_aware, "JsUtcIso")=="2023-11-26T17:05:05Z"
+def test_dtaware2str():    
+    dt_naive=  datetime(2023, 11, 26, 17, 5, 5, 123456)
+    dt_aware=casts.dtnaive2dtaware(dtnaive, "UTC")
+    with raises(exceptions.CastException):
+        casts.dtaware2str(dt_naive)
+    assert casts.dtaware2str(dt_aware, "%Y-%m-%d")=="2023-11-26"
+    assert casts.dtaware2str(dt_aware, "%Y-%m-%d %H:%M:%S")=="2023-11-26 17:05:05"
+    assert casts.dtaware2str(dt_aware, "%Y%m%d %H%M")=="20231126 1705"
+    assert casts.dtaware2str(dt_aware, "%Y%m%d%H%M")=="202311261705"
+    assert casts.dtaware2str(dt_aware, "JsUtcIso")=="2023-11-26T17:05:05Z"
 
 
-def test_dtnaive2string():
-    dt_naive=datetime(2023, 11, 26, 17, 5, 5, 123456)
+def test_dtnaive2str():
+    dt_naive=  datetime(2023, 11, 26, 17, 5, 5, 123456)
+    dt_aware=casts.dtnaive2dtaware(dtnaive, "UTC")
+    with raises(exceptions.CastException):
+        casts.dtnaive2str(dt_aware)
+    
     assert casts.dtnaive2str(dt_naive, "%Y-%m-%d")=="2023-11-26"
     assert casts.dtnaive2str(dt_naive, "%Y-%m-%d %H:%M:%S")=="2023-11-26 17:05:05"
     assert casts.dtnaive2str(dt_naive, "%Y%m%d %H%M")=="20231126 1705"
     assert casts.dtnaive2str(dt_naive, "%Y%m%d%H%M")=="202311261705"
-    assert casts.dtnaive2str(dt_naive, "JsUtcIso")=="2023-11-26T17:05:05Z"
+    assert casts.dtnaive2str(dt_naive, "JsIso")=="2023-11-26T17:05:05"
 
 def test_dtaware_changes_tz():
     #Sacado date en linux
