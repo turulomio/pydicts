@@ -227,9 +227,14 @@ def test_str2time():
 
 def test_time2str():
 #    allowed=["HH:MM", "HH:MM:SS","Xulpymoney"]
-    time_=time(9, 5, 54)
+    with raises(exceptions.CastException):
+        assert casts.time2str(None)
+        
+    assert casts.time2str(None, ignore_exception=True)==None
+    time_=time(9, 5, 54, 123456)
     assert casts.time2str(time_, "HH:MM")=="09:05"
     assert casts.time2str(time_, "HH:MM:SS")=="09:05:54"
+    assert casts.time2str(time_)=="09:05:54.123456"
 
 def test_str2date():
     with raises(exceptions.CastException):

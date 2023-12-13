@@ -341,24 +341,36 @@ def str2time(value, format="JsIso", ignore_exception=False, ignore_exception_val
             return ignore_exception_value
 
 ## Converts a time to a string
-def time2str(ti, format="HH:MM" , ignore_exception=False, ignore_exception_value=None):
-    original=ti
-    
-    return manage_allowed_formats(format, ["HH:MM", "HH:MM:SS","Xulpymoney"])
+def time2str(value, format="jsIso" , ignore_exception=False, ignore_exception_value=None):
+    original=value
+    allowed=["HH:MM", "HH:MM:SS","Xulpymoney", "jsIso"]
+    error=f"Error in Pydicts.cast.str2time method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
+    if format not in  allowed or value.__class__!=time:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+            
+    if value is None:
+        return None
+
     try:
-        if ti==None:
-            return None
         if format=="Xulpymoney":
-            if ti.microsecond in (4, 5):
-                return str(ti)[11:-13]
+            if value.microsecond in (4, 5):
+                return str(value)[11:-13]
             else:
-                return str(ti)[11:-6]
+                return str(value)[11:-6]
         elif format=="HH:MM":
-            return ("{}:{}".format(str(ti.hour).zfill(2), str(ti.minute).zfill(2)))
+            return ("{}:{}".format(str(value.hour).zfill(2), str(value.minute).zfill(2)))
         elif format=="HH:MM:SS":
-            return ("{}:{}:{}".format(str(ti.hour).zfill(2), str(ti.minute).zfill(2), str(ti.second).zfill(2)))
+            return ("{}:{}:{}".format(str(value.hour).zfill(2), str(value.minute).zfill(2), str(value.second).zfill(2)))
+        elif format=="jsIso":
+            return(str(value))
     except:
-        return manage_exception_with_format(original, format, ignore_exception, ignore_exception_value)
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
 
 
 def str2date(iso, format="YYYY-MM-DD", ignore_exception=False, ignore_exception_value=None):
