@@ -322,7 +322,7 @@ def test_dtnaive2str():
     assert casts.dtnaive2str(dt_naive, "%Y-%m-%d %H:%M:%S")=="2023-11-26 17:05:05"
     assert casts.dtnaive2str(dt_naive, "%Y%m%d %H%M")=="20231126 1705"
     assert casts.dtnaive2str(dt_naive, "%Y%m%d%H%M")=="202311261705"
-    assert casts.dtnaive2str(dt_naive, "JsIso")=="2023-11-26T17:05:05"
+    assert casts.dtnaive2str(dt_naive, "JsIso")=="2023-11-26T17:05:05.123456"
 
 def test_dtaware_changes_tz():
     #Sacado date en linux

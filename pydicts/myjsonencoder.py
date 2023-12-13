@@ -94,78 +94,7 @@ def hooks(iter_value, decimals_way):
     """
         Iterates a dict or list to cast decimals and dtaware in json.loads using objeck_hook
     """
-#    
-#    def get_bool(s):
-#            if s=="true":#ONly for load and id json true
-#                return True
-#            elif s=="false":
-#                return False
-#            return None
-            
-#    def get_date(s):
-#            return casts.str2date(s, ignore_exception=True)
-            
-#    def get_dtaware(s):
-#            return casts.str2dtaware(s,"JsUtcIso", ignore_exception=True)
-#
-#    def get_dtnaive(s):
-#            return casts.str2dtnaive(s,"JsIso", ignore_exception=True)
-            
-    #    Parse the ISO8601 duration string as hours, minutes, seconds
-    def get_timedelta(str):
-    #    try:
-    ## https://stackoverflow.com/questions/36976138/is-there-an-easy-way-to-convert-iso-8601-duration-to-timedelta
-    ## Parse the ISO8601 duration as years,months,weeks,days, hours,minutes,seconds
-    ## Returns: milliseconds
-    ## Examples: "PT1H30M15.460S", "P5DT4M", "P2WT3H"
-        def get_isosplit(str, split):
-            if split in str:
-                n, str = str.split(split, 1)
-            else:
-                n = '0'
-            return n.replace(',', '.'), str  # to handle like "P0,5Y"
-
-        str = str.split('P', 1)[-1]  # Remove prefix
-        s_yr, str = get_isosplit(str, 'Y')  # Step through letter dividers
-        s_mo, str = get_isosplit(str, 'M')
-        s_wk, str = get_isosplit(str, 'W')
-        s_dy, str = get_isosplit(str, 'D')
-        _, str    = get_isosplit(str, 'T')
-        s_hr, str = get_isosplit(str, 'H')
-        s_mi, str = get_isosplit(str, 'M')
-        s_sc, str = get_isosplit(str, 'S')
-        n_yr = float(s_yr) * 365   # approx days for year, month, week
-        n_mo = float(s_mo) * 30.4
-        n_wk = float(s_wk) * 7
-        dt = datetime.timedelta(days=n_yr+n_mo+n_wk+float(s_dy), hours=float(s_hr), minutes=float(s_mi), seconds=float(s_sc))
-        print(dt)
-        return int(dt.total_seconds()*1000) ## int(dt.total_seconds()) | dt
-    #    except:
-    #        return None 
-            
-#    def get_time(s):
-#        try:
-#            if not ":" in s:
-#                return None
-#            return time.fromisoformat(s)
-#        except:
-#            return None 
-            
-#    def get_bytes(s):
-#        try:
-#            return b64decode(s)
-#        except:
-#            return None
-            
-#    def get_Decimal(s):
-#        try:
-#            return casts.str2decimal(s)
-#        except:
-#            return None
-
-        
     def guess_cast(o, decimal_way):
-        print("ENTERING ", o)
         if decimal_way==DecimalsWay.DecimalString:
             if o.__class__==str and o.startswith("Decimal("):
                 try:
@@ -201,9 +130,7 @@ def hooks(iter_value, decimals_way):
 
         #Guess Bytes
         try:
-            print("string", o)
             b64bytes=casts.str2bytes(o)# o is a b64 string
-            print("string bytes", b64bytes)
             return casts.base64bytes2bytes(b64bytes)
         except:
             pass
@@ -220,7 +147,7 @@ def hooks(iter_value, decimals_way):
                     i=hooks(v, decimals_way)
             else:
                 guessed=guess_cast(v, decimals_way)
-                print("GUESS_CAST", iter_value[k], decimals_way, "GOT", guessed, guessed.__class__)
+#                print("GUESS_CAST", iter_value[k], decimals_way, "GOT", guessed, guessed.__class__)
                 iter_value[k]=guessed
     elif isinstance(iter_value, list):
         for i in v:

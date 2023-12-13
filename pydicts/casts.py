@@ -475,6 +475,7 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
             return ignore_exception_value
 
     try:
+        print("DTNAIVE", value)
         if format=="%Y%m%d%H%M":
             dat=datetime.strptime( value, format )
             return dat
@@ -500,10 +501,10 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
         if format=="JsIso": #2021-08-21T06:27:38.294
             if "Z" in value:
                 raise exceptions.CastException(error)
-            else:
-                value=value.replace("T"," ")
-                dtnaive=str2dtnaive(value,"%Y-%m-%d %H:%M:%S.")
-                return dtnaive
+            value=value.replace("T"," ")
+            print("SINT T", value)
+            dtnaive=str2dtnaive(value,"%Y-%m-%d %H:%M:%S.")
+            return dtnaive
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -571,12 +572,10 @@ def epochmicros2dtaware(n, tz="UTC"):
 ## @param dt datetime aware object
 ## @return String
 def dtaware2str(value, format="JsUtcIso", ignore_exception=False, ignore_exception_value=None):
-    print("ENTRANDO DTAWARE")
     original=value
     allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"]
     error=f"Error in Pydicts.cast.dtaware2str method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     
-    print("ENTRANDO DTAWARE")
     print ( format not in  allowed ,  value.__class__!=datetime , is_naive(value))
     if format not in  allowed or value.__class__!=datetime or is_naive(value):
         if ignore_exception is False:
@@ -584,7 +583,6 @@ def dtaware2str(value, format="JsUtcIso", ignore_exception=False, ignore_excepti
         else:
             return ignore_exception_value
     try:
-        print(value, "AWARE")
         if format=="%Y-%m-%d":
             return value.strftime("%Y-%m-%d")
         elif format=="%Y-%m-%d %H:%M:%S": 
@@ -595,6 +593,7 @@ def dtaware2str(value, format="JsUtcIso", ignore_exception=False, ignore_excepti
             return value.strftime("%Y%m%d%H%M")
         elif format=="JsUtcIso":
             value=dtaware_changes_tz(value, "UTC")
+            print("DTAWARE2str", value)
             return value.isoformat().replace("+00:00","Z")
     except:
         if ignore_exception is False:
@@ -626,7 +625,8 @@ def dtnaive2str(value, format="JsIso", ignore_exception=False, ignore_exception_
         elif format=="%Y%m%d%H%M":
             return value.strftime("%Y%m%d%H%M")
         elif format=="JsIso":
-            return value.strftime("%Y-%m-%dT%H:%M:%S")
+            print("DTNAIVE2str", value)
+            return value.strftime("%Y-%m-%dT%H:%M:%S")+"."+str(value.microsecond).zfill(6)
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -697,3 +697,32 @@ def timedelta2str(td):
     return "{}P{}DT{:02d}H{:02d}M{:02d}{}S".format(
         sign, days, hours, minutes, seconds, ms
     )
+    
+def str2timedelta(s):
+    #    try:
+    ## https://stackoverflow.com/questions/36976138/is-there-an-easy-way-to-convert-iso-8601-duration-to-timedelta
+    ## Parse the ISO8601 duration as years,months,weeks,days, hours,minutes,seconds
+    ## Returns: milliseconds
+    ## Examples: "PT1H30M15.460S", "P5DT4M", "P2WT3H"
+        def get_isosplit(s, split):
+            if split in s:
+                n, s = s.split(split, 1)
+            else:
+                n = '0'
+            return n.replace(',', '.'), s  # to handle like "P0,5Y"
+
+        s = s.split('P', 1)[-1]  # Remove prefix
+        s_yr, s = get_isosplit(s, 'Y')  # Step through letter dividers
+        s_mo, s = get_isosplit(s, 'M')
+        s_wk, s = get_isosplit(s, 'W')
+        s_dy, s = get_isosplit(s, 'D')
+        _, s    = get_isosplit(s, 'T')
+        s_hr, s = get_isosplit(s, 'H')
+        s_mi, s = get_isosplit(s, 'M')
+        s_sc, s = get_isosplit(s, 'S')
+        n_yr = float(s_yr) * 365   # approx days for year, month, week
+        n_mo = float(s_mo) * 30.4
+        n_wk = float(s_wk) * 7
+        dt = datetime.timedelta(days=n_yr+n_mo+n_wk+float(s_dy), hours=float(s_hr), minutes=float(s_mi), seconds=float(s_sc))
+        print(dt)
+        return int(dt.total_seconds()*1000) ## int(dt.total_seconds()) | dt
