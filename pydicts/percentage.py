@@ -1,72 +1,62 @@
-from logging import warning
 from decimal import Decimal
 
 ## Class to manage percentages in spreadsheets
+## Converts values to decimal (Value is a decimal)
 class Percentage:
     def __init__(self, numerator=None, denominator=None):
-        self.setValue(self.toDecimal(numerator),self.toDecimal(denominator))
-
-    def toDecimal(self, o):
-        if o==None:
-            return o
-        if o.__class__.__name__ in ["Currency", "Money"]:
-            return o.amount
-        elif o.__class__.__name__=="Decimal":
-            return o
-        elif o.__class__.__name__ in ["int", "float"]:
-            return Decimal(o)
-        elif o.__class__.__name__=="Percentage":
-            return o.value
-        else:
-            warning (o.__class__.__name__)
-            return None
+        
+        self.setValue(numerator, denominator)
 
     def __repr__(self):
         return self.string()
 
     def __neg__(self):
-        if self.value==None:
-            return self
+        if self.value is None:
+            return Percentage(None)
         return Percentage(-self.value, 1)
 
     def __lt__(self, other):
-        if self.value==None:
-            value1=Decimal('-Infinity')
-        else:
-            value1=self.value
-        if other.value==None:
-            value2=Decimal('-Infinity')
-        else:
-            value2=other.value
-        if value1<value2:
+        if self.value is None or other.value is None:
+            return False
+        
+        
+        if self.value<other.value:
             return True
         return False
 
-
+    def __eq__(self, b):
+        
+        return self.value==b.value
 
     def __add__(self,p):
+        if self.value is None or p.value is None:
+            return None
+        
         return self.__class__(self.value+p.value,1)
 
     def __sub__(self, p):
+        if self.value is None or p.value is None:
+            return None
+        
         return self.__class__(self.value-p.value,1)
 
     def __mul__(self, value):
-        if self.value==None or value==None:
-            r=None
-        else:
-            r=self.value*self.toDecimal(value)
-        return Percentage(r, 1)
-
-    def __truediv__(self, value):
         try:
-            r=self.value/self.toDecimal(value)
+            if value.__class__==Percentage:
+                return Percentage(self.value*value.value, 1)
+        except:
+            return Percentage(None)
+
+    def __truediv__(self, other):
+        try:
+            r=self.value/other.value
         except:
             r=None
         return Percentage(r, 1)
 
     def setValue(self, numerator,  denominator):
         try:
-            self.value=Decimal(numerator/denominator)
+            self.value=Decimal(numerator)/Decimal(denominator)
         except:
             self.value=None
 
@@ -78,10 +68,18 @@ class Percentage:
 
     ## @return percentage float value
     def float_100(self):
+        if self.value is None:
+            return None
         return float(self.value_100())
 
+    ## @return percentage float value
+    def float(self):
+        if self.value is None:
+            return None
+        return float(self.value)
+
     def string(self, rnd=2):
-        if self.value==None:
+        if self.value is None:
             return "None %"
         return "{} %".format(round(self.value_100(), rnd))
 
@@ -103,6 +101,11 @@ class Percentage:
 
     def isLTZero(self):
         if self.isValid() and self.value<0:
+            return True
+        return False
+        
+    def isLETZero(self):
+        if self.isValid() and self.value<=0:
             return True
         return False
 
