@@ -1,4 +1,5 @@
-from pydicts.percentage import Percentage
+from decimal import Decimal
+from pydicts.percentage import Percentage, percentage_between
 from pytest import raises
 
 def test_percentage_init():
@@ -31,16 +32,54 @@ def test_percentage_repr():
     
 def test_percentage_mult():
     assert Percentage(1, 2)*Percentage(1,2 )==Percentage(1, 4)
+    assert Percentage(1, 2)*Percentage(None,2 )==Percentage(None)
     with raises(TypeError):
         2*Percentage(1,2 )
     
 def test_percentage_truediv():
     assert Percentage(1, 2)/Percentage(1,2 )==Percentage(1, 1)
-    with raises(TypeError):
-        2/Percentage(1,2 )
+    assert Percentage(1, 2)/Percentage(None,2 )==Percentage(None)
+    
+    
+def test_percentage_value_100():
+    assert Percentage(1, 2).value_100()==Decimal(50)
+    assert Percentage(None).value_100()==None
+    
+def test_percentage_float_100():
+    assert Percentage(1, 2).float_100()==50
+    assert Percentage(None).float_100()==None
+    
+def test_percentage_float():
+    assert Percentage(1, 2).float()==0.5
+    assert Percentage(None).float()==None
     
 def test_percentage_lt():
     assert not Percentage(1, 2)<Percentage(1, 4)
     assert Percentage(1, 4)<Percentage(1, 2)
     assert not Percentage(None)<Percentage(1, 2)
     assert not Percentage(1, 2)<Percentage(None)
+
+def test_percentage_isGETZero():
+    assert Percentage(1, 2).isGETZero()==True
+    assert Percentage(-1, 2).isGETZero()==False
+    assert Percentage(None).isGETZero()==False
+
+def test_percentage_isLETZero():
+    assert Percentage(1, 2).isLETZero()==False
+    assert Percentage(-1, 2).isLETZero()==True
+    assert Percentage(None).isLETZero()==False
+    
+def test_percentage_isGTZero():
+    assert Percentage(1, 2).isGTZero()==True
+    assert Percentage(-1, 2).isGTZero()==False
+    assert Percentage(None).isGTZero()==False
+
+def test_percentage_isLTZero():
+    assert Percentage(1, 2).isLTZero()==False
+    assert Percentage(-1, 2).isLTZero()==True
+    assert Percentage(None).isLTZero()==False
+
+def test_percentage_between():
+    assert percentage_between(1, 2)==Percentage(1,1 )
+    assert percentage_between(None,1 )==Percentage(None )
+    

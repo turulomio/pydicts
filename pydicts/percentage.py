@@ -68,7 +68,15 @@ class Percentage:
 
     ## @return percentage float value
     def float_100(self):
+        if self.value is None:
+            return None
         return float(self.value_100())
+
+    ## @return percentage float value
+    def float(self):
+        if self.value is None:
+            return None
+        return float(self.value)
 
     def string(self, rnd=2):
         if self.value is None:
@@ -93,6 +101,11 @@ class Percentage:
 
     def isLTZero(self):
         if self.isValid() and self.value<0:
+            return True
+        return False
+        
+    def isLETZero(self):
+        if self.isValid() and self.value<=0:
             return True
         return False
 
