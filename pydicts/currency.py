@@ -1,20 +1,24 @@
 from logging import error
 from sys import exit
 from decimal import Decimal
+from ccy import dump_currency_table
+
+
+def currencies_dictionary():
+    print(dump_currency_table())
+
+print(currencies_dictionary())
 
 ## Class to manage currencies in officegenerator
 ##
 ## The symbol is defined by code with self.symbol()
 class Currency:
-    def __init__(self, amount=None,  currency=None) :
+    def __init__(self, amount=None,  currency="EUR") :
         if amount==None:
             self.amount=Decimal(0)
         else:
             self.amount=Decimal(str(amount))
-        if currency==None:
-            self.currency='EUR'
-        else:
-            self.currency=currency
+
 
 
     def __add__(self, money):
