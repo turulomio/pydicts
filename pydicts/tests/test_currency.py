@@ -51,3 +51,11 @@ def test_currency_lt():
         a<b
     assert not a<a
     assert a< a+a
+    
+def test_currency_lte():
+    a=Currency(12.12, "EUR")
+    b=Currency(0.88, "USD")
+    with raises(exceptions.CurrencyOperationsException):
+        a<=b
+    assert not a<=a
+    assert a<= a+a
