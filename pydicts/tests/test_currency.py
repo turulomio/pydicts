@@ -30,4 +30,24 @@ def test_currency_sub():
     b=Currency(0.88, "USD")
     assert a-a==Currency(0, "EUR")
     with raises(exceptions.CurrencyOperationsException):
-        a-b
+        a-b        
+        
+def test_currency_mul():
+    a=Currency(12.12, "EUR")
+    b=Currency(0.88, "USD")
+    assert (a*a)==Currency( 146.8944, "EUR")
+    with raises(exceptions.CurrencyOperationsException):
+        a*b
+    with raises(TypeError):
+        2*a
+    
+    a*2==Currency(24.24, "EUR")
+
+
+def test_currency_lt():
+    a=Currency(12.12, "EUR")
+    b=Currency(0.88, "USD")
+    with raises(exceptions.CurrencyOperationsException):
+        a<b
+    assert not a<a
+    assert a< a+a

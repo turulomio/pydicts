@@ -52,23 +52,23 @@ class Currency:
             return True
         return False
 
-    def __add__(self, money):
+    def __add__(self, other):
         """Si las divisas son distintas, queda el resultado con la divisa del primero"""
-        if self.currency==money.currency:
-            return self.__class__(self.amount+money.amount, self.currency)
+        if self.currency==other.currency:
+            return Currency(self.amount+other.amount, self.currency)
         else:
             raise exceptions.CurrencyOperationsException("Before adding, please convert to the same currency")
 
-    def __sub__(self, money):
+    def __sub__(self, other):
         """Si las divisas son distintas, queda el resultado con la divisa del primero"""
-        if self.currency==money.currency:
-            return self.__class__(self.amount-money.amount, self.currency)
+        if self.currency==other.currency:
+            return Currency(self.amount-other.amount, self.currency)
         else:
             raise exceptions.CurrencyOperationsException("Before substracting, please convert to the same currency")
 
-    def __lt__(self, money):
-        if self.currency==money.currency:
-            if self.amount < money.amount:
+    def __lt__(self, other):
+        if self.currency==other.currency:
+            if self.amount < other.amount:
                 return True
             return False
         else:
@@ -76,19 +76,21 @@ class Currency:
 
     ## Si las divisas son distintas, queda el resultado con la divisa del primero
     ##
-    ## En caso de querer multiplicar por un numero debe ser despues. For example: money*4
-    def __mul__(self, money):
-        if money.__class__.__name__ in ("int",  "float", "Decimal"):
-            return self.__class__(self.amount*money, self.currency)
-        if self.currency==money.currency:
-            return self.__class__(self.amount*money.amount, self.currency)
+    ## En caso de querer multiplicar por un numero debe ser despues. For example: other*4
+    def __mul__(self, other):
+        if other.__class__.__name__ in ("int",  "float", "Decimal"):
+            return Currency(self.amount*other, self.currency)
+
+        if self.currency==other.currency:
+            print(self.amount, other.amount, self.amount*other.amount)
+            return Currency(self.amount*other.amount, self.currency)
         else:
             raise exceptions.CurrencyOperationsException("Before multiplying, please convert to the same currency")
 
-    def __truediv__(self, money):
+    def __truediv__(self, other):
         """Si las divisas son distintas, queda el resultado con la divisa del primero"""
-        if self.currency==money.currency:
-            return self.__class__(self.amount/money.amount, self.currency)
+        if self.currency==other.currency:
+            return Currency(self.amount/other.amount, self.currency)
         else:
             raise exceptions.CurrencyOperationsException("Before true dividing, please convert to the same currency")
 
@@ -132,8 +134,8 @@ class Currency:
             return False
 
     def __neg__(self):
-        """Devuelve otro money con el amount con signo cambiado"""
-        return self.__class__(-self.amount, self.currency)
+        """Devuelve otro other con el amount con signo cambiado"""
+        return Currency(-self.amount, self.currency)
 
     def round(self, digits=2):
         return round(self.amount, digits)
