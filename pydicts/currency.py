@@ -2,12 +2,25 @@ from logging import error
 from sys import exit
 from decimal import Decimal
 from ccy import dump_currency_table
+from pydicts import lod
 
+def currencies_list():
+    lod_=[]
+    for code_, name, iso, symbol, country, order, rounding in dump_currency_table()[1:]:
+        lod_.append({
+            "code":code_, 
+            "name":name, 
+            "iso":iso, 
+            "symbol":symbol, 
+            "country":country, 
+            "order":order, 
+            "rounding":rounding
+        })
+    return lod.lod_order_by(lod_,"code")
 
-def currencies_dictionary():
-    print(dump_currency_table())
-
-print(currencies_dictionary())
+def currencies_odod():
+    return lod.lod2odod(currencies_list(), "code")
+    
 
 ## Class to manage currencies in officegenerator
 ##

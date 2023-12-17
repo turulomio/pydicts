@@ -95,6 +95,13 @@ def lod2dod(lod, key):
         d[ld[key]]=ld
     return d
     
+## Converts a lod to an ordered dictionary of dictionarys
+def lod2odod(lod, key):
+    d={}
+    for ld in lod:
+        d[ld[key]]=ld
+    return d
+    
 ## Converts a lod to a dict using (key1,key2) tuple  as new dict key, and the dict as a value
 def lod2dod_tuple(lod, key1, key2):
     d={}
