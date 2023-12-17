@@ -12,3 +12,6 @@ class LodYMVException(Exception):
     
 class LolException(Exception):
     pass
+
+class CurrencyOperationsException(Exception):
+    pass

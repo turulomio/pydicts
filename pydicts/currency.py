@@ -2,7 +2,10 @@ from logging import error
 from sys import exit
 from decimal import Decimal
 from ccy import dump_currency_table
-from pydicts import lod
+from html import unescape
+from pydicts import lod, exceptions
+
+
 
 def currencies_list():
     lod_=[]
@@ -11,16 +14,29 @@ def currencies_list():
             "code":code_, 
             "name":name, 
             "iso":iso, 
-            "symbol":symbol, 
+            "symbol_html":symbol, 
+            "symbol": unescape(symbol), 
             "country":country, 
+            
             "order":order, 
             "rounding":rounding
         })
+    lod_.append({
+        "code":"u", 
+        "name": "Unit", 
+        "iso":"", 
+        "symbol_html":"u", 
+        "symbol": "u", 
+        "country":"WW", 
+        "order": 0, 
+        "rounding":6, 
+    })
     return lod.lod_order_by(lod_,"code")
 
 def currencies_odod():
     return lod.lod2odod(currencies_list(), "code")
     
+currencies=currencies_odod()
 
 ## Class to manage currencies in officegenerator
 ##
@@ -31,16 +47,19 @@ class Currency:
             self.amount=Decimal(0)
         else:
             self.amount=Decimal(str(amount))
+        self.currency=currency
 
-
+    def __eq__(self, other):
+        if self.amount==other.amount and self.currency==other.currency:
+            return True
+        return False
 
     def __add__(self, money):
         """Si las divisas son distintas, queda el resultado con la divisa del primero"""
         if self.currency==money.currency:
             return self.__class__(self.amount+money.amount, self.currency)
         else:
-            error("Before adding, please convert to the same currency")
-            raise "OdfMoneyOperationException"
+            raise exceptions.CurrencyOperationsException("Before adding, please convert to the same currency")
 
     def __sub__(self, money):
         """Si las divisas son distintas, queda el resultado con la divisa del primero"""
@@ -86,7 +105,7 @@ class Currency:
     ## @param digits int that defines the number of decimals. 2 by default
     ## @return string
     def string(self,   digits=2):
-        return "{} {}".format(round(self.amount, digits), currency_symbol(self.currency))
+        return "{} {}".format(round(self.amount, digits), currencies[self.currency]["symbol"])
 
     def isZero(self):
         if self.amount==Decimal(0):
@@ -126,35 +145,6 @@ class Currency:
         return round(self.amount, digits)
 
 
-## Returns the symbol of the currency
-def currency_symbol(currency):
-    if currency=="EUR":
-        return "€"
-    elif currency=="USD":
-        return "$"
-    elif currency in ["CNY",  "JPY"]:
-        return "¥"
-    elif currency=="GBP":
-        return "£"
-    elif currency=="u":
-            return "u"## Returns the symbol of the currency
 
-def currency_name(name):
-    if name=="EUR":
-        return "Euro"
-    elif name=="USD":
-        return "American Dolar"
-    elif name=="CNY":
-        return "Chinese Yoan"
-    elif name=="JPY":
-        return "Japanes Yen"
-    elif name=="GBP":
-        return "Pound"
-    elif name=="u":
-            return "Unit"
-            
-            
-def MostCommonCurrencyTypes():
-    return ['CNY', 'EUR', 'GBP', 'JPY', 'USD', 'u']
 
 
