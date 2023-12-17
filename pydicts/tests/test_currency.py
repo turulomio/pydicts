@@ -23,3 +23,11 @@ def test_currency_eq():
     a=Currency(12.12, "EUR")
     b=Currency(0.88, "USD")
     assert not a==b
+    
+        
+def test_currency_sub():
+    a=Currency(12.12, "EUR")
+    b=Currency(0.88, "USD")
+    assert a-a==Currency(0, "EUR")
+    with raises(exceptions.CurrencyOperationsException):
+        a-b

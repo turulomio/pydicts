@@ -1,5 +1,3 @@
-from logging import error
-from sys import exit
 from decimal import Decimal
 from ccy import dump_currency_table
 from html import unescape
@@ -66,8 +64,7 @@ class Currency:
         if self.currency==money.currency:
             return self.__class__(self.amount-money.amount, self.currency)
         else:
-            error("Before substracting, please convert to the same currency")
-            raise "CurrencyOperationException"
+            raise exceptions.CurrencyOperationsException("Before substracting, please convert to the same currency")
 
     def __lt__(self, money):
         if self.currency==money.currency:
@@ -75,8 +72,7 @@ class Currency:
                 return True
             return False
         else:
-            error("Before lt ordering, please convert to the same currency")
-            exit(1)
+            raise exceptions.CurrencyOperationsException("Before lt ordering, please convert to the same currency")
 
     ## Si las divisas son distintas, queda el resultado con la divisa del primero
     ##
@@ -87,16 +83,14 @@ class Currency:
         if self.currency==money.currency:
             return self.__class__(self.amount*money.amount, self.currency)
         else:
-            error("Before multiplying, please convert to the same currency")
-            exit(1)
+            raise exceptions.CurrencyOperationsException("Before multiplying, please convert to the same currency")
 
     def __truediv__(self, money):
         """Si las divisas son distintas, queda el resultado con la divisa del primero"""
         if self.currency==money.currency:
             return self.__class__(self.amount/money.amount, self.currency)
         else:
-            error("Before true dividing, please convert to the same currency")
-            exit(1)
+            raise exceptions.CurrencyOperationsException("Before true dividing, please convert to the same currency")
 
     def __repr__(self):
         return self.string(2)
