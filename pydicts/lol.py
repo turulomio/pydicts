@@ -33,11 +33,11 @@ def list_remove_positions(l, listindex):
     return r
 
 ## lol is a list of list. Naned List Of Rows, used in myqtablewidget
-## @param listindex is a list of column indexes to remove
-def lol_remove_columns(rows, listindex):
+## @param list_of_indexes is a list of column indexes to remove
+def lol_remove_columns(rows, list_of_indexes):
     r_rows=[]
     for i, row in enumerate(rows):
-        r_rows.append(list_remove_positions(row,listindex))
+        r_rows.append(list_remove_positions(row,list_of_indexes))
     return r_rows
 
 ## lol is a list of list. Naned List Of Rows, used in myqtablewidget
