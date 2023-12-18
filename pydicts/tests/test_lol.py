@@ -9,7 +9,14 @@ for i in range(10):
     lol_.append([1*i,2*i,3*i])
 
 def test_lol_add_column():
-    lol.lol_add_column(lol_, 2,  [1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
+    new_lol=lol.lol_add_column(lol_, 2,  [1, 2, 3, 4, 5, 6, 7, 8, 9, 0])
+    assert len(lol_[0])+1==len(new_lol[0])
+    with raises(exceptions.LolException):
+        lol.lol_add_column(lol_, 2,  [1, ]) #Different size
+
+def test_lol_remove_columns():
+    new_lol=lol.lol_remove_columns(lol_, [2])
+    assert len(lol_[0])-1==len(new_lol[0])
 
 def test_lol_print():
     lol.lol_print(lol_)
@@ -18,9 +25,13 @@ def test_lol_print():
     
 def test_lol_transposed():
     transposed=lol.lol_transposed(lol_)
+    assert transposed[0]==[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
     transposed=lol.lol_transposed([])
+    assert transposed==[]
+
     with raises(exceptions.LolException):
-        transposed=lol.lol_transposed(None)
+        lol.lol_transposed(None)
 
 #
 #    lor=[]

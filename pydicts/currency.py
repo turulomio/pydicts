@@ -73,6 +73,30 @@ class Currency:
             return False
         else:
             raise exceptions.CurrencyOperationsException("Before lt ordering, please convert to the same currency")
+    
+    def __le__(self, other):
+        if self.currency==other.currency:
+            if self.amount <= other.amount:
+                return True
+            return False
+        else:
+            raise exceptions.CurrencyOperationsException("Before lt ordering, please convert to the same currency")
+            
+    def __gt__(self, other):
+        if self.currency==other.currency:
+            if self.amount > other.amount:
+                return True
+            return False
+        else:
+            raise exceptions.CurrencyOperationsException("Before lt ordering, please convert to the same currency")
+            
+    def __ge__(self, other):
+        if self.currency==other.currency:
+            if self.amount >= other.amount:
+                return True
+            return False
+        else:
+            raise exceptions.CurrencyOperationsException("Before lt ordering, please convert to the same currency")
 
     ## Si las divisas son distintas, queda el resultado con la divisa del primero
     ##
