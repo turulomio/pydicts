@@ -97,7 +97,7 @@ def lod2dod(lod, key):
     
 ## Converts a lod to an ordered dictionary of dictionarys
 def lod2odod(lod, key):
-    d={}
+    d=OrderedDict()
     for ld in lod:
         d[ld[key]]=ld
     return d

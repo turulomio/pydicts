@@ -30,6 +30,25 @@ def tests_lod_sum():
         lod.lod_sum(lod_, "d", ignore_nones=False)==16
     assert "NoneType" in str(excinfo.value)
     
+def test_lod_average():
+    lod.lod_print(lod_)
+    assert lod.lod_average(lod_,"c")==0
+    assert lod.lod_average(lod_,"d")==8
+
+def test_lod_average_ponderated():
+    assert lod.lod_average_ponderated(lod_,"e", "c")==0
+    
+def test_lod_median():
+    assert lod.lod_median(lod_,"c")==0
+    
+def tests_lod_sum_positives():
+    assert lod.lod_sum_positives(lod_, "c")==Decimal("12.32")
+    assert lod.lod_sum_positives(lod_, "d")==16
+    
+def tests_lod_sum_negatives():
+    assert lod.lod_sum_negatives(lod_, "c")==Decimal("-12.32")
+    assert lod.lod_sum_negatives(lod_, "d")==0
+    
 def test_lod_remove_key():
     assert lod.lod_has_key(lod_, "d")
     lod.lod_remove_key(lod_, "d")
@@ -63,3 +82,11 @@ def test_calculate():
     lod.lod_print(new_lod)
     assert "NEW C" in lod.lod_keys(new_lod)
     assert "NEW C" in lod.lod_keys(lod_)
+    
+def test_lod2dod():
+    dod_=lod.lod2dod(lod_, "c")
+    print(dod_)
+    assert dod_[Decimal("12.32")]==lod_[0]
+def test_dod2lod():
+    dod_=lod.lod2dod(lod_, "c")
+    assert lod_==lod.dod2lod(dod_)
