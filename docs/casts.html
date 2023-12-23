@@ -1,0 +1,871 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Casts and other utils &#8212; Pydicts documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'casts';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="LOD" href="lod.html" />
+    <link rel="prev" title="Pydicts project" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Pydicts documentation - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Pydicts documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Pydicts project
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Casts and other utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lod.html">LOD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lod_xyv.html">LOD_XYV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lod_ymv.html">LOD_YMV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lol.html">LOL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="currency.html">Currency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="percentage.html">Percentage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="myjsonencoder.html">MyJsonEncoder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pylatex.html">PyLatex</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/turulomio/pydicts" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/turulomio/pydicts/issues/new?title=Issue%20on%20page%20%2Fcasts.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/casts.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Casts and other utils</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-exception">ignore_exception</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#casts">Casts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#base64bytes2bytes">base64bytes2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2base64bytes">bytes2base64bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2str">bytes2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2dtnaive">dtaware2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochmicros">dtaware2epochmicros</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochms">dtaware2epochms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2str">dtaware2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2dtaware">dtnaive2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2str">dtnaive2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochmicros2dtaware">epochmicros2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochms2dtaware">epochms2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#none2alternative">none2alternative</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bytes">str2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2date">str2date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2decimal">str2decimal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtaware">str2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtnaive">str2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2time">str2time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2timedelta">str2timedelta</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time2str">time2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#timedelta2str">timedelta2str</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-and-time-utils">Date and time utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-month">date_first_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-next-x-months">date_first_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-year">date_first_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-month">date_last_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-next-x-months">date_last_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-year">date_last_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware">dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-changes-tz">dtaware_changes_tz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end">dtaware_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end-from-date">dtaware_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start">dtaware_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start-from-date">dtaware_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-end">dtaware_month_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-start">dtaware_month_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-now">dtaware_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-end">dtaware_year_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-start">dtaware_year_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive">dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end">dtnaive_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end-from-date">dtnaive_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start">dtnaive_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start-from-date">dtnaive_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-now">dtnaive_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-aware">is_aware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-naive">is_naive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#months">months</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utils">Other utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-noe">is_noe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#object-or-empty">object_or_empty</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="casts-and-other-utils">
+<h1>Casts and other utils<a class="headerlink" href="#casts-and-other-utils" title="Permalink to this heading">#</a></h1>
+<p>Casting is essential in programming. With Pydicts I try to put together main castings, to work easyly with all kind of data structures.</p>
+<section id="ignore-exception">
+<h2>ignore_exception<a class="headerlink" href="#ignore-exception" title="Permalink to this heading">#</a></h2>
+<p>Morever, this module casting function has two additional parameters, that are useful for rapid development:</p>
+<ul class="simple">
+<li><p><strong>ignore_exception</strong>. By default False. If you set this parameter to True, casting with return ignore_exception_value if a CastException happens.</p></li>
+<li><p><strong>ignore_exception_value</strong>. By default None. It’s the value casting will return if a CastException happens</p></li>
+</ul>
+<p>For example, this code  <code class="docutils literal notranslate"><span class="pre">casts.str2bool(None)</span></code>  will raise a CastException, due to None is not a valid value.</p>
+<p>But this code will return None</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And this code will return False</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">ignore_exception_value</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="casts">
+<h2>Casts<a class="headerlink" href="#casts" title="Permalink to this heading">#</a></h2>
+<section id="base64bytes2bytes">
+<h3>base64bytes2bytes<a class="headerlink" href="#base64bytes2bytes" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="bytes2base64bytes">
+<h3>bytes2base64bytes<a class="headerlink" href="#bytes2base64bytes" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="bytes2str">
+<h3>bytes2str<a class="headerlink" href="#bytes2str" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware2dtnaive">
+<h3>dtaware2dtnaive<a class="headerlink" href="#dtaware2dtnaive" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware2epochmicros">
+<h3>dtaware2epochmicros<a class="headerlink" href="#dtaware2epochmicros" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware2epochms">
+<h3>dtaware2epochms<a class="headerlink" href="#dtaware2epochms" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware2str">
+<h3>dtaware2str<a class="headerlink" href="#dtaware2str" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive2dtaware">
+<h3>dtnaive2dtaware<a class="headerlink" href="#dtnaive2dtaware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive2str">
+<h3>dtnaive2str<a class="headerlink" href="#dtnaive2str" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="epochmicros2dtaware">
+<h3>epochmicros2dtaware<a class="headerlink" href="#epochmicros2dtaware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="epochms2dtaware">
+<h3>epochms2dtaware<a class="headerlink" href="#epochms2dtaware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="none2alternative">
+<h3>none2alternative<a class="headerlink" href="#none2alternative" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2bool">
+<h3>str2bool<a class="headerlink" href="#str2bool" title="Permalink to this heading">#</a></h3>
+<p>Converts a string to a boolean</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="s2">&quot;true&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p>These calls will raise CastException:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(None)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(True)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(&quot;Verdadero&quot;)</span></code></p></li>
+</ul>
+</section>
+<section id="str2bytes">
+<h3>str2bytes<a class="headerlink" href="#str2bytes" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2date">
+<h3>str2date<a class="headerlink" href="#str2date" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2decimal">
+<h3>str2decimal<a class="headerlink" href="#str2decimal" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2dtaware">
+<h3>str2dtaware<a class="headerlink" href="#str2dtaware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2dtnaive">
+<h3>str2dtnaive<a class="headerlink" href="#str2dtnaive" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2time">
+<h3>str2time<a class="headerlink" href="#str2time" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2timedelta">
+<h3>str2timedelta<a class="headerlink" href="#str2timedelta" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="time2str">
+<h3>time2str<a class="headerlink" href="#time2str" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="timedelta2str">
+<h3>timedelta2str<a class="headerlink" href="#timedelta2str" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="date-and-time-utils">
+<h2>Date and time utils<a class="headerlink" href="#date-and-time-utils" title="Permalink to this heading">#</a></h2>
+<section id="date-first-of-the-month">
+<h3>date_first_of_the_month<a class="headerlink" href="#date-first-of-the-month" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="date-first-of-the-next-x-months">
+<h3>date_first_of_the_next_x_months<a class="headerlink" href="#date-first-of-the-next-x-months" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="date-first-of-the-year">
+<h3>date_first_of_the_year<a class="headerlink" href="#date-first-of-the-year" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="date-last-of-the-month">
+<h3>date_last_of_the_month<a class="headerlink" href="#date-last-of-the-month" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="date-last-of-the-next-x-months">
+<h3>date_last_of_the_next_x_months<a class="headerlink" href="#date-last-of-the-next-x-months" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="date-last-of-the-year">
+<h3>date_last_of_the_year<a class="headerlink" href="#date-last-of-the-year" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware">
+<h3>dtaware<a class="headerlink" href="#dtaware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-changes-tz">
+<h3>dtaware_changes_tz<a class="headerlink" href="#dtaware-changes-tz" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-day-end">
+<h3>dtaware_day_end<a class="headerlink" href="#dtaware-day-end" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-day-end-from-date">
+<h3>dtaware_day_end_from_date<a class="headerlink" href="#dtaware-day-end-from-date" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-day-start">
+<h3>dtaware_day_start<a class="headerlink" href="#dtaware-day-start" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-day-start-from-date">
+<h3>dtaware_day_start_from_date<a class="headerlink" href="#dtaware-day-start-from-date" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-month-end">
+<h3>dtaware_month_end<a class="headerlink" href="#dtaware-month-end" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-month-start">
+<h3>dtaware_month_start<a class="headerlink" href="#dtaware-month-start" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-now">
+<h3>dtaware_now<a class="headerlink" href="#dtaware-now" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-year-end">
+<h3>dtaware_year_end<a class="headerlink" href="#dtaware-year-end" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-year-start">
+<h3>dtaware_year_start<a class="headerlink" href="#dtaware-year-start" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive">
+<h3>dtnaive<a class="headerlink" href="#dtnaive" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive-day-end">
+<h3>dtnaive_day_end<a class="headerlink" href="#dtnaive-day-end" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive-day-end-from-date">
+<h3>dtnaive_day_end_from_date<a class="headerlink" href="#dtnaive-day-end-from-date" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive-day-start">
+<h3>dtnaive_day_start<a class="headerlink" href="#dtnaive-day-start" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive-day-start-from-date">
+<h3>dtnaive_day_start_from_date<a class="headerlink" href="#dtnaive-day-start-from-date" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive-now">
+<h3>dtnaive_now<a class="headerlink" href="#dtnaive-now" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="is-aware">
+<h3>is_aware<a class="headerlink" href="#is-aware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="is-naive">
+<h3>is_naive<a class="headerlink" href="#is-naive" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="months">
+<h3>months<a class="headerlink" href="#months" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="other-utils">
+<h2>Other utils<a class="headerlink" href="#other-utils" title="Permalink to this heading">#</a></h2>
+<section id="is-noe">
+<h3>is_noe<a class="headerlink" href="#is-noe" title="Permalink to this heading">#</a></h3>
+<p>Return if value is None or an empty string</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_noe</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_noe</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_noe</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+True
+False
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="object-or-empty">
+<h3>object_or_empty<a class="headerlink" href="#object-or-empty" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Pydicts project</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lod.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">LOD</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-exception">ignore_exception</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#casts">Casts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#base64bytes2bytes">base64bytes2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2base64bytes">bytes2base64bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2str">bytes2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2dtnaive">dtaware2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochmicros">dtaware2epochmicros</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochms">dtaware2epochms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2str">dtaware2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2dtaware">dtnaive2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2str">dtnaive2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochmicros2dtaware">epochmicros2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochms2dtaware">epochms2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#none2alternative">none2alternative</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bytes">str2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2date">str2date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2decimal">str2decimal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtaware">str2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtnaive">str2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2time">str2time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2timedelta">str2timedelta</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time2str">time2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#timedelta2str">timedelta2str</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-and-time-utils">Date and time utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-month">date_first_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-next-x-months">date_first_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-year">date_first_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-month">date_last_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-next-x-months">date_last_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-year">date_last_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware">dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-changes-tz">dtaware_changes_tz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end">dtaware_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end-from-date">dtaware_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start">dtaware_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start-from-date">dtaware_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-end">dtaware_month_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-start">dtaware_month_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-now">dtaware_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-end">dtaware_year_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-start">dtaware_year_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive">dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end">dtnaive_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end-from-date">dtnaive_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start">dtnaive_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start-from-date">dtnaive_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-now">dtnaive_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-aware">is_aware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-naive">is_naive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#months">months</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utils">Other utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-noe">is_noe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#object-or-empty">object_or_empty</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Turulomio
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

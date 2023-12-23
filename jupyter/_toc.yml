@@ -4,5 +4,12 @@
 format: jb-book
 root: intro
 chapters:
+- file: casts
 - file: lod
+- file: lod_xyv
+- file: lod_ymv
 - file: lol
+- file: currency
+- file: percentage
+- file: myjsonencoder
+- file: pylatex

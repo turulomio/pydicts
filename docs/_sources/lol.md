@@ -36,21 +36,12 @@ lol.lol_print(lol_)
 
 Returns a trasnsposed list of lists 
 
-```python
->>> from pydicts.lol import lol_transposed
->>> lol_=[[1, 2, 3], [4, 5, 6]]
->>> lol.lol_print(lol_)
-+---+---+---+
-| 1 | 2 | 3 |
-| 4 | 5 | 6 |
-+---+---+---+
->>> transposed=lol.lol_transposed(lol_)
->>> lol.lol_print(transposed)
-+---+---+
-| 1 | 4 |
-| 2 | 5 |
-| 3 | 6 |
-+---+---+
+```{code-cell}
+from pydicts.lol import lol_transposed
+lol_=[[1, 2, 3], [4, 5, 6]]
+lol.lol_print(lol_)
+transposed=lol.lol_transposed(lol_)
+lol.lol_print(transposed)
 ```
 
 ## lol_get_column
