@@ -21,6 +21,5 @@ env/
 .env/
 dist/
 .python3.10
-.coverage
 jupyter/_build/.doctrees/
 jupyter/_build/jupyter_execute/
