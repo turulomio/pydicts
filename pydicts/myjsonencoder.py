@@ -122,6 +122,12 @@ def hooks(iter_value, decimals_way):
             return casts.str2time(o)
         except exceptions.CastException:
             pass
+                    
+        # Guess date
+        try:
+            return casts.str2timedelta(o)
+        except exceptions.CastException:
+            pass
 
         #Guess Bytes
         try:

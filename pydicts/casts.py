@@ -11,6 +11,7 @@ from importlib.resources import files
 from pydicts import exceptions
 from zoneinfo import ZoneInfo
 from base64 import b64encode, b64decode
+from isodate import parse_duration, duration_isoformat
 
 
 try:
@@ -671,61 +672,43 @@ def months(year_from, month_from, year_to=None, month_to=None):
         r.append((current.year,current.month))
         current=date_first_of_the_next_x_months(current.year, current.month, 1)
     return r
-
-
     
-def timedelta2str(td):
-        # Part of this code is from https://github.com/django/django/blob/main/django/core/serializers/json.py
-    # JSONEncoder subclass that knows how to encode date/time, decimal types, and UUIDs.
-    def _get_duration_components(duration):
-        days = duration.days
-        seconds = duration.seconds
-        microseconds = duration.microseconds
-
-        minutes = seconds // 60
-        seconds %= 60
-
-
-        hours = minutes // 60
-        minutes %= 60
-
-        return days, hours, minutes, seconds, microseconds
-    if td < timedelta(0):
-        sign = "-"
-        td *= -1
-    else:
-        sign = ""
-
-    days, hours, minutes, seconds, microseconds = _get_duration_components(td)
-    ms = ".{:06d}".format(microseconds) if microseconds else ""
-    return "{}P{}DT{:02d}H{:02d}M{:02d}{}S".format(
-        sign, days, hours, minutes, seconds, ms
-    )
+def timedelta2str(value, ignore_exception=False, ignore_exception_value=None):
+    """
+        Converts a timedelta object into a string in ISO_8601
+    """
+    original=value
+    error=f"Error in Pydicts.cast.timedelta2str method. Value: {original} Value class: {value.__class__.__name__}"
+    if is_noe(value):
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+            
+    try:
+        return duration_isoformat(value)
+    except:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
     
-def str2timedelta(s):
-    #    try:
-    ## https://stackoverflow.com/questions/36976138/is-there-an-easy-way-to-convert-iso-8601-duration-to-timedelta
-    ## Parse the ISO8601 duration as years,months,weeks,days, hours,minutes,seconds
-    ## Returns: milliseconds
-    ## Examples: "PT1H30M15.460S", "P5DT4M", "P2WT3H"
-        def get_isosplit(s, split):
-            if split in s:
-                n, s = s.split(split, 1)
-            else:
-                n = '0'
-            return n.replace(',', '.'), s  # to handle like "P0,5Y"
-
-        s = s.split('P', 1)[-1]  # Remove prefix
-        s_yr, s = get_isosplit(s, 'Y')  # Step through letter dividers
-        s_mo, s = get_isosplit(s, 'M')
-        s_wk, s = get_isosplit(s, 'W')
-        s_dy, s = get_isosplit(s, 'D')
-        _, s    = get_isosplit(s, 'T')
-        s_hr, s = get_isosplit(s, 'H')
-        s_mi, s = get_isosplit(s, 'M')
-        s_sc, s = get_isosplit(s, 'S')
-        n_yr = float(s_yr) * 365   # approx days for year, month, week
-        n_mo = float(s_mo) * 30.4
-        n_wk = float(s_wk) * 7
-        dt = datetime.timedelta(days=n_yr+n_mo+n_wk+float(s_dy), hours=float(s_hr), minutes=float(s_mi), seconds=float(s_sc))
-        return int(dt.total_seconds()*1000) ## int(dt.total_seconds()) | dt
+def str2timedelta(value, ignore_exception=False, ignore_exception_value=None):
+    """
+        Converts a string in ISO_8601 in a timedelta or duration
+    """
+    original=value
+    error=f"Error in Pydicts.cast.str2timedelta method. Value: {original} Value class: {value.__class__.__name__}"
+    if is_noe(value):
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+    try:
+        return parse_duration(value)
+    except:
+        if ignore_exception is False:
+            raise exceptions.CastException(error)
+        else:
+            return ignore_exception_value
+    

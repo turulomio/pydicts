@@ -10,7 +10,7 @@ d["Integer"]=12112
 d["Float"]=12121.1212
 d["Date"]=date.today()
 d["Datetime"]=datetime.now()
-d["Timedelta"]=timedelta(hours=4, days=2, minutes=12,  seconds=12)
+d["Timedelta"]=timedelta(days=396, hours=4, minutes=12,  seconds=12, microseconds=121212)
 d["Time"]=time(12, 12, 12, 123456)
 d["Datetime aware"]=d["Datetime"].replace(tzinfo=ZoneInfo("UTC"))
 d["Bytes"]=b"Byte array"
@@ -32,7 +32,7 @@ def test_myjsonencoder():
     assert json_["Bytes"]==d["Bytes"]
     assert json_["Decimal"]==d["Decimal"]
     assert json_["Time"]==d["Time"]
-#    assert json_["Timedelta"]==d["Timedelta"] 
+    assert json_["Timedelta"]==d["Timedelta"] 
 
 def test_myjsonencoder_decimals_as_float():
     json_string=myjsonencoder.MyJSONEncoderDecimalsAsFloat_dumps(d)
@@ -46,7 +46,7 @@ def test_myjsonencoder_decimals_as_float():
     assert json_["Bytes"]==d["Bytes"]
     assert json_["Decimal"]==float(d["Decimal"])
     assert json_["Time"]==d["Time"]
-#    assert json_["Timedelta"]==d["Timedelta"] 
+    assert json_["Timedelta"]==d["Timedelta"] 
 
 
 def test_myjsonencoder_decimals_as_string():
@@ -61,4 +61,4 @@ def test_myjsonencoder_decimals_as_string():
     assert json_["Bytes"]==d["Bytes"]
     assert json_["Decimal"]==str(d["Decimal"])
     assert json_["Time"]==d["Time"]
-#    assert json_["Timedelta"]==d["Timedelta"] 
+    assert json_["Timedelta"]==d["Timedelta"] 

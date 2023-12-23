@@ -1,4 +1,4 @@
-from datetime import date, time, datetime
+from datetime import date, time, datetime, timedelta
 from decimal import Decimal
 from pydicts import casts, exceptions
 from pytest import raises
@@ -191,10 +191,30 @@ def test_str2time():
     
     
 def test_str2timedelta():
-    pass
+    assert casts.str2timedelta("P396DT01H01M01.000001S")==timedelta(days=396,  hours=1,  minutes=1, seconds=1, microseconds=1)
+    assert casts.str2timedelta("PT0S")==timedelta( seconds=0)
+    
+    
+    with raises(exceptions.CastException):
+        casts.str2timedelta(None)
+    with raises(exceptions.CastException):
+        casts.str2timedelta("")
+    
+    assert casts.str2timedelta(None, ignore_exception=True)==None
+    assert casts.str2timedelta("", ignore_exception=True)==None
     
 def test_timedelta2str():
-    pass
+    assert casts.timedelta2str(timedelta(days=396,  hours=1,  minutes=1, seconds=1, microseconds=1))=="P396DT1H1M1.000001S"
+    assert casts.timedelta2str(timedelta(days=0))=="P0D"
+    
+    with raises(exceptions.CastException):
+        casts.timedelta2str(None)
+    with raises(exceptions.CastException):
+        casts.timedelta2str("")
+        
+        
+    assert casts.timedelta2str(None, ignore_exception=True)==None
+    assert casts.timedelta2str("", ignore_exception=True)==None
 
 def test_time2str():
     with raises(exceptions.CastException):
