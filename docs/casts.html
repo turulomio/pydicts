@@ -350,7 +350,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -366,6 +368,14 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -377,6 +387,50 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="casts">
 <h1>Casts<a class="headerlink" href="#casts" title="Permalink to this heading">#</a></h1>
+<section id="str2bool">
+<h2>str2bool<a class="headerlink" href="#str2bool" title="Permalink to this heading">#</a></h2>
+<p>Converts a string to a boolean</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="s2">&quot;true&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(None)</span></code> will throw a CastException, but you can</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span><span class="n">ignore_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -433,6 +487,20 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>

@@ -4,6 +4,14 @@
     In construction. Please help me
 :::
 
+## Casts
+
+Casting is essential in programming. With Pydicts I try to put together main castings, to work easyly with all king of data structures.
+
+
+
+## Data structures
+
 PyDicts uses several acronyms to call modulues, functions and parameters
 
 - **LOD**: List of dictionaries `[{"a":1,"b":2}, {"a":3,"b":4}]`
