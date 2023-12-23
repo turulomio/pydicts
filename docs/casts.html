@@ -375,11 +375,64 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-exception">ignore_exception</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#casts">Casts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#base64bytes2bytes">base64bytes2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2base64bytes">bytes2base64bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2str">bytes2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2dtnaive">dtaware2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochmicros">dtaware2epochmicros</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochms">dtaware2epochms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2str">dtaware2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2dtaware">dtnaive2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2str">dtnaive2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochmicros2dtaware">epochmicros2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochms2dtaware">epochms2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#none2alternative">none2alternative</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bytes">str2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2date">str2date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2decimal">str2decimal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtaware">str2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtnaive">str2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2time">str2time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2timedelta">str2timedelta</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time2str">time2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#timedelta2str">timedelta2str</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-and-time-utils">Date and time utils</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utils">Other utils</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-and-time-utils">Date and time utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-month">date_first_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-next-x-months">date_first_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-year">date_first_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-month">date_last_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-next-x-months">date_last_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-year">date_last_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware">dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-changes-tz">dtaware_changes_tz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end">dtaware_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end-from-date">dtaware_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start">dtaware_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start-from-date">dtaware_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-end">dtaware_month_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-start">dtaware_month_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-now">dtaware_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-end">dtaware_year_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-start">dtaware_year_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive">dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end">dtnaive_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end-from-date">dtnaive_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start">dtnaive_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start-from-date">dtnaive_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-now">dtnaive_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-aware">is_aware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-naive">is_naive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#months">months</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utils">Other utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-noe">is_noe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#object-or-empty">object_or_empty</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -428,6 +481,42 @@ document.write(`
 </section>
 <section id="casts">
 <h2>Casts<a class="headerlink" href="#casts" title="Permalink to this heading">#</a></h2>
+<section id="base64bytes2bytes">
+<h3>base64bytes2bytes<a class="headerlink" href="#base64bytes2bytes" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="bytes2base64bytes">
+<h3>bytes2base64bytes<a class="headerlink" href="#bytes2base64bytes" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="bytes2str">
+<h3>bytes2str<a class="headerlink" href="#bytes2str" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware2dtnaive">
+<h3>dtaware2dtnaive<a class="headerlink" href="#dtaware2dtnaive" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware2epochmicros">
+<h3>dtaware2epochmicros<a class="headerlink" href="#dtaware2epochmicros" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware2epochms">
+<h3>dtaware2epochms<a class="headerlink" href="#dtaware2epochms" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware2str">
+<h3>dtaware2str<a class="headerlink" href="#dtaware2str" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive2dtaware">
+<h3>dtnaive2dtaware<a class="headerlink" href="#dtnaive2dtaware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive2str">
+<h3>dtnaive2str<a class="headerlink" href="#dtnaive2str" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="epochmicros2dtaware">
+<h3>epochmicros2dtaware<a class="headerlink" href="#epochmicros2dtaware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="epochms2dtaware">
+<h3>epochms2dtaware<a class="headerlink" href="#epochms2dtaware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="none2alternative">
+<h3>none2alternative<a class="headerlink" href="#none2alternative" title="Permalink to this heading">#</a></h3>
+</section>
 <section id="str2bool">
 <h3>str2bool<a class="headerlink" href="#str2bool" title="Permalink to this heading">#</a></h3>
 <p>Converts a string to a boolean</p>
@@ -464,12 +553,141 @@ document.write(`
 <li><p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(&quot;Verdadero&quot;)</span></code></p></li>
 </ul>
 </section>
+<section id="str2bytes">
+<h3>str2bytes<a class="headerlink" href="#str2bytes" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2date">
+<h3>str2date<a class="headerlink" href="#str2date" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2decimal">
+<h3>str2decimal<a class="headerlink" href="#str2decimal" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2dtaware">
+<h3>str2dtaware<a class="headerlink" href="#str2dtaware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2dtnaive">
+<h3>str2dtnaive<a class="headerlink" href="#str2dtnaive" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2time">
+<h3>str2time<a class="headerlink" href="#str2time" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="str2timedelta">
+<h3>str2timedelta<a class="headerlink" href="#str2timedelta" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="time2str">
+<h3>time2str<a class="headerlink" href="#time2str" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="timedelta2str">
+<h3>timedelta2str<a class="headerlink" href="#timedelta2str" title="Permalink to this heading">#</a></h3>
+</section>
 </section>
 <section id="date-and-time-utils">
 <h2>Date and time utils<a class="headerlink" href="#date-and-time-utils" title="Permalink to this heading">#</a></h2>
+<section id="date-first-of-the-month">
+<h3>date_first_of_the_month<a class="headerlink" href="#date-first-of-the-month" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="date-first-of-the-next-x-months">
+<h3>date_first_of_the_next_x_months<a class="headerlink" href="#date-first-of-the-next-x-months" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="date-first-of-the-year">
+<h3>date_first_of_the_year<a class="headerlink" href="#date-first-of-the-year" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="date-last-of-the-month">
+<h3>date_last_of_the_month<a class="headerlink" href="#date-last-of-the-month" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="date-last-of-the-next-x-months">
+<h3>date_last_of_the_next_x_months<a class="headerlink" href="#date-last-of-the-next-x-months" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="date-last-of-the-year">
+<h3>date_last_of_the_year<a class="headerlink" href="#date-last-of-the-year" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware">
+<h3>dtaware<a class="headerlink" href="#dtaware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-changes-tz">
+<h3>dtaware_changes_tz<a class="headerlink" href="#dtaware-changes-tz" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-day-end">
+<h3>dtaware_day_end<a class="headerlink" href="#dtaware-day-end" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-day-end-from-date">
+<h3>dtaware_day_end_from_date<a class="headerlink" href="#dtaware-day-end-from-date" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-day-start">
+<h3>dtaware_day_start<a class="headerlink" href="#dtaware-day-start" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-day-start-from-date">
+<h3>dtaware_day_start_from_date<a class="headerlink" href="#dtaware-day-start-from-date" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-month-end">
+<h3>dtaware_month_end<a class="headerlink" href="#dtaware-month-end" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-month-start">
+<h3>dtaware_month_start<a class="headerlink" href="#dtaware-month-start" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-now">
+<h3>dtaware_now<a class="headerlink" href="#dtaware-now" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-year-end">
+<h3>dtaware_year_end<a class="headerlink" href="#dtaware-year-end" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtaware-year-start">
+<h3>dtaware_year_start<a class="headerlink" href="#dtaware-year-start" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive">
+<h3>dtnaive<a class="headerlink" href="#dtnaive" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive-day-end">
+<h3>dtnaive_day_end<a class="headerlink" href="#dtnaive-day-end" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive-day-end-from-date">
+<h3>dtnaive_day_end_from_date<a class="headerlink" href="#dtnaive-day-end-from-date" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive-day-start">
+<h3>dtnaive_day_start<a class="headerlink" href="#dtnaive-day-start" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive-day-start-from-date">
+<h3>dtnaive_day_start_from_date<a class="headerlink" href="#dtnaive-day-start-from-date" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="dtnaive-now">
+<h3>dtnaive_now<a class="headerlink" href="#dtnaive-now" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="is-aware">
+<h3>is_aware<a class="headerlink" href="#is-aware" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="is-naive">
+<h3>is_naive<a class="headerlink" href="#is-naive" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="months">
+<h3>months<a class="headerlink" href="#months" title="Permalink to this heading">#</a></h3>
+</section>
 </section>
 <section id="other-utils">
 <h2>Other utils<a class="headerlink" href="#other-utils" title="Permalink to this heading">#</a></h2>
+<section id="is-noe">
+<h3>is_noe<a class="headerlink" href="#is-noe" title="Permalink to this heading">#</a></h3>
+<p>Return if value is None or an empty string</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_noe</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_noe</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_noe</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+True
+False
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="object-or-empty">
+<h3>object_or_empty<a class="headerlink" href="#object-or-empty" title="Permalink to this heading">#</a></h3>
+</section>
 </section>
 </section>
 
@@ -538,11 +756,64 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-exception">ignore_exception</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#casts">Casts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#base64bytes2bytes">base64bytes2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2base64bytes">bytes2base64bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2str">bytes2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2dtnaive">dtaware2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochmicros">dtaware2epochmicros</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochms">dtaware2epochms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2str">dtaware2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2dtaware">dtnaive2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2str">dtnaive2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochmicros2dtaware">epochmicros2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochms2dtaware">epochms2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#none2alternative">none2alternative</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bytes">str2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2date">str2date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2decimal">str2decimal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtaware">str2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtnaive">str2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2time">str2time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2timedelta">str2timedelta</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time2str">time2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#timedelta2str">timedelta2str</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-and-time-utils">Date and time utils</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utils">Other utils</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-and-time-utils">Date and time utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-month">date_first_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-next-x-months">date_first_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-year">date_first_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-month">date_last_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-next-x-months">date_last_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-year">date_last_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware">dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-changes-tz">dtaware_changes_tz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end">dtaware_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end-from-date">dtaware_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start">dtaware_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start-from-date">dtaware_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-end">dtaware_month_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-start">dtaware_month_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-now">dtaware_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-end">dtaware_year_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-start">dtaware_year_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive">dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end">dtnaive_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end-from-date">dtnaive_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start">dtnaive_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start-from-date">dtnaive_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-now">dtnaive_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-aware">is_aware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-naive">is_naive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#months">months</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utils">Other utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-noe">is_noe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#object-or-empty">object_or_empty</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

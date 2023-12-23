@@ -39,6 +39,30 @@ casts.str2bool(None, ignore_exception=True,ignore_exception_value=False)
 
 ## Casts
 
+### base64bytes2bytes
+
+### bytes2base64bytes
+
+### bytes2str
+
+### dtaware2dtnaive
+
+### dtaware2epochmicros
+
+### dtaware2epochms
+
+### dtaware2str
+
+### dtnaive2dtaware
+
+### dtnaive2str
+
+### epochmicros2dtaware
+
+### epochms2dtaware
+
+### none2alternative
+
 ### str2bool
 
 Converts a string to a boolean
@@ -58,6 +82,93 @@ These calls will raise CastException:
 - `casts.str2bool("Verdadero")`
 
 
+### str2bytes
+
+### str2date
+
+### str2decimal
+
+### str2dtaware
+
+### str2dtnaive
+
+### str2time
+
+### str2timedelta
+
+### time2str
+
+### timedelta2str
+
 ## Date and time utils
 
+### date_first_of_the_month
+
+### date_first_of_the_next_x_months
+
+### date_first_of_the_year
+
+### date_last_of_the_month
+
+### date_last_of_the_next_x_months
+
+### date_last_of_the_year
+
+### dtaware
+
+### dtaware_changes_tz
+
+### dtaware_day_end
+
+### dtaware_day_end_from_date
+
+###  dtaware_day_start
+
+### dtaware_day_start_from_date
+
+### dtaware_month_end
+
+### dtaware_month_start
+
+### dtaware_now
+
+### dtaware_year_end
+
+### dtaware_year_start
+
+### dtnaive
+
+
+### dtnaive_day_end
+
+### dtnaive_day_end_from_date
+
+###  dtnaive_day_start
+
+### dtnaive_day_start_from_date
+
+### dtnaive_now
+
+### is_aware
+
+### is_naive
+
+### months
+
+
 ## Other utils
+
+### is_noe
+
+Return if value is None or an empty string
+
+```{code-cell}
+from pydicts import casts
+print(casts.is_noe(None))
+print(casts.is_noe(""))
+print(casts.is_noe(1))
+```
+
+
+### object_or_empty
+
