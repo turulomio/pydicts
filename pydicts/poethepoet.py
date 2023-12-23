@@ -12,6 +12,7 @@ def release():
   * linguist
   * poe translate
   * poe test
+  * poe jupyter
   * git commit -a -m 'pydicts-{0}'
   * git push
   * Hacer un pull request con los cambios a main
@@ -25,6 +26,10 @@ def release():
 
 """.format(__version__))
 
+def jupyter():
+    system("jupyter-book build jupyter")
+    system("rm -Rf docs")
+    system("mv jupyter/_build/html docs/")
     
 def coverage():
     system("coverage run --omit='*uno.py' -m pytest && coverage report && coverage html")
