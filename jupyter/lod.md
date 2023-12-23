@@ -12,7 +12,9 @@ kernelspec:
   name: python3
 ---
 
-# prueba
+# LOD
+
+## dod2lod
 
 Converts a dictionary of dictionaries (dod) to a list of dictionaries (lod), ignoring dictionary keys
 
@@ -23,39 +25,31 @@ lod.dod2lod(dod)
 
 ```
 
+## lod2dictkv
 
-``` python
->>> from pydicts import lod
->>> dod={'key2': {'a': 1, 'b': 2}, 'key1': {'a': 1, 'b': 2}}
->>> lod.dod2lod(dod)
-[{'a': 1, 'b': 2}, {'a': 1, 'b': 2}]
-
-```
-# lod2dictkv
-
-# lod2dod
+## lod2dod
 
 Converts a list of dictionaries (lod) to a dictionary of dictionaries (dod) using a key as the dictionary key. This is a fast method to access dictionaries.
-``` python
->>> from pydicts import lod
->>> lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
->>> lod.lod2dod(lod_,"b")
-{2: {'a': 1, 'b': 2}, 4: {'a': 3, 'b': 4}}
+
+```{code-cell}
+from pydicts import lod
+lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
+lod.lod2dod(lod_,"b")
 ```
 
-# lod2dod_tuple
+## lod2dod_tuple
 
-# lod2list
+## lod2list
 
 Converts a list of dictionaries (lod) to list using all values of key
-``` python
->>> from pydicts import lod
->>> lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
->>> lod.lod2list(lod_,"a")
-[1, 3]
+```{code-cell}
+from pydicts import lod
+lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
+lod.lod2list(lod_,"a")
 ```
 
-# lod2list_distinct
+
+## lod2list_distinct
 
 Converts a list of dictionaries (lod) to list using all distinct values of key
 ``` python
@@ -68,15 +62,15 @@ Converts a list of dictionaries (lod) to list using all distinct values of key
 ```
 
 
-# lod2lol
+## lod2lol
 
-# lod2lood
+## lod2lood
 
-# lod_average
+## lod_average
 
-# lod_average_ponderated
+## lod_average_ponderated
 
-# lod_calculate
+## lod_calculate
 Makes calculations inside dictionary iterations
 ```python
 >>> from pydicts import lod
@@ -86,11 +80,11 @@ Makes calculations inside dictionary iterations
 
 ```
 
-# lod_clone
+## lod_clone
 
 Makes a clone of the list of dictionaries createing a new list and new dictionaries
 
-# lod_filter_dictionaries
+## lod_filter_dictionaries
 
 Create a new lod leaving filtering dictionaries that returns True to lambda funcion
 ```python
@@ -102,7 +96,7 @@ Create a new lod leaving filtering dictionaries that returns True to lambda func
 ```
 
 
-# lod_filter_keys
+## lod_filter_keys
 
 Creates a new list of dictionaries with dictionaries that only have the keys passed as parameters
 
@@ -132,7 +126,7 @@ Creates a new list of dictionaries with dictionaries that only have the keys pas
 ```
     
 
-# lod_has_key
+## lod_has_key
 
 Returns a boolean. Checks if list of dictionaries has a key
 
@@ -147,7 +141,7 @@ False
 False
 ```
 
-# lod_keys
+## lod_keys
 
 Returns a list with the keys of the first dictionary in the list
 
@@ -160,7 +154,7 @@ Returns a list with the keys of the first dictionary in the list
 True
 ```
 
-# lod_max_value
+## lod_max_value
 
 Returns the maximum value of a key in a list of dictionaries (lod)
 
@@ -174,9 +168,9 @@ True
 ```
 
 
-# lod_median
+## lod_median
 
-# lod_min_value
+## lod_min_value
 
 Returns the minimum value of a key in a list of dictionaries (lod)
 
@@ -189,7 +183,7 @@ Returns the minimum value of a key in a list of dictionaries (lod)
 True
 ```
 
-# lod_order_by
+## lod_order_by
 
 Orders a list of dictionaries (lod) by a key. You can make reverse orders and set None values at the top or the bottom of the ordered list
 
@@ -205,7 +199,7 @@ Orders a list of dictionaries (lod) by a key. You can make reverse orders and se
 
 ```
 
-# lod_print
+## lod_print
 
 Prints a list of dictionaries in a tabulated way
 
@@ -221,7 +215,7 @@ Prints a list of dictionaries in a tabulated way
 +-----+-----+
 ```
 
-# lod_rename_key
+## lod_rename_key
 
 Renames a key name with other given as a parameter
 
@@ -232,7 +226,7 @@ Renames a key name with other given as a parameter
 [{'a': 1, 'new': 2}, {'a': 3, 'new': 4}, {'a': 3, 'new': 4}]
 ```
 
-# lod_remove_key
+## lod_remove_key
 
 Removes a key in all dictionaries in the list of dictionaries
 
@@ -256,7 +250,7 @@ Removes a key in all dictionaries in the list of dictionaries
 +-----+
 ```
 
-# lod_sum
+## lod_sum
 
 Sums all values from a lod key. None values are ignored by default
 
@@ -275,7 +269,7 @@ Traceback (most recent call last):
 TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'
 ```
 
-# lod_sum_negatives
+## lod_sum_negatives
 
-# lod_sum_positives
+## lod_sum_positives
 

@@ -171,32 +171,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html">prueba</a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<li class="toctree-l1"><a class="reference internal" href="lod.html">LOD</a></li>
 </ul>
 
     </div>
@@ -418,32 +393,7 @@ It does not go in-depth into any particular topic - check out <a class="referenc
 <li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks.html">Content with notebooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html">prueba</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod2dictkv">lod2dictkv</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod2dod">lod2dod</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod2dod-tuple">lod2dod_tuple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod2list">lod2list</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod2list-distinct">lod2list_distinct</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod2lol">lod2lol</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod2lood">lod2lood</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-average">lod_average</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-average-ponderated">lod_average_ponderated</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-calculate">lod_calculate</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-clone">lod_clone</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-filter-dictionaries">lod_filter_dictionaries</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-filter-keys">lod_filter_keys</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-has-key">lod_has_key</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-keys">lod_keys</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-max-value">lod_max_value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-median">lod_median</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-min-value">lod_min_value</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-order-by">lod_order_by</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-print">lod_print</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-rename-key">lod_rename_key</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-remove-key">lod_remove_key</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-sum">lod_sum</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-sum-negatives">lod_sum_negatives</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lod.html#lod-sum-positives">lod_sum_positives</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lod.html">LOD</a></li>
 </ul>
 </div>
 </section>
@@ -460,6 +410,23 @@ structured.</p>
 </pre></div>
 </div>
 <p>Check out the content pages bundled with this sample book to see more.</p>
+<p>PyDicts uses several acronyms to call modulues, functions and parameters</p>
+<ul class="simple">
+<li><p><strong>LOD</strong>: List of dictionaries <code class="docutils literal notranslate"><span class="pre">[{&quot;a&quot;:1,&quot;b&quot;:2},</span> <span class="pre">{&quot;a&quot;:3,&quot;b&quot;:4}]</span></code></p></li>
+<li><p><strong>LOOD</strong>: List of ordered dictionaries (OrderedDicts from collections module) <code class="docutils literal notranslate"><span class="pre">[OrderedDict([('a',</span> <span class="pre">1),</span> <span class="pre">('b',</span> <span class="pre">2)]),</span> <span class="pre">OrderedDict([('a',</span> <span class="pre">3),</span> <span class="pre">('b',</span> <span class="pre">4)])]</span></code></p></li>
+<li><p><strong>LOL</strong>: List of lists <code class="docutils literal notranslate"><span class="pre">[[1,</span> <span class="pre">2,</span> <span class="pre">3],</span> <span class="pre">[4,</span> <span class="pre">5,</span> <span class="pre">6]]</span></code></p></li>
+<li><p><strong>DOD</strong>: Dictionary of dictionaries <code class="docutils literal notranslate"><span class="pre">{'key2':</span> <span class="pre">{'a':</span> <span class="pre">1,</span> <span class="pre">'b':</span> <span class="pre">2},</span> <span class="pre">'key1':</span> <span class="pre">{'a':</span> <span class="pre">1,</span> <span class="pre">'b':</span> <span class="pre">2}}</span></code></p></li>
+<li><p><strong>ODOD</strong>: Ordered dictionary of dictionaries <code class="docutils literal notranslate"><span class="pre">OrderedDict({'key2':</span> <span class="pre">{'a':</span> <span class="pre">1,</span> <span class="pre">'b':</span> <span class="pre">2},</span> <span class="pre">'key1':</span> <span class="pre">{'a':</span> <span class="pre">1,</span> <span class="pre">'b':</span> <span class="pre">2}})</span></code></p></li>
+<li><p><strong>LOD_XYV</strong>: List of dictionaries with x-y-value keys <code class="docutils literal notranslate"><span class="pre">[{'X':</span> <span class="pre">21,</span> <span class="pre">'Y':</span> <span class="pre">12,</span> <span class="pre">'value':</span> <span class="pre">180},</span> <span class="pre">{'X':</span> <span class="pre">2,</span> <span class="pre">'Y':</span> <span class="pre">122,</span> <span class="pre">'value':</span> <span class="pre">170}]</span></code></p></li>
+<li><p><strong>LOD_YMV</strong>: List of dictionaries with year-month-value keys <code class="docutils literal notranslate"><span class="pre">[{'year':</span> <span class="pre">2021,</span> <span class="pre">'month':</span> <span class="pre">1,</span> <span class="pre">'value':</span> <span class="pre">12.12},</span> <span class="pre">{'year':</span> <span class="pre">2023,</span> <span class="pre">'month':</span> <span class="pre">3,</span> <span class="pre">'value':</span> <span class="pre">13.03}]</span></code></p></li>
+</ul>
+<p>You can read modules documentation:</p>
+<ul class="simple">
+<li><p><span class="xref myst">LOD (List of dictionaries)</span></p></li>
+<li><p><span class="xref myst">LOD_XYV (List of dictionaries with X, Y and values keys)</span></p></li>
+<li><p><span class="xref myst">LOD_YMV (List of dictionaries with year, month and values keys)</span></p></li>
+<li><p><span class="xref myst">LOL (List of lists)</span></p></li>
+</ul>
 </section>
 
     <script type="text/x-thebe-config">
