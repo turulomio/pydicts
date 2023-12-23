@@ -1,3 +1,16 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.11.5
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
 
 # prueba
 
@@ -7,7 +20,6 @@ Converts a dictionary of dictionaries (dod) to a list of dictionaries (lod), ign
 from pydicts import lod
 dod={'key2': {'a': 1, 'b': 2}, 'key1': {'a': 1, 'b': 2}}
 lod.dod2lod(dod)
-dod
 
 ```
 
