@@ -431,21 +431,29 @@ document.write(`
 <section id="lol-transposed">
 <h2>lol_transposed<a class="headerlink" href="#lol-transposed" title="Permalink to this heading">#</a></h2>
 <p>Returns a trasnsposed list of lists</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pydicts.lol</span> <span class="kn">import</span> <span class="n">lol_transposed</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lol_</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lol</span><span class="o">.</span><span class="n">lol_print</span><span class="p">(</span><span class="n">lol_</span><span class="p">)</span>
-<span class="go">+---+---+---+</span>
-<span class="go">| 1 | 2 | 3 |</span>
-<span class="go">| 4 | 5 | 6 |</span>
-<span class="go">+---+---+---+</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">transposed</span><span class="o">=</span><span class="n">lol</span><span class="o">.</span><span class="n">lol_transposed</span><span class="p">(</span><span class="n">lol_</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lol</span><span class="o">.</span><span class="n">lol_print</span><span class="p">(</span><span class="n">transposed</span><span class="p">)</span>
-<span class="go">+---+---+</span>
-<span class="go">| 1 | 4 |</span>
-<span class="go">| 2 | 5 |</span>
-<span class="go">| 3 | 6 |</span>
-<span class="go">+---+---+</span>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts.lol</span> <span class="kn">import</span> <span class="n">lol_transposed</span>
+<span class="n">lol_</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
+<span class="n">lol</span><span class="o">.</span><span class="n">lol_print</span><span class="p">(</span><span class="n">lol_</span><span class="p">)</span>
+<span class="n">transposed</span><span class="o">=</span><span class="n">lol</span><span class="o">.</span><span class="n">lol_transposed</span><span class="p">(</span><span class="n">lol_</span><span class="p">)</span>
+<span class="n">lol</span><span class="o">.</span><span class="n">lol_print</span><span class="p">(</span><span class="n">transposed</span><span class="p">)</span>
 </pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+---+---+---+
+| 1 | 2 | 3 |
+| 4 | 5 | 6 |
++---+---+---+
++---+---+
+| 1 | 4 |
+| 2 | 5 |
+| 3 | 6 |
++---+---+
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 <section id="lol-get-column">

@@ -12,3 +12,17 @@ kernelspec:
   name: python3
 ---
 # MyJsonEncoder
+
+## Encoders
+### MyJSONEncoder
+### MyJSONEncoderDecimalsAsString
+### MyJSONEncoderDecimalsAsFloat
+
+## Methods
+
+### MyJSONEncoder_dumps
+### MyJSONEncoder_loads
+### MyJSONEncoderDecimalsAsString_dumps
+### MyJSONEncoderDecimalsAsString_loads
+### MyJSONEncoderDecimalsAsFloat_dumps
+### MyJSONEncoderDecimalsAsFloat_loads

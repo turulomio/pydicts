@@ -12,3 +12,8 @@ kernelspec:
   name: python3
 ---
 # PyLatex
+
+## pylatex_table
+
+
+## pylatex_table_with_matched_values

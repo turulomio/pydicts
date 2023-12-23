@@ -77,7 +77,7 @@ def lol_get_column(lol, column):
 ## @param from_index
 ## @param to_index
 ## @param zerovalue 0 or Money(self.mem, 0, self.mem.localcurrency)....
-def lol_sum_row(row, from_index, to_index, zerovalue=0):
+def lol_sum_row(row, from_index=0, to_index=None, zerovalue=0):
     s=zerovalue
     for i, column in enumerate(row):
         if i>=from_index and i<=to_index:
