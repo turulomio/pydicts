@@ -1,31 +1,13 @@
-# Welcome to your Jupyter Book
-
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
-
-Check out the content pages bundled with this sample book to see more.
+# Pydicts project
 
 ```{tableofcontents}
 ```
 
-# Welcome to your Jupyter Book
-
-This is a small sample book to give you a feel for how book content is
-structured.
 
 :::{note}
-Here is a note!
+    I love this library
 :::
 
-And here is a code block:
-
-```
-e = mc^2
-```
-
-Check out the content pages bundled with this sample book to see more.
 
 PyDicts uses several acronyms to call modulues, functions and parameters
 
@@ -39,7 +21,9 @@ PyDicts uses several acronyms to call modulues, functions and parameters
 
 You can read modules documentation:
 
-- [LOD (List of dictionaries)](LOD-(List-of-dictionaries))
-- [LOD_XYV (List of dictionaries with X, Y and values keys)](LOD_XYV-(List-of-dictionaries-with-X,-Y-and-values-keys))
-- [LOD_YMV (List of dictionaries with year, month and values keys)](LOD_YMV-(List-of-dictionaries-with-year,-month-and-values-keys))
-- [LOL (List of lists)](LOL-(List-of-lists))
+{doc}`./LOD.md`
+[](./LOD.md)
+[LOD (List of dictionaries)](LOD.md))
+[LOD_XYV (List of dictionaries with X, Y and values keys)](LOD_XYV.md)
+[LOD_YMV (List of dictionaries with year, month and values keys)](LOD_YMV-(List-of-dictionaries-with-year,-month-and-values-keys))
+[LOL (List of lists)](LOL-(List-of-lists))
