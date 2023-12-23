@@ -17,6 +17,7 @@ isodate = "^0.6.1"
 pytest = ">=7.3.0"
 poethepoet = ">=0.24.1"
 coverage = ">=7.3.2"
+jupyter-book = "^0.15.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -27,6 +28,7 @@ release = { script = "pydicts.poethepoet:release" }
 translate = { script = "pydicts.poethepoet:translate" }
 test   = "pytest" 
 coverage = { script = "pydicts.poethepoet:coverage" }
+jupyter = { script = "pydicts.poethepoet:jupyter" }
 
 
 [project.urls]
