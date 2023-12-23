@@ -28,8 +28,9 @@ def release():
 
 def jupyter():
     system("jupyter-book build jupyter")
-#    system("rm -Rf docs")
-#    system("mv jupyter/_build/html docs/")
+    system("rm -Rf docs")
+    system("mv jupyter/_build/html docs/")
+    system("touch docs/.nojekyll")
     
 def coverage():
     system("coverage run --omit='*uno.py' -m pytest && coverage report && coverage html")

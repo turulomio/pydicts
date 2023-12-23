@@ -11,7 +11,7 @@ I've developed this module because I needed this kind of methods developing with
 
 ## Documentation
 
-You can access documentation in [Github Pydicts Wiki](https://github.com/turulomio/pydicts/wiki)
+You can access documentation in [Pydicts Github page](https://turulomio.github.io/pydicts/)
 
 ## CHANGELOG
 
