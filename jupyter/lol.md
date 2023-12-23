@@ -1,3 +1,16 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+    format_version: 0.13
+    jupytext_version: 1.11.5
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
 # LOL
 
 ## lol_add_column
@@ -6,16 +19,12 @@
 
 Prints a list of lists in a tabulated way
 
-```python
->>> from pydicts.lol import lol_print
->>> lol_=[[1, 2, 3], [4, 5, 6]]
->>> lol.lol_print(lol_)
-+---+---+---+
-| 1 | 2 | 3 |
-| 4 | 5 | 6 |
-+---+---+---+
-```
+```{code-cell}
+from pydicts import lol
+lol_=[[1, 2, 3], [4, 5, 6]]
+lol.lol_print(lol_)
 
+```
 
 ## list_remove_positions
 

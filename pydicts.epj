@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project pydicts",
     "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-12-23, 09:43:39"
+    "saved": "2023-12-23, 10:07:47"
   },
   "project": {
     "AUTHOR": "",
@@ -57,22 +57,12 @@
     "OTHERS": [
       ".gitignore",
       "README.md",
-      "docs",
-      "docs/_sources/intro.md",
-      "docs/_sources/lod.md",
-      "docs/_sources/markdown-notebooks.md",
-      "docs/_sources/markdown.md",
-      "docs/_static/scripts/bootstrap.js.LICENSE.txt",
-      "docs/_static/vendor/fontawesome/6.1.2/LICENSE.txt",
-      "docs/_static/vendor/fontawesome/6.1.2/js/all.min.js.LICENSE.txt",
-      "htmlcov/status.json",
       "jupyter",
       "jupyter/_config.yml",
       "jupyter/_toc.yml",
       "jupyter/intro.md",
       "jupyter/lod.md",
-      "jupyter/markdown-notebooks.md",
-      "jupyter/markdown.md",
+      "jupyter/lol.md",
       "jupyter/requirements.txt",
       "pydicts.epj",
       "pyproject.toml"
