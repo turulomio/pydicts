@@ -1,13 +1,8 @@
 # Pydicts project
 
-```{tableofcontents}
-```
-
-
 :::{note}
     I love this library
 :::
-
 
 PyDicts uses several acronyms to call modulues, functions and parameters
 
@@ -21,9 +16,5 @@ PyDicts uses several acronyms to call modulues, functions and parameters
 
 You can read modules documentation:
 
-{doc}`./LOD.md`
-[](./LOD.md)
-[LOD (List of dictionaries)](LOD.md))
-[LOD_XYV (List of dictionaries with X, Y and values keys)](LOD_XYV.md)
-[LOD_YMV (List of dictionaries with year, month and values keys)](LOD_YMV-(List-of-dictionaries-with-year,-month-and-values-keys))
-[LOL (List of lists)](LOL-(List-of-lists))
+- [LOD (List of dictionaries)](lod.md))
+- [LOL (List of lists)](lol.md)
