@@ -26,6 +26,16 @@ lod.dod2lod(dod)
 ```
 
 ## lod2dictkv
+Converts a list of dictionaries (lod) to a dictionary using a key for the new key and another key for its value
+
+
+```{code-cell}
+from pydicts import lod
+lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
+lod.lod2dictkv(lod_,"a","b")
+
+```
+
 
 ## lod2dod
 
@@ -52,17 +62,34 @@ lod.lod2list(lod_,"a")
 ## lod2list_distinct
 
 Converts a list of dictionaries (lod) to list using all distinct values of key
-``` python
->>> from pydicts import lod
->>> lod_= [{'a': 1, 'b': 2}, {'a': 3, 'b': 4}, {'a': 3, 'b': 4}]
->>> lod.lod2list_distinct(lod_,"b")
-[2, 4]
->>> lod.lod2list(lod_,"b")
-[2, 4, 4]
+
+```{code-cell}
+from pydicts import lod
+lod_= [{'a': 1, 'b': 2}, {'a': 3, 'b': 4}, {'a': 3, 'b': 4}]
+print("lod2list:",lod.lod2list(lod_,"a"))
+print("lod2list_distinct:",lod.lod2list_distinct(lod_,"a"))
 ```
 
 
 ## lod2lol
+
+Converts a list of dictionaries (lod) to a list of lists
+
+If you don't select keys (Supposed ordereddict)
+
+```{code-cell}
+from pydicts import lod
+lod_= [{'a': 1, 'b': 2}, {'a': 3, 'b': 4}, {'a': 3, 'b': 4}]
+lod.lod2lol(lod_)
+```
+
+You can select your keys in the order you need
+
+```{code-cell}
+from pydicts import lod
+lod_= [{'a': 1, 'b': 2}, {'a': 3, 'b': 4}, {'a': 3, 'b': 4}]
+lod.lod2lol(lod_,["b","a"])
+```
 
 ## lod2lood
 
