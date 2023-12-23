@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>LOL &#8212; Pydicts documentation</title>
+    <title>Currency &#8212; Pydicts documentation</title>
   
   
   
@@ -62,11 +62,11 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'lol';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'currency';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Currency" href="currency.html" />
-    <link rel="prev" title="LOD_YMV" href="lod_ymv.html" />
+    <link rel="next" title="Percentage" href="percentage.html" />
+    <link rel="prev" title="LOL" href="lol.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -173,8 +173,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1"><a class="reference internal" href="lod.html">LOD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lod_xyv.html">LOD_XYV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lod_ymv.html">LOD_YMV</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">LOL</a></li>
-<li class="toctree-l1"><a class="reference internal" href="currency.html">Currency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lol.html">LOL</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Currency</a></li>
 <li class="toctree-l1"><a class="reference internal" href="percentage.html">Percentage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="myjsonencoder.html">MyJsonEncoder</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pylatex.html">PyLatex</a></li>
@@ -249,7 +249,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/turulomio/pydicts/issues/new?title=Issue%20on%20page%20%2Flol.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/turulomio/pydicts/issues/new?title=Issue%20on%20page%20%2Fcurrency.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -279,7 +279,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="_sources/lol.md" target="_blank"
+      <li><a href="_sources/currency.md" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -350,9 +350,7 @@ document.write(`
   </button>
 `);
 </script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
+
 </div></div>
       
     </div>
@@ -363,27 +361,11 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>LOL</h1>
+    <h1>Currency</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-add-column">lol_add_column</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-print">lol_print</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list-remove-positions">list_remove_positions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-remove-columns">lol_remove_columns</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-remove-rows">lol_remove_rows</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-transposed">lol_transposed</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-get-column">lol_get_column</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-sum-row">lol_sum_row</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-sum-column">lol_sum_column</a></li>
-</ul>
-            </nav>
         </div>
     </div>
 </div>
@@ -393,70 +375,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lol">
-<h1>LOL<a class="headerlink" href="#lol" title="Permalink to this heading">#</a></h1>
-<section id="lol-add-column">
-<h2>lol_add_column<a class="headerlink" href="#lol-add-column" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="lol-print">
-<h2>lol_print<a class="headerlink" href="#lol-print" title="Permalink to this heading">#</a></h2>
-<p>Prints a list of lists in a tabulated way</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">lol</span>
-<span class="n">lol_</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
-<span class="n">lol</span><span class="o">.</span><span class="n">lol_print</span><span class="p">(</span><span class="n">lol_</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+---+---+---+
-| 1 | 2 | 3 |
-| 4 | 5 | 6 |
-+---+---+---+
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="list-remove-positions">
-<h2>list_remove_positions<a class="headerlink" href="#list-remove-positions" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="lol-remove-columns">
-<h2>lol_remove_columns<a class="headerlink" href="#lol-remove-columns" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="lol-remove-rows">
-<h2>lol_remove_rows<a class="headerlink" href="#lol-remove-rows" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="lol-transposed">
-<h2>lol_transposed<a class="headerlink" href="#lol-transposed" title="Permalink to this heading">#</a></h2>
-<p>Returns a trasnsposed list of lists</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pydicts.lol</span> <span class="kn">import</span> <span class="n">lol_transposed</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lol_</span><span class="o">=</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lol</span><span class="o">.</span><span class="n">lol_print</span><span class="p">(</span><span class="n">lol_</span><span class="p">)</span>
-<span class="go">+---+---+---+</span>
-<span class="go">| 1 | 2 | 3 |</span>
-<span class="go">| 4 | 5 | 6 |</span>
-<span class="go">+---+---+---+</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">transposed</span><span class="o">=</span><span class="n">lol</span><span class="o">.</span><span class="n">lol_transposed</span><span class="p">(</span><span class="n">lol_</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">lol</span><span class="o">.</span><span class="n">lol_print</span><span class="p">(</span><span class="n">transposed</span><span class="p">)</span>
-<span class="go">+---+---+</span>
-<span class="go">| 1 | 4 |</span>
-<span class="go">| 2 | 5 |</span>
-<span class="go">| 3 | 6 |</span>
-<span class="go">+---+---+</span>
-</pre></div>
-</div>
-</section>
-<section id="lol-get-column">
-<h2>lol_get_column<a class="headerlink" href="#lol-get-column" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="lol-sum-row">
-<h2>lol_sum_row<a class="headerlink" href="#lol-sum-row" title="Permalink to this heading">#</a></h2>
-</section>
-<section id="lol-sum-column">
-<h2>lol_sum_column<a class="headerlink" href="#lol-sum-column" title="Permalink to this heading">#</a></h2>
-</section>
+  <section class="tex2jax_ignore mathjax_ignore" id="currency">
+<h1>Currency<a class="headerlink" href="#currency" title="Permalink to this heading">#</a></h1>
 </section>
 
     <script type="text/x-thebe-config">
@@ -490,20 +410,20 @@ document.write(`
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="lod_ymv.html"
+       href="lol.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">LOD_YMV</p>
+        <p class="prev-next-title">LOL</p>
       </div>
     </a>
     <a class="right-next"
-       href="currency.html"
+       href="percentage.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Currency</p>
+        <p class="prev-next-title">Percentage</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -513,28 +433,6 @@ document.write(`
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-add-column">lol_add_column</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-print">lol_print</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list-remove-positions">list_remove_positions</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-remove-columns">lol_remove_columns</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-remove-rows">lol_remove_rows</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-transposed">lol_transposed</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-get-column">lol_get_column</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-sum-row">lol_sum_row</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lol-sum-column">lol_sum_column</a></li>
-</ul>
-  </nav></div>
-
-</div></div>
               
             
           </div>
