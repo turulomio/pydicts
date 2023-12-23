@@ -1,7 +1,7 @@
 # Pydicts project
 
 :::{note}
-    I love this library
+    In construction. Please help me
 :::
 
 PyDicts uses several acronyms to call modulues, functions and parameters
