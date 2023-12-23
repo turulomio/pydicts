@@ -1,8 +1,10 @@
 # PyDicts  [![PyPI - Downloads](https://img.shields.io/pypi/dm/pydicts?label=Pypi%20downloads)](https://pypi.org/project/pydicts/)
-
+<div align="center">
+  <div style="display: flex; align-items: flex-start;">
+    <img src="images/pydicts_jupyter.png?raw=true" width="150" title="PyDicts logo">
+  </div>
 Module to use dictionaries, list of dictionaries and other data structures 
-
-I've developed this module because I needed this kind of methods developing with Django and python
+</div>
 
 ## Links
 
@@ -10,6 +12,8 @@ I've developed this module because I needed this kind of methods developing with
 - https://pypi.org/project/pydicts/
 
 ## Documentation
+
+I've developed this module because I needed this kind of methods developing with Django and python
 
 You can access documentation in [Pydicts Github page](https://turulomio.github.io/pydicts/)
 
