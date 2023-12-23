@@ -6,7 +6,7 @@
 
 ## Casts
 
-Casting is essential in programming. With Pydicts I try to put together main castings, to work easyly with all king of data structures.
+Casting is essential in programming. With Pydicts I try to put together main castings, to work easyly with all kind of data structures.
 
 ## Data structures
 

@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Casts &#8212; Pydicts documentation</title>
+    <title>Casts and other utils &#8212; Pydicts documentation</title>
   
   
   
@@ -169,7 +169,7 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Casts</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Casts and other utils</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lod.html">LOD</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lod_xyv.html">LOD_XYV</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lod_ymv.html">LOD_YMV</a></li>
@@ -363,7 +363,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Casts</h1>
+    <h1>Casts and other utils</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -373,7 +373,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-exception">ignore_exception</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#casts">Casts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-and-time-utils">Date and time utils</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utils">Other utils</a></li>
 </ul>
             </nav>
         </div>
@@ -385,10 +391,45 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="casts">
-<h1>Casts<a class="headerlink" href="#casts" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="casts-and-other-utils">
+<h1>Casts and other utils<a class="headerlink" href="#casts-and-other-utils" title="Permalink to this heading">#</a></h1>
+<p>Casting is essential in programming. With Pydicts I try to put together main castings, to work easyly with all kind of data structures.</p>
+<section id="ignore-exception">
+<h2>ignore_exception<a class="headerlink" href="#ignore-exception" title="Permalink to this heading">#</a></h2>
+<p>Morever, this module casting function has two additional parameters, that are useful for rapid development:</p>
+<ul class="simple">
+<li><p><strong>ignore_exception</strong>. By default False. If you set this parameter to True, casting with return ignore_exception_value if a CastException happens.</p></li>
+<li><p><strong>ignore_exception_value</strong>. By default None. It’s the value casting will return if a CastException happens</p></li>
+</ul>
+<p>For example, this code  <code class="docutils literal notranslate"><span class="pre">casts.str2bool(None)</span></code>  will raise a CastException, due to None is not a valid value.</p>
+<p>But this code will return None</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And this code will return False</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">ignore_exception_value</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="casts">
+<h2>Casts<a class="headerlink" href="#casts" title="Permalink to this heading">#</a></h2>
 <section id="str2bool">
-<h2>str2bool<a class="headerlink" href="#str2bool" title="Permalink to this heading">#</a></h2>
+<h3>str2bool<a class="headerlink" href="#str2bool" title="Permalink to this heading">#</a></h3>
 <p>Converts a string to a boolean</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -416,20 +457,19 @@ document.write(`
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(None)</span></code> will throw a CastException, but you can</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span><span class="n">ignore_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
-</pre></div>
-</div>
-</div>
-</div>
+<p>These calls will raise CastException:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(None)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(True)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(&quot;Verdadero&quot;)</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="date-and-time-utils">
+<h2>Date and time utils<a class="headerlink" href="#date-and-time-utils" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="other-utils">
+<h2>Other utils<a class="headerlink" href="#other-utils" title="Permalink to this heading">#</a></h2>
 </section>
 </section>
 
@@ -496,7 +536,13 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-exception">ignore_exception</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#casts">Casts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-and-time-utils">Date and time utils</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utils">Other utils</a></li>
 </ul>
   </nav></div>
 
