@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project pydicts",
     "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-12-23, 10:07:47"
+    "saved": "2023-12-23, 19:13:34"
   },
   "project": {
     "AUTHOR": "",
@@ -60,9 +60,16 @@
       "jupyter",
       "jupyter/_config.yml",
       "jupyter/_toc.yml",
+      "jupyter/casts.md",
+      "jupyter/currency.md",
       "jupyter/intro.md",
       "jupyter/lod.md",
+      "jupyter/lod_xyv.md",
+      "jupyter/lod_ymv.md",
       "jupyter/lol.md",
+      "jupyter/myjsonencoder.md",
+      "jupyter/percentage.md",
+      "jupyter/pylatex.md",
       "jupyter/requirements.txt",
       "pydicts.epj",
       "pyproject.toml"
