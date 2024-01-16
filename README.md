@@ -19,6 +19,15 @@ You can access documentation in [Pydicts Github page](https://turulomio.github.i
 
 ## CHANGELOG
 
+### 0.12.0 (2024-01-16)
+- Improved percentage logic
+- Integrated ccy module for currencies listing
+- Added more test. Coverage is now 86%
+- Added support to ISO 8601 durations casts. Added support to durations in MyJsonEncoder module
+- Added jupyter-book support for documentation
+- Added project logo
+- Fixed jinja2 dependency security warnning
+
 ### 0.11.0 (2023-12-13)
 - Added in casts ignore_exceptions parameter in all methods
 - Added a lot of tests. Test coverage is now 73%.

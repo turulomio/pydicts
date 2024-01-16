@@ -32,7 +32,7 @@ msgid "This list of dictionaries hasn't data to print"
 msgstr "Esta lista de diccionarios no tiene datos para imprimir"
 
 msgid "Keys names are not correct in dictionary in lod_year_month_value_transposition function"
-msgstr ""
+msgstr "Los nombres de las llaves no son correctar en el diccionario de la función lod_year_month_value_transposition"
 
 msgid "Keys names are not correct in dictionary in lod_ymv_transposition function"
 msgstr ""
