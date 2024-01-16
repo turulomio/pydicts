@@ -132,6 +132,15 @@ These calls will raise CastException:
 
 ### dtaware_now
 
+Returns a aware datetime object of current moment. By default returns UTC timezone
+
+```{code-cell}
+from pydicts import casts
+print(casts.dtaware_now())
+print(casts.dtaware_now("Europe/Madrid"))
+```
+
+
 ### dtaware_year_end
 
 ### dtaware_year_start
@@ -149,9 +158,32 @@ These calls will raise CastException:
 
 ### dtnaive_now
 
+Returns a naive datetime object of current moment. By default returns UTC timezone
+
+```{code-cell}
+from pydicts import casts
+casts.dtnaive_now()
+```
+
 ### is_aware
 
+Returns if a datetime object is aware (with timezone) 
+
+```{code-cell}
+from pydicts import casts
+print(casts.is_aware(casts.dtaware_now()))
+print(casts.is_aware(casts.dtnaive_now()))
+```
+
 ### is_naive
+
+Returns if a datetime object is naive (without timezone) 
+
+```{code-cell}
+from pydicts import casts
+print(casts.is_naive(casts.dtaware_now()))
+print(casts.is_naive(casts.dtnaive_now()))
+```
 
 ### months
 

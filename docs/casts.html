@@ -627,6 +627,22 @@ document.write(`
 </section>
 <section id="dtaware-now">
 <h3>dtaware_now<a class="headerlink" href="#dtaware-now" title="Permalink to this heading">#</a></h3>
+<p>Returns a aware datetime object of current moment. By default returns UTC timezone</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtaware_now</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtaware_now</span><span class="p">(</span><span class="s2">&quot;Europe/Madrid&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-01-16 19:06:54.277087+00:00
+2024-01-16 20:06:54.278501+01:00
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="dtaware-year-end">
 <h3>dtaware_year_end<a class="headerlink" href="#dtaware-year-end" title="Permalink to this heading">#</a></h3>
@@ -651,12 +667,58 @@ document.write(`
 </section>
 <section id="dtnaive-now">
 <h3>dtnaive_now<a class="headerlink" href="#dtnaive-now" title="Permalink to this heading">#</a></h3>
+<p>Returns a naive datetime object of current moment. By default returns UTC timezone</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">dtnaive_now</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>datetime.datetime(2024, 1, 16, 19, 6, 54, 282126)
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="is-aware">
 <h3>is_aware<a class="headerlink" href="#is-aware" title="Permalink to this heading">#</a></h3>
+<p>Returns if a datetime object is aware (with timezone)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_aware</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtaware_now</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_aware</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtnaive_now</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+False
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="is-naive">
 <h3>is_naive<a class="headerlink" href="#is-naive" title="Permalink to this heading">#</a></h3>
+<p>Returns if a datetime object is naive (without timezone)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts</span> <span class="kn">import</span> <span class="n">casts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_naive</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtaware_now</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_naive</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtnaive_now</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+True
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="months">
 <h3>months<a class="headerlink" href="#months" title="Permalink to this heading">#</a></h3>
