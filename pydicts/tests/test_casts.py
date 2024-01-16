@@ -241,7 +241,7 @@ def test_str2date():
     assert casts.str2date("2023-11-26", "YYYY-MM-DD")==date(2023, 11, 26)
     assert casts.str2date("26/11/2023", "DD/MM/YYYY")==date(2023, 11, 26)
     assert casts.str2date("26.11.2023", "DD.MM.YYYY")==date(2023, 11, 26)
-    assert casts.str2date("26/11", "DD/MM")==date(2023, 11, 26)
+    assert casts.str2date("26/11", "DD/MM")==date(date.today().year, 11, 26)
 
 def test_str2dtnaive():
     assert casts.str2dtnaive("202311261705", "%Y%m%d%H%M")==datetime(2023, 11, 26, 17, 5)
