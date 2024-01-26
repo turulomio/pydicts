@@ -1,35 +1,13 @@
 from decimal import Decimal
-from ccy import dump_currency_table
-from html import unescape
 from pydicts import lod, exceptions
+from importlib.resources import files
 
 
 
 def currencies_list():
-    lod_=[]
-    for code_, name, iso, symbol, country, order, rounding in dump_currency_table()[1:]:
-        lod_.append({
-            "code":code_, 
-            "name":name, 
-            "iso":iso, 
-            "symbol_html":symbol, 
-            "symbol": unescape(symbol), 
-            "country":country, 
-            
-            "order":order, 
-            "rounding":rounding
-        })
-    lod_.append({
-        "code":"u", 
-        "name": "Unit", 
-        "iso":"", 
-        "symbol_html":"u", 
-        "symbol": "u", 
-        "country":"WW", 
-        "order": 0, 
-        "rounding":6, 
-    })
-    return lod.lod_order_by(lod_,"code")
+    with open(files("pydicts") / 'currencies.json') as f:
+        lod_=eval(f.read())
+    return lod_
 
 def currencies_odod():
     return lod.lod2odod(currencies_list(), "code")
