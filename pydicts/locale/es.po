@@ -38,7 +38,7 @@ msgid "Keys names are not correct in dictionary in lod_ymv_transposition functio
 msgstr ""
 
 msgid "I can't add a column with different size of lol"
-msgstr ""
+msgstr "No puedo añadir una columna con un tamaño diferente al lol"
 
 msgid "I can't remove positions from a None list"
 msgstr ""

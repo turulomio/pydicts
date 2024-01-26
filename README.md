@@ -19,6 +19,9 @@ You can access documentation in [Pydicts Github page](https://turulomio.github.i
 
 ## CHANGELOG
 
+### 0.13.0 (2024-01-26)
+- Removed ccy dependency due to slow python release updates
+
 ### 0.12.0 (2024-01-16)
 - Improved percentage logic
 - Integrated ccy module for currencies listing
