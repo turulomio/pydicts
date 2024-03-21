@@ -219,6 +219,18 @@ lod_=[{"a":1,"b":2}, {"a":3,"b":4}, {"a":3, "b": 4}]
 lod.lod_rename_key(lod_,"b","new")
 ```
 
+## lod_remove_duplicates
+
+Removes duplicates (dictionaries with the same keys and values) from a list of dictionaries.
+
+```{code-cell}
+from pydicts.lod import lod_print, lod_remove_duplicates
+lod_=[{"a":1, "b":2},{"a":1, "b":2},{"a":1, "b":2}]
+lod_print(lod_)
+lod_=lod_remove_duplicates(lod_)
+lod_print(lod_)
+```
+
 ## lod_remove_key
 
 Removes a key in all dictionaries in the list of dictionaries
