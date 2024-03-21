@@ -28,3 +28,4 @@ jobs:
           jupyter-book build jupyter/
       - name: Upload artifact to pass to GitHub Pages
           ghp-import -n -p -f mybook/_build/html
+            - name: Jupyterbook Action
