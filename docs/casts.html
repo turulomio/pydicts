@@ -1,13 +1,12 @@
 
-
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="" >
+<html lang="en" data-content_root="./" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>Casts and other utils &#8212; Pydicts documentation</title>
   
@@ -19,49 +18,45 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
-    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
-    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/clipboard.min.js"></script>
-    <script src="_static/copybutton.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js"></script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="_static/design-tabs.js"></script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
-const thebe_selector = ".thebe,.cell"
-const thebe_selector_input = "pre"
-const thebe_selector_output = ".output, .cell_output"
-</script>
-    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'casts';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -76,10 +71,9 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
-
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
     <i class="fa-solid fa-arrow-up"></i>
@@ -120,11 +114,14 @@ const thebe_selector_output = ".output, .cell_output"
 </form></div>
   </div>
   
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
   
+
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
+      
+      
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -158,7 +155,18 @@ const thebe_selector_output = ".output, .cell_output"
   
   
 </a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item navbar-nav active">
         
         <ul class="nav bd-sidenav bd-sidenav__home-link">
@@ -442,13 +450,13 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article" role="main">
+                <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="casts-and-other-utils">
-<h1>Casts and other utils<a class="headerlink" href="#casts-and-other-utils" title="Permalink to this heading">#</a></h1>
+<h1>Casts and other utils<a class="headerlink" href="#casts-and-other-utils" title="Link to this heading">#</a></h1>
 <p>Casting is essential in programming. With Pydicts I try to put together main castings, to work easyly with all kind of data structures.</p>
 <section id="ignore-exception">
-<h2>ignore_exception<a class="headerlink" href="#ignore-exception" title="Permalink to this heading">#</a></h2>
+<h2>ignore_exception<a class="headerlink" href="#ignore-exception" title="Link to this heading">#</a></h2>
 <p>Morever, this module casting function has two additional parameters, that are useful for rapid development:</p>
 <ul class="simple">
 <li><p><strong>ignore_exception</strong>. By default False. If you set this parameter to True, casting with return ignore_exception_value if a CastException happens.</p></li>
@@ -480,45 +488,45 @@ document.write(`
 </div>
 </section>
 <section id="casts">
-<h2>Casts<a class="headerlink" href="#casts" title="Permalink to this heading">#</a></h2>
+<h2>Casts<a class="headerlink" href="#casts" title="Link to this heading">#</a></h2>
 <section id="base64bytes2bytes">
-<h3>base64bytes2bytes<a class="headerlink" href="#base64bytes2bytes" title="Permalink to this heading">#</a></h3>
+<h3>base64bytes2bytes<a class="headerlink" href="#base64bytes2bytes" title="Link to this heading">#</a></h3>
 </section>
 <section id="bytes2base64bytes">
-<h3>bytes2base64bytes<a class="headerlink" href="#bytes2base64bytes" title="Permalink to this heading">#</a></h3>
+<h3>bytes2base64bytes<a class="headerlink" href="#bytes2base64bytes" title="Link to this heading">#</a></h3>
 </section>
 <section id="bytes2str">
-<h3>bytes2str<a class="headerlink" href="#bytes2str" title="Permalink to this heading">#</a></h3>
+<h3>bytes2str<a class="headerlink" href="#bytes2str" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware2dtnaive">
-<h3>dtaware2dtnaive<a class="headerlink" href="#dtaware2dtnaive" title="Permalink to this heading">#</a></h3>
+<h3>dtaware2dtnaive<a class="headerlink" href="#dtaware2dtnaive" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware2epochmicros">
-<h3>dtaware2epochmicros<a class="headerlink" href="#dtaware2epochmicros" title="Permalink to this heading">#</a></h3>
+<h3>dtaware2epochmicros<a class="headerlink" href="#dtaware2epochmicros" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware2epochms">
-<h3>dtaware2epochms<a class="headerlink" href="#dtaware2epochms" title="Permalink to this heading">#</a></h3>
+<h3>dtaware2epochms<a class="headerlink" href="#dtaware2epochms" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware2str">
-<h3>dtaware2str<a class="headerlink" href="#dtaware2str" title="Permalink to this heading">#</a></h3>
+<h3>dtaware2str<a class="headerlink" href="#dtaware2str" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtnaive2dtaware">
-<h3>dtnaive2dtaware<a class="headerlink" href="#dtnaive2dtaware" title="Permalink to this heading">#</a></h3>
+<h3>dtnaive2dtaware<a class="headerlink" href="#dtnaive2dtaware" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtnaive2str">
-<h3>dtnaive2str<a class="headerlink" href="#dtnaive2str" title="Permalink to this heading">#</a></h3>
+<h3>dtnaive2str<a class="headerlink" href="#dtnaive2str" title="Link to this heading">#</a></h3>
 </section>
 <section id="epochmicros2dtaware">
-<h3>epochmicros2dtaware<a class="headerlink" href="#epochmicros2dtaware" title="Permalink to this heading">#</a></h3>
+<h3>epochmicros2dtaware<a class="headerlink" href="#epochmicros2dtaware" title="Link to this heading">#</a></h3>
 </section>
 <section id="epochms2dtaware">
-<h3>epochms2dtaware<a class="headerlink" href="#epochms2dtaware" title="Permalink to this heading">#</a></h3>
+<h3>epochms2dtaware<a class="headerlink" href="#epochms2dtaware" title="Link to this heading">#</a></h3>
 </section>
 <section id="none2alternative">
-<h3>none2alternative<a class="headerlink" href="#none2alternative" title="Permalink to this heading">#</a></h3>
+<h3>none2alternative<a class="headerlink" href="#none2alternative" title="Link to this heading">#</a></h3>
 </section>
 <section id="str2bool">
-<h3>str2bool<a class="headerlink" href="#str2bool" title="Permalink to this heading">#</a></h3>
+<h3>str2bool<a class="headerlink" href="#str2bool" title="Link to this heading">#</a></h3>
 <p>Converts a string to a boolean</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -554,79 +562,79 @@ document.write(`
 </ul>
 </section>
 <section id="str2bytes">
-<h3>str2bytes<a class="headerlink" href="#str2bytes" title="Permalink to this heading">#</a></h3>
+<h3>str2bytes<a class="headerlink" href="#str2bytes" title="Link to this heading">#</a></h3>
 </section>
 <section id="str2date">
-<h3>str2date<a class="headerlink" href="#str2date" title="Permalink to this heading">#</a></h3>
+<h3>str2date<a class="headerlink" href="#str2date" title="Link to this heading">#</a></h3>
 </section>
 <section id="str2decimal">
-<h3>str2decimal<a class="headerlink" href="#str2decimal" title="Permalink to this heading">#</a></h3>
+<h3>str2decimal<a class="headerlink" href="#str2decimal" title="Link to this heading">#</a></h3>
 </section>
 <section id="str2dtaware">
-<h3>str2dtaware<a class="headerlink" href="#str2dtaware" title="Permalink to this heading">#</a></h3>
+<h3>str2dtaware<a class="headerlink" href="#str2dtaware" title="Link to this heading">#</a></h3>
 </section>
 <section id="str2dtnaive">
-<h3>str2dtnaive<a class="headerlink" href="#str2dtnaive" title="Permalink to this heading">#</a></h3>
+<h3>str2dtnaive<a class="headerlink" href="#str2dtnaive" title="Link to this heading">#</a></h3>
 </section>
 <section id="str2time">
-<h3>str2time<a class="headerlink" href="#str2time" title="Permalink to this heading">#</a></h3>
+<h3>str2time<a class="headerlink" href="#str2time" title="Link to this heading">#</a></h3>
 </section>
 <section id="str2timedelta">
-<h3>str2timedelta<a class="headerlink" href="#str2timedelta" title="Permalink to this heading">#</a></h3>
+<h3>str2timedelta<a class="headerlink" href="#str2timedelta" title="Link to this heading">#</a></h3>
 </section>
 <section id="time2str">
-<h3>time2str<a class="headerlink" href="#time2str" title="Permalink to this heading">#</a></h3>
+<h3>time2str<a class="headerlink" href="#time2str" title="Link to this heading">#</a></h3>
 </section>
 <section id="timedelta2str">
-<h3>timedelta2str<a class="headerlink" href="#timedelta2str" title="Permalink to this heading">#</a></h3>
+<h3>timedelta2str<a class="headerlink" href="#timedelta2str" title="Link to this heading">#</a></h3>
 </section>
 </section>
 <section id="date-and-time-utils">
-<h2>Date and time utils<a class="headerlink" href="#date-and-time-utils" title="Permalink to this heading">#</a></h2>
+<h2>Date and time utils<a class="headerlink" href="#date-and-time-utils" title="Link to this heading">#</a></h2>
 <section id="date-first-of-the-month">
-<h3>date_first_of_the_month<a class="headerlink" href="#date-first-of-the-month" title="Permalink to this heading">#</a></h3>
+<h3>date_first_of_the_month<a class="headerlink" href="#date-first-of-the-month" title="Link to this heading">#</a></h3>
 </section>
 <section id="date-first-of-the-next-x-months">
-<h3>date_first_of_the_next_x_months<a class="headerlink" href="#date-first-of-the-next-x-months" title="Permalink to this heading">#</a></h3>
+<h3>date_first_of_the_next_x_months<a class="headerlink" href="#date-first-of-the-next-x-months" title="Link to this heading">#</a></h3>
 </section>
 <section id="date-first-of-the-year">
-<h3>date_first_of_the_year<a class="headerlink" href="#date-first-of-the-year" title="Permalink to this heading">#</a></h3>
+<h3>date_first_of_the_year<a class="headerlink" href="#date-first-of-the-year" title="Link to this heading">#</a></h3>
 </section>
 <section id="date-last-of-the-month">
-<h3>date_last_of_the_month<a class="headerlink" href="#date-last-of-the-month" title="Permalink to this heading">#</a></h3>
+<h3>date_last_of_the_month<a class="headerlink" href="#date-last-of-the-month" title="Link to this heading">#</a></h3>
 </section>
 <section id="date-last-of-the-next-x-months">
-<h3>date_last_of_the_next_x_months<a class="headerlink" href="#date-last-of-the-next-x-months" title="Permalink to this heading">#</a></h3>
+<h3>date_last_of_the_next_x_months<a class="headerlink" href="#date-last-of-the-next-x-months" title="Link to this heading">#</a></h3>
 </section>
 <section id="date-last-of-the-year">
-<h3>date_last_of_the_year<a class="headerlink" href="#date-last-of-the-year" title="Permalink to this heading">#</a></h3>
+<h3>date_last_of_the_year<a class="headerlink" href="#date-last-of-the-year" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware">
-<h3>dtaware<a class="headerlink" href="#dtaware" title="Permalink to this heading">#</a></h3>
+<h3>dtaware<a class="headerlink" href="#dtaware" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware-changes-tz">
-<h3>dtaware_changes_tz<a class="headerlink" href="#dtaware-changes-tz" title="Permalink to this heading">#</a></h3>
+<h3>dtaware_changes_tz<a class="headerlink" href="#dtaware-changes-tz" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware-day-end">
-<h3>dtaware_day_end<a class="headerlink" href="#dtaware-day-end" title="Permalink to this heading">#</a></h3>
+<h3>dtaware_day_end<a class="headerlink" href="#dtaware-day-end" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware-day-end-from-date">
-<h3>dtaware_day_end_from_date<a class="headerlink" href="#dtaware-day-end-from-date" title="Permalink to this heading">#</a></h3>
+<h3>dtaware_day_end_from_date<a class="headerlink" href="#dtaware-day-end-from-date" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware-day-start">
-<h3>dtaware_day_start<a class="headerlink" href="#dtaware-day-start" title="Permalink to this heading">#</a></h3>
+<h3>dtaware_day_start<a class="headerlink" href="#dtaware-day-start" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware-day-start-from-date">
-<h3>dtaware_day_start_from_date<a class="headerlink" href="#dtaware-day-start-from-date" title="Permalink to this heading">#</a></h3>
+<h3>dtaware_day_start_from_date<a class="headerlink" href="#dtaware-day-start-from-date" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware-month-end">
-<h3>dtaware_month_end<a class="headerlink" href="#dtaware-month-end" title="Permalink to this heading">#</a></h3>
+<h3>dtaware_month_end<a class="headerlink" href="#dtaware-month-end" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware-month-start">
-<h3>dtaware_month_start<a class="headerlink" href="#dtaware-month-start" title="Permalink to this heading">#</a></h3>
+<h3>dtaware_month_start<a class="headerlink" href="#dtaware-month-start" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware-now">
-<h3>dtaware_now<a class="headerlink" href="#dtaware-now" title="Permalink to this heading">#</a></h3>
+<h3>dtaware_now<a class="headerlink" href="#dtaware-now" title="Link to this heading">#</a></h3>
 <p>Returns a aware datetime object of current moment. By default returns UTC timezone</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -637,36 +645,36 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-01-16 19:16:26.564968+00:00
-2024-01-16 20:16:26.565215+01:00
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2024-03-21 03:58:33.030284+00:00
+2024-03-21 04:58:33.030463+01:00
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="dtaware-year-end">
-<h3>dtaware_year_end<a class="headerlink" href="#dtaware-year-end" title="Permalink to this heading">#</a></h3>
+<h3>dtaware_year_end<a class="headerlink" href="#dtaware-year-end" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtaware-year-start">
-<h3>dtaware_year_start<a class="headerlink" href="#dtaware-year-start" title="Permalink to this heading">#</a></h3>
+<h3>dtaware_year_start<a class="headerlink" href="#dtaware-year-start" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtnaive">
-<h3>dtnaive<a class="headerlink" href="#dtnaive" title="Permalink to this heading">#</a></h3>
+<h3>dtnaive<a class="headerlink" href="#dtnaive" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtnaive-day-end">
-<h3>dtnaive_day_end<a class="headerlink" href="#dtnaive-day-end" title="Permalink to this heading">#</a></h3>
+<h3>dtnaive_day_end<a class="headerlink" href="#dtnaive-day-end" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtnaive-day-end-from-date">
-<h3>dtnaive_day_end_from_date<a class="headerlink" href="#dtnaive-day-end-from-date" title="Permalink to this heading">#</a></h3>
+<h3>dtnaive_day_end_from_date<a class="headerlink" href="#dtnaive-day-end-from-date" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtnaive-day-start">
-<h3>dtnaive_day_start<a class="headerlink" href="#dtnaive-day-start" title="Permalink to this heading">#</a></h3>
+<h3>dtnaive_day_start<a class="headerlink" href="#dtnaive-day-start" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtnaive-day-start-from-date">
-<h3>dtnaive_day_start_from_date<a class="headerlink" href="#dtnaive-day-start-from-date" title="Permalink to this heading">#</a></h3>
+<h3>dtnaive_day_start_from_date<a class="headerlink" href="#dtnaive-day-start-from-date" title="Link to this heading">#</a></h3>
 </section>
 <section id="dtnaive-now">
-<h3>dtnaive_now<a class="headerlink" href="#dtnaive-now" title="Permalink to this heading">#</a></h3>
+<h3>dtnaive_now<a class="headerlink" href="#dtnaive-now" title="Link to this heading">#</a></h3>
 <p>Returns a naive datetime object of current moment. By default returns UTC timezone</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -676,14 +684,14 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>datetime.datetime(2024, 1, 16, 19, 16, 26, 568404)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>datetime.datetime(2024, 3, 21, 3, 58, 33, 33591)
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="is-aware">
-<h3>is_aware<a class="headerlink" href="#is-aware" title="Permalink to this heading">#</a></h3>
+<h3>is_aware<a class="headerlink" href="#is-aware" title="Link to this heading">#</a></h3>
 <p>Returns if a datetime object is aware (with timezone)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -702,7 +710,7 @@ False
 </div>
 </section>
 <section id="is-naive">
-<h3>is_naive<a class="headerlink" href="#is-naive" title="Permalink to this heading">#</a></h3>
+<h3>is_naive<a class="headerlink" href="#is-naive" title="Link to this heading">#</a></h3>
 <p>Returns if a datetime object is naive (without timezone)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -721,13 +729,13 @@ True
 </div>
 </section>
 <section id="months">
-<h3>months<a class="headerlink" href="#months" title="Permalink to this heading">#</a></h3>
+<h3>months<a class="headerlink" href="#months" title="Link to this heading">#</a></h3>
 </section>
 </section>
 <section id="other-utils">
-<h2>Other utils<a class="headerlink" href="#other-utils" title="Permalink to this heading">#</a></h2>
+<h2>Other utils<a class="headerlink" href="#other-utils" title="Link to this heading">#</a></h2>
 <section id="is-noe">
-<h3>is_noe<a class="headerlink" href="#is-noe" title="Permalink to this heading">#</a></h3>
+<h3>is_noe<a class="headerlink" href="#is-noe" title="Link to this heading">#</a></h3>
 <p>Return if value is None or an empty string</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -748,7 +756,7 @@ False
 </div>
 </section>
 <section id="object-or-empty">
-<h3>object_or_empty<a class="headerlink" href="#object-or-empty" title="Permalink to this heading">#</a></h3>
+<h3>object_or_empty<a class="headerlink" href="#object-or-empty" title="Link to this heading">#</a></h3>
 </section>
 </section>
 </section>
@@ -809,6 +817,7 @@ False
             
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
 
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
@@ -900,7 +909,7 @@ By Turulomio
 
   <p class="copyright">
     
-      © Copyright 2022.
+      © Copyright 2023.
       <br/>
     
   </p>
@@ -924,8 +933,8 @@ By Turulomio
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>
