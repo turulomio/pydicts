@@ -23,6 +23,15 @@ def tests_lod_has_key():
     assert lod.lod_has_key(lod_,"cc")==False
     assert lod.lod_has_key(empty_lod, "c")==False
     
+def test_remove_duplicates():
+    lod_=[
+        {"a":1,  "b":2}, 
+        {"a":1,  "b":2}, 
+        {"a":1,  "b":2}, 
+    ]
+    lod_=lod.lod_remove_duplicates(lod_)
+    assert len(lod_)==1
+    
 def tests_lod_sum():
     assert lod.lod_sum(lod_, "c")==0
     assert lod.lod_sum(lod_, "d")==16
