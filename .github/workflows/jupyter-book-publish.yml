@@ -22,9 +22,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install jupyter-book
+          pip install jupyter-book ghp-import pydicts
       - name: Build Jupyter Book
         run: |
           jupyter-book build jupyter/
       - name: Upload artifact to pass to GitHub Pages
-          ghp-import -n -p -f mybook/_build/html
+          ghp-import -n -p -f jupyter/_build/html
