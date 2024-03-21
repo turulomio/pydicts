@@ -27,10 +27,8 @@ jobs:
           pip install jupyter-book ghp-import
           pip install .
       - name: Configure git authentication
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.email "turulomio@yahoo.es"
+          git config --global user.email "turulomio@yahoo.es" #gh-pages branch
           git config --global user.name "turulomio" 
       - name: Build Jupyter Book
         run: |
