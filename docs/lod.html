@@ -555,9 +555,55 @@ lod2list_distinct: [1, 3]
 </section>
 <section id="lod-average">
 <h2>lod_average<a class="headerlink" href="#lod-average" title="Link to this heading">#</a></h2>
+<p>Calculates average from all values is the list of dictionaries with the key passed as parameter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts.lod</span> <span class="kn">import</span> <span class="n">lod_print</span><span class="p">,</span><span class="n">lod_average</span>
+<span class="n">lod_</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">},{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">},{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">}]</span>
+<span class="n">lod_print</span><span class="p">(</span><span class="n">lod_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lod_average</span><span class="p">(</span><span class="n">lod_</span><span class="p">,</span><span class="s2">&quot;a&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+-----+-----+
+|   a |   b |
+|-----+-----|
+|   1 |   2 |
+|   3 |   2 |
+|   5 |   2 |
++-----+-----+
+3.0
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="lod-average-ponderated">
 <h2>lod_average_ponderated<a class="headerlink" href="#lod-average-ponderated" title="Link to this heading">#</a></h2>
+<p>Calculates average ponderated from all values is the list of dictionaries with the key passed as parameter, and the weight passed as a parameter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts.lod</span> <span class="kn">import</span> <span class="n">lod_print</span><span class="p">,</span><span class="n">lod_average_ponderated</span>
+<span class="n">lod_</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">},{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">},{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">}]</span>
+<span class="n">lod_print</span><span class="p">(</span><span class="n">lod_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lod_average_ponderated</span><span class="p">(</span><span class="n">lod_</span><span class="p">,</span><span class="s2">&quot;a&quot;</span><span class="p">,</span><span class="s2">&quot;b&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+-----+-----+
+|   a |   b |
+|-----+-----|
+|   1 |   1 |
+|   3 |   2 |
+|   5 |   3 |
++-----+-----+
+2.4444444444444446
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="lod-calculate">
 <h2>lod_calculate<a class="headerlink" href="#lod-calculate" title="Link to this heading">#</a></h2>
@@ -581,7 +627,7 @@ lod2list_distinct: [1, 3]
 </section>
 <section id="lod-clone">
 <h2>lod_clone<a class="headerlink" href="#lod-clone" title="Link to this heading">#</a></h2>
-<p>Makes a clone of the list of dictionaries createing a new list and new dictionaries</p>
+<p>Makes a clone of the list of dictionaries with a new list and new dictionaries</p>
 </section>
 <section id="lod-filter-dictionaries">
 <h2>lod_filter_dictionaries<a class="headerlink" href="#lod-filter-dictionaries" title="Link to this heading">#</a></h2>
@@ -694,6 +740,29 @@ False
 </section>
 <section id="lod-median">
 <h2>lod_median<a class="headerlink" href="#lod-median" title="Link to this heading">#</a></h2>
+<p>Calculates median from all values is the list of dictionaries with the key passed as parameter.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pydicts.lod</span> <span class="kn">import</span> <span class="n">lod_print</span><span class="p">,</span><span class="n">lod_median</span>
+<span class="n">lod_</span><span class="o">=</span><span class="p">[{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">},{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">},{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">}]</span>
+<span class="n">lod_print</span><span class="p">(</span><span class="n">lod_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">lod_median</span><span class="p">(</span><span class="n">lod_</span><span class="p">,</span><span class="s2">&quot;a&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+-----+-----+
+|   a |   b |
+|-----+-----|
+|   1 |   2 |
+|   3 |   2 |
+|   5 |   2 |
++-----+-----+
+3
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="lod-min-value">
 <h2>lod_min_value<a class="headerlink" href="#lod-min-value" title="Link to this heading">#</a></h2>

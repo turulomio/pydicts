@@ -95,7 +95,25 @@ lod.lod2lol(lod_,["b","a"])
 
 ## lod_average
 
+Calculates average from all values is the list of dictionaries with the key passed as parameter.
+
+```{code-cell}
+from pydicts.lod import lod_print,lod_average
+lod_=[{"a":1, "b":2},{"a":3, "b":2},{"a":5, "b":2}]
+lod_print(lod_)
+print(lod_average(lod_,"a"))
+```
+
 ## lod_average_ponderated
+
+Calculates average ponderated from all values is the list of dictionaries with the key passed as parameter, and the weight passed as a parameter.
+
+```{code-cell}
+from pydicts.lod import lod_print,lod_average_ponderated
+lod_=[{"a":1, "b":1},{"a":3, "b":2},{"a":5, "b":3}]
+lod_print(lod_)
+print(lod_average_ponderated(lod_,"a","b"))
+```
 
 ## lod_calculate
 Makes calculations inside dictionary iterations
@@ -107,7 +125,7 @@ lod.lod_calculate(lod_, "d", lambda d, index: d['a']+d['b']+d['c'])
 
 ## lod_clone
 
-Makes a clone of the list of dictionaries createing a new list and new dictionaries
+Makes a clone of the list of dictionaries with a new list and new dictionaries
 
 ## lod_filter_dictionaries
 
@@ -163,8 +181,16 @@ lod_=[{"a":1,"b":2}, {"a":3,"b":4}]
 lod.lod_max_value(lod_,"b")
 ```
 
-
 ## lod_median
+
+Calculates median from all values is the list of dictionaries with the key passed as parameter.
+
+```{code-cell}
+from pydicts.lod import lod_print,lod_median
+lod_=[{"a":1, "b":2},{"a":3, "b":2},{"a":5, "b":2}]
+lod_print(lod_)
+print(lod_median(lod_,"a"))
+```
 
 ## lod_min_value
 
