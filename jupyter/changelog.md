@@ -13,6 +13,11 @@ kernelspec:
 ---
 # CHANGELOG
 
+## 0.14.0 (2023-03-21)
+- Add method lod_remove_duplicates
+- Python>=3.9 is now required
+- Github project pages is now updated with Github Actions
+
 ## 0.13.0 (2024-01-26)
 - Removed ccy dependency due to slow python release updates
 

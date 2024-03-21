@@ -41,7 +41,7 @@ msgid "I can't add a column with different size of lol"
 msgstr "No puedo añadir una columna con un tamaño diferente al lol"
 
 msgid "I can't remove positions from a None list"
-msgstr ""
+msgstr "No puedo borrar posiciones de una lista que es None"
 
 msgid "I can't traspaso a None object"
 msgstr ""
@@ -50,7 +50,7 @@ msgid "lol_print: This list of lists hasn't data to print"
 msgstr "lol_print: Esta lista de listas no tiene data para imprimir"
 
 msgid "lol_print: No data was printed due to you selected 0 rows"
-msgstr ""
+msgstr "lol_print: No se ha mostrado datos ya que has seleccionado 0 filas"
 
 msgid "No data to show"
 msgstr "Sin datos que mostrar"
