@@ -39,5 +39,8 @@ jobs:
           jupyter-book build jupyter/
 
       - name: Publish to GitHub Pages
+        permissions:
+          contents: write
+
         run: |
           ghp-import -n -p -f jupyter/_build/html
