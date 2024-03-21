@@ -14,6 +14,9 @@ jobs:
         id-token: write   # to verify the deployment originates from an appropriate source
     steps:
       - uses: actions/checkout@v2
+        with:
+          persist-credentials: false  # It's important to disable the automatic token
+
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
