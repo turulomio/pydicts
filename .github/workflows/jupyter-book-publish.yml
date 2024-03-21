@@ -30,13 +30,9 @@ jobs:
       - name: Publish to GitHub Pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-        permissions:
-          pages: write      # to deploy to Pages
-          id-token: write   # to verify the deployment originates from an appropriate source
         run: |
           git config --global user.email "turulomio@yahoo.es"
           git config --global user.name "turulomio"
           git config --global credential.helper store
           # This next command assumes your build output is in the 'jupyter/_build/html' directory.
-          ghp-import -n -p -f jupyter/_build/html -r origin -b gh-pages
+          ghp-import -n -p -f jupyter/_build/html
