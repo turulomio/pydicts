@@ -3,7 +3,7 @@ name: Publish Jupyter Book
 on:
   push:
     branches:
-      - "jupyter-in-github"  # Set this to your default branch
+      - main  # Set this to your default branch
 
 jobs:
   build-and-publish-book:
