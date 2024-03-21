@@ -1,14 +1,15 @@
 # Pydicts project
 
-:::{note}
-    In construction. Please help me
-:::
+Module to use dictionaries, list of dictionaries and other data structures
 
-## Casts
+Links
 
-Casting is essential in programming. With Pydicts I try to put together main castings, to work easyly with all kind of data structures.
+* https://github.com/turulomio/pydicts/
+* https://pypi.org/project/pydicts/
 
-## Data structures
+Documentation can be found in https://turulomio.github.io/pydicts/
+
+## Acronyms
 
 PyDicts uses several acronyms to call modulues, functions and parameters
 

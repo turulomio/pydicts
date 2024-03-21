@@ -13,3 +13,4 @@ chapters:
 - file: percentage
 - file: myjsonencoder
 - file: pylatex
+- file: changelog
