@@ -1,8 +1,8 @@
 {
   "header": {
     "comment": "eric project file for project pydicts",
-    "copyright": "Copyright (C) 2023 , ",
-    "saved": "2023-12-23, 19:13:34"
+    "copyright": "Copyright (C) 2024 , ",
+    "saved": "2024-03-21, 05:53:20"
   },
   "project": {
     "AUTHOR": "",
@@ -72,6 +72,7 @@
       "jupyter/pylatex.md",
       "jupyter/requirements.txt",
       "pydicts.epj",
+      "pydicts/currencies.json",
       "pyproject.toml"
     ],
     "OTHERTOOLSPARMS": {},

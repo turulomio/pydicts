@@ -7,7 +7,7 @@ def release():
   * Cambiar la versión y la fecha en __init__.py
   * Ejecutar otra vez poe release
   * git checkout -b pydicts-{0}
-  * Modificar el Changelog en README
+  * Modificar el Changelog en jupyter/changelog.md
   * poe translate
   * linguist
   * poe translate
@@ -27,6 +27,10 @@ def release():
 """.format(__version__))
 
 def jupyter():
+    """
+        This command is for developing
+        This page is published into https://turulomio.github.io/pydicts/ with github actions
+    """
     system("jupyter-book build jupyter")
     system("rm -Rf docs")
     system("mv jupyter/_build/html docs/")
