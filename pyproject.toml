@@ -31,7 +31,7 @@ jupyter = { script = "pydicts.poethepoet:jupyter" }
 currencies = { script = "pydicts.poethepoet:currencies" }
 
 
-[project.urls]
+[project.urls] 
 homepage = "https://github.com/turulomio/pydicts/"
 repository = "https://github.com/turulomio/pydicts/"
 changelog = "https://github.com/turulomio/pydicts#changelog"
