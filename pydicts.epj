@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project pydicts",
     "copyright": "Copyright (C) 2024 , ",
-    "saved": "2024-03-21, 07:01:17"
+    "saved": "2024-03-22, 05:56:31"
   },
   "project": {
     "AUTHOR": "",
@@ -63,6 +63,7 @@
       "jupyter/casts.md",
       "jupyter/changelog.md",
       "jupyter/currency.md",
+      "jupyter/dod.md",
       "jupyter/intro.md",
       "jupyter/lod.md",
       "jupyter/lod_xyv.md",
@@ -71,7 +72,6 @@
       "jupyter/myjsonencoder.md",
       "jupyter/percentage.md",
       "jupyter/pylatex.md",
-      "jupyter/requirements.txt",
       "pydicts.epj",
       "pydicts/currencies.json",
       "pyproject.toml"
@@ -93,6 +93,7 @@
       "pydicts/casts.py",
       "pydicts/classes.py",
       "pydicts/currency.py",
+      "pydicts/dod.py",
       "pydicts/exceptions.py",
       "pydicts/lod.py",
       "pydicts/lod_xyv.py",
@@ -105,6 +106,7 @@
       "pydicts/tests/__init__.py",
       "pydicts/tests/test_casts.py",
       "pydicts/tests/test_currency.py",
+      "pydicts/tests/test_dod.py",
       "pydicts/tests/test_lod.py",
       "pydicts/tests/test_lod_ymv.py",
       "pydicts/tests/test_lol.py",
