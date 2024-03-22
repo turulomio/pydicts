@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project pydicts",
     "copyright": "Copyright (C) 2024 , ",
-    "saved": "2024-03-22, 05:47:28"
+    "saved": "2024-03-22, 05:56:31"
   },
   "project": {
     "AUTHOR": "",
@@ -63,6 +63,7 @@
       "jupyter/casts.md",
       "jupyter/changelog.md",
       "jupyter/currency.md",
+      "jupyter/dod.md",
       "jupyter/intro.md",
       "jupyter/lod.md",
       "jupyter/lod_xyv.md",
