@@ -13,6 +13,10 @@ kernelspec:
 ---
 # CHANGELOG
 
+## 0.15.0 (2023-3-24)
+- Added dod_print, lol_order_by, lod_add_row methods.
+- Added automatic documentation to the whole project.
+
 ## 0.14.0 (2023-03-21)
 - Add method lod_remove_duplicates
 - Python>=3.9 is now required
