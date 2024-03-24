@@ -16,7 +16,12 @@ kernelspec:
 
 ## dod_print
 
-Prints in console a dictionary of nested dictionaries nicely
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import dod
+help(dod.dod_print)
+```
 
 ```{code-cell}
 from pydicts import dod

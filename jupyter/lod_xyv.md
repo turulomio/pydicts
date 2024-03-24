@@ -14,3 +14,10 @@ kernelspec:
 # LOD_XYV
 
 ## lod_xyv_transformation
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod_xyv
+help(lod_xyv.lod_xyv_transformation)
+```

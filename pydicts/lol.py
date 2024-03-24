@@ -10,7 +10,7 @@ except:
     _=str
 
 
-## LOR is a list of list. Naned List Of Rows, used in myqtablewidget for example
+## LOR is a list of list. 
 ## @param rows LOR
 ## @param index int with the index of the position where we are going to insert row
 ## @param column List with the values to add. Must be of the same size of rows
@@ -22,6 +22,25 @@ def lol_add_column(rows, index, column):
         r_rows.append(row[0:index] + [column[i],] + row[index:len(row)])
     return r_rows
 
+def lol_add_row(lol_, index, row):
+    """
+        Adds a row to a list of rows
+        Checks if new row has the same size of the first row of the LOL
+        Parameters:
+            - lol_
+            - index: int with the index of the position where we are going to insert row
+            - row
+        Returns
+            LOL
+            
+        Will raise error:
+            - lol.lol_add_row(lol_, 1, [2,3]) #New row size is different to first row
+    """
+    if len(lol_)>0 and len(lol_[0])!=len(row):
+        raise exceptions.LolException(_("I can't add a row with different size of the first row of the lol"))
+    lol_.insert(index, row)
+    return lol_
+
 ## Returns a list with object in positions removed
 def list_remove_positions(l, listindex):
     if l is None:
@@ -31,6 +50,32 @@ def list_remove_positions(l, listindex):
         if i not in listindex:
             r.append(o)
     return r
+
+## Order data columns. 
+def lol_order_by(lol_, index, reverse=False, none_at_top=True):
+    """
+        Orders a list of lists by a index
+        Parameters:
+            - lol
+            - index
+            - reverse
+            - none_at_top: None values are set at the beginning
+    """
+    
+    nonull=[]
+    null=[]
+    for o in lol_:
+        com=o[index]
+        if com is None:
+            null.append(o)
+        else:
+            nonull.append(o)
+    nonull=sorted(nonull, key=lambda item: item[index], reverse=reverse)
+    if none_at_top==True:#Set None at top of the list
+        return null+nonull
+    else:
+        return nonull+null
+
 
 ## lol is a list of list. Naned List Of Rows, used in myqtablewidget
 ## @param list_of_indexes is a list of column indexes to remove
@@ -96,21 +141,20 @@ def lol_sum_column(lol, column, from_index, to_index, zerovalue=0):
                 s=s + row[column]
     return s
 
-def lol_print(lod, number=None):
+def lol_print(lol_, number=None):
     """
-    Function Prints a list of list with tabulate module.
-
-    @param lol
-    @type List of lists
-    @param number Number of lists to print. If None prints all lod. (defaults to None)
-    @type Integer
+        Prints a list of list with tabulate module.
+        
+        Parameters:
+            - lol_: List of list
+            - number: Númber of lists to print. If None prints all lod. (defaults to None)
     """
-    number=len(lod) if number is None else number
+    number=len(lol_) if number is None else number
 
-    if len(lod)==0:
+    if len(lol_)==0:
         print(_("lol_print: This list of lists hasn't data to print"))
         return
     if number==0:
         print(_("lol_print: No data was printed due to you selected 0 rows"))
         return
-    print(tabulate(lod[0:number], tablefmt="psql"))
+    print(tabulate(lol_[0:number], tablefmt="psql"))

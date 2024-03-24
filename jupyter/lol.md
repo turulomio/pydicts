@@ -15,9 +15,51 @@ kernelspec:
 
 ## lol_add_column
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lol
+help(lol.lol_add_column)
+```
+
+## lol_add_row
+
+```{code-cell}
+:tags: [remove-input]
+
+help(lol.lol_add_row)
+```
+
+```{code-cell}
+from pydicts import lol
+lol_=[[1, 2, 3], [4, 5, 6]]
+lol_=lol.lol_add_row(lol_, 1, [2,3,5])
+lol.lol_print(lol_)
+```
+
+## lol_order_by
+
+```{code-cell}
+:tags: [remove-input]
+
+help(lol.lol_order_by)
+```
+
+```{code-cell}
+from pydicts import lol
+lol_=[[1, 2, 3], [4, 5, 6], [None, 4, None]]
+lol_=lol.lol_order_by(lol_, 2, reverse=True, none_at_top=False)
+lol.lol_print(lol_)
+```
+
+
 ## lol_print
 
-Prints a list of lists in a tabulated way
+```{code-cell}
+:tags: [remove-input]
+
+help(lol.lol_print)
+```
 
 ```{code-cell}
 from pydicts import lol
@@ -28,13 +70,37 @@ lol.lol_print(lol_)
 
 ## list_remove_positions
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lol
+help(lol.list_remove_positions)
+```
+
 ## lol_remove_columns
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lol
+help(lol.lol_remove_columns)
+```
 
 ## lol_remove_rows
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lol
+help(lol.lol_remove_rows)
+```
 
 ## lol_transposed
 
-Returns a trasnsposed list of lists 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lol
+help(lol.lol_transposed)
+```
 
 ```{code-cell}
 from pydicts.lol import lol_transposed
@@ -46,6 +112,25 @@ lol.lol_print(transposed)
 
 ## lol_get_column
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lol
+help(lol.lol_get_column)
+```
 ## lol_sum_row
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lol
+help(lol.lol_sum_row)
+```
 ## lol_sum_column
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lol
+help(lol.lol_sum_column)
+```
