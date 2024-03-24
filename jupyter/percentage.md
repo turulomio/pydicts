@@ -12,3 +12,10 @@ kernelspec:
   name: python3
 ---
 # Percentage
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import percentage
+help(percentage.Percentage)
+```
