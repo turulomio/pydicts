@@ -25,6 +25,7 @@ def lol_add_column(rows, index, column):
 def lol_add_row(lol_, index, row):
     """
         Adds a row to a list of rows
+        Checks if new row has the same size of the first row of the LOL
         Parameters:
             - lol_
             - index: int with the index of the position where we are going to insert row

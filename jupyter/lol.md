@@ -15,6 +15,35 @@ kernelspec:
 
 ## lol_add_column
 
+## lol_add_row
+
+Adds a row at index position
+
+```{code-cell}
+from pydicts import lol
+lol_=[[1, 2, 3], [4, 5, 6]]
+lol_=lol.lol_add_row(lol_, 1, [2,3,5])
+lol.lol_print(lol_)
+
+print("""
+Will raise error:
+    - lol.lol_add_row(lol_, 1, [2,3])
+""")
+```
+
+## lol_order_by
+
+Order a list of list by column index
+
+```{code-cell}
+from pydicts import lol
+lol_=[[1, 2, 3], [4, 5, 6], [None, 4, None]]
+lol_=lol.lol_order_by(lol_, 2, reverse=True, none_at_top=False)
+lol.lol_print(lol_)
+
+```
+
+
 ## lol_print
 
 Prints a list of lists in a tabulated way
