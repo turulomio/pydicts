@@ -49,6 +49,16 @@ lod.lod2dod(lod_,"b")
 
 ## lod2dod_tuple
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod
+help(lod.lod2dod_tuple)
+```
+
+
+
+
 ## lod2list
 
 Converts a list of dictionaries (lod) to list using all values of key
@@ -92,6 +102,13 @@ lod.lod2lol(lod_,["b","a"])
 ```
 
 ## lod2lood
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod
+help(lod.lod2lood)
+```
 
 ## lod_average
 
@@ -281,5 +298,19 @@ lod_sum(lod,"a")
 
 ## lod_sum_negatives
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod
+help(lod.lod_sum_negatives)
+```
+
 ## lod_sum_positives
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod
+help(lod.lod_sum_positives)
+```
 

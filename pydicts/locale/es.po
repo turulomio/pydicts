@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TooManyFiles\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-13 19:04+0100\n"
+"POT-Creation-Date: 2024-03-24 09:37+0100\n"
 "PO-Revision-Date: 2020-04-03 08:54+0200\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
@@ -40,6 +40,9 @@ msgstr ""
 msgid "I can't add a column with different size of lol"
 msgstr "No puedo añadir una columna con un tamaño diferente al lol"
 
+msgid "I can't add a row with different size of the first row of the lol"
+msgstr ""
+
 msgid "I can't remove positions from a None list"
 msgstr "No puedo borrar posiciones de una lista que es None"
 
@@ -57,4 +60,3 @@ msgstr "Sin datos que mostrar"
 
 msgid "This table continues in the next page"
 msgstr "Esta tabla continúa en la siguiente página"
-
