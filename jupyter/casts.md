@@ -41,31 +41,114 @@ casts.str2bool(None, ignore_exception=True,ignore_exception_value=False)
 
 ### base64bytes2bytes
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.base64bytes2bytes)
+```
+
 ### bytes2base64bytes
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.bytes2base64bytes)
+```
 
 ### bytes2str
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.bytes2str)
+```
 ### dtaware2dtnaive
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware2dtnaive)
+```
 ### dtaware2epochmicros
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware2epochmicros)
+```
 ### dtaware2epochms
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware2epochms)
+```
 ### dtaware2str
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware2str)
+```
 ### dtnaive2dtaware
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtnaive2dtaware)
+```
 
 ### dtnaive2str
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtnaive2str)
+```
+
 ### epochmicros2dtaware
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.epochmicros2dtaware)
+```
 
 ### epochms2dtaware
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.epochms2dtaware)
+```
+
 ### none2alternative
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.none2alternative)
+```
 
 ### str2bool
 
-Converts a string to a boolean
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.str2bool)
+```
 
 ```{code-cell}
 from pydicts import casts
@@ -84,53 +167,221 @@ These calls will raise CastException:
 
 ### str2bytes
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.str2bytes)
+```
+
 ### str2date
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.str2date)
+```
 
 ### str2decimal
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.str2decimal)
+```
+
 ### str2dtaware
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.str2dtaware)
+```
 
 ### str2dtnaive
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.str2dtnaive)
+```
+
 ### str2time
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.str2time)
+```
 
 ### str2timedelta
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.str2timedelta)
+```
+
 ### time2str
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.time2str)
+```
+
 ### timedelta2str
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.timedelta2str)
+```
 
 ## Date and time utils
 
 ### date_first_of_the_month
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.date_first_of_the_month)
+```
+
 ### date_first_of_the_next_x_months
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.date_first_of_the_next_x_months)
+```
 
 ### date_first_of_the_year
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.date_first_of_the_year)
+```
+
 ### date_last_of_the_month
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.date_last_of_the_month)
+```
 
 ### date_last_of_the_next_x_months
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.date_last_of_the_next_x_months)
+```
+
 ### date_last_of_the_year
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.date_last_of_the_year)
+```
 
 ### dtaware
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware)
+```
+
 ### dtaware_changes_tz
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware_changes_tz)
+```
 
 ### dtaware_day_end
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware_day_end)
+```
+
 ### dtaware_day_end_from_date
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware_day_end_from_date)
+```
 
 ###  dtaware_day_start
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware_day_start)
+```
+
 ### dtaware_day_start_from_date
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware_day_start_from_date)
+```
 
 ### dtaware_month_end
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware_month_end)
+```
+
 ### dtaware_month_start
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware_month_start)
+```
+
 ### dtaware_now
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware_now)
+```
 
 Returns a aware datetime object of current moment. By default returns UTC timezone
 
@@ -143,20 +394,76 @@ print(casts.dtaware_now("Europe/Madrid"))
 
 ### dtaware_year_end
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware_year_end)
+```
+
 ### dtaware_year_start
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtaware_year_start)
+```
+
 ### dtnaive
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtnaive)
+```
 
 
 ### dtnaive_day_end
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtnaive_day_end)
+```
+
 ### dtnaive_day_end_from_date
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtnaive_day_end_from_date)
+```
 
 ###  dtnaive_day_start
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtnaive_day_start)
+```
+
 ### dtnaive_day_start_from_date
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtnaive_day_start_from_date)
+```
+
 ### dtnaive_now
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.dtnaive_now)
+```
 
 Returns a naive datetime object of current moment. By default returns UTC timezone
 
@@ -166,6 +473,13 @@ casts.dtnaive_now()
 ```
 
 ### is_aware
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.is_aware)
+```
 
 Returns if a datetime object is aware (with timezone) 
 
@@ -177,7 +491,12 @@ print(casts.is_aware(casts.dtnaive_now()))
 
 ### is_naive
 
-Returns if a datetime object is naive (without timezone) 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.is_naive)
+```
 
 ```{code-cell}
 from pydicts import casts
@@ -187,10 +506,24 @@ print(casts.is_naive(casts.dtnaive_now()))
 
 ### months
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.months)
+```
+
 
 ## Other utils
 
 ### is_noe
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.is_noe)
+```
 
 Return if value is None or an empty string
 
@@ -203,4 +536,11 @@ print(casts.is_noe(1))
 
 
 ### object_or_empty
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.object_or_empty)
+```
 
