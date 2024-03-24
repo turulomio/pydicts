@@ -15,8 +15,36 @@ kernelspec:
 
 ## lod_ymv_transposition
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod_ymv
+help(lod_ymv.lod_ymv_transposition)
+```
+
 ## lod_ymv_transposition_with_percentages
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod_ymv
+help(lod_ymv.lod_ymv_transposition_with_percentages)
+```
 
 ## lod_ymv_transposition_sum
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod_ymv
+help(lod_ymv.lod_ymv_transposition_sum)
+```
+
 ## lod_ymv_filling
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod_ymv
+help(lod_ymv.lod_ymv_filling)
+```
