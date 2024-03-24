@@ -12,3 +12,11 @@ kernelspec:
   name: python3
 ---
 # Currency
+
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import currency
+help(currency.Currency)
+```

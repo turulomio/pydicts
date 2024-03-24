@@ -15,5 +15,18 @@ kernelspec:
 
 ## pylatex_table
 
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import pylatex
+help(pylatex.pylatex_table)
+```
 
 ## pylatex_table_with_matched_values
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import pylatex
+help(pylatex.pylatex_table_with_matched_values)
+```

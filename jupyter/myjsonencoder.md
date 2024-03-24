@@ -15,14 +15,59 @@ kernelspec:
 
 ## Encoders
 ### MyJSONEncoder
+
 ### MyJSONEncoderDecimalsAsString
+
 ### MyJSONEncoderDecimalsAsFloat
+
 
 ## Methods
 
 ### MyJSONEncoder_dumps
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import myjsonencoder
+help(myjsonencoder.MyJSONEncoder_dumps)
+```
 ### MyJSONEncoder_loads
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import myjsonencoder
+help(myjsonencoder.MyJSONEncoder_loads)
+```
 ### MyJSONEncoderDecimalsAsString_dumps
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import myjsonencoder
+help(myjsonencoder.MyJSONEncoderDecimalsAsString_dumps)
+```
 ### MyJSONEncoderDecimalsAsString_loads
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import myjsonencoder
+help(myjsonencoder.MyJSONEncoderDecimalsAsString_loads)
+```
 ### MyJSONEncoderDecimalsAsFloat_dumps
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import myjsonencoder
+help(myjsonencoder.MyJSONEncoderDecimalsAsFloat_dumps)
+```
 ### MyJSONEncoderDecimalsAsFloat_loads
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import myjsonencoder
+help(myjsonencoder.MyJSONEncoderDecimalsAsFloat_loads)
+```
