@@ -32,6 +32,9 @@ def lol_add_row(lol_, index, row):
             - row
         Returns
             LOL
+            
+        Will raise error:
+            - lol.lol_add_row(lol_, 1, [2,3]) #New row size is different to first row
     """
     if len(lol_)>0 and len(lol_[0])!=len(row):
         raise exceptions.LolException(_("I can't add a row with different size of the first row of the lol"))
@@ -138,21 +141,20 @@ def lol_sum_column(lol, column, from_index, to_index, zerovalue=0):
                 s=s + row[column]
     return s
 
-def lol_print(lod, number=None):
+def lol_print(lol_, number=None):
     """
-    Function Prints a list of list with tabulate module.
-
-    @param lol
-    @type List of lists
-    @param number Number of lists to print. If None prints all lod. (defaults to None)
-    @type Integer
+        Prints a list of list with tabulate module.
+        
+        Parameters:
+            - lol_: List of list
+            - number: Númber of lists to print. If None prints all lod. (defaults to None)
     """
-    number=len(lod) if number is None else number
+    number=len(lol_) if number is None else number
 
-    if len(lod)==0:
+    if len(lol_)==0:
         print(_("lol_print: This list of lists hasn't data to print"))
         return
     if number==0:
         print(_("lol_print: No data was printed due to you selected 0 rows"))
         return
-    print(tabulate(lod[0:number], tablefmt="psql"))
+    print(tabulate(lol_[0:number], tablefmt="psql"))
