@@ -516,6 +516,22 @@ help(casts.months)
 
 ## Other utils
 
+### is_email
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.is_email)
+```
+
+```{code-cell}
+from pydicts import casts
+print(casts.is_email("hi.hi.com"))
+print(casts.is_email("hi@hi.com"))
+print(casts.is_email("hi@hi.com."))
+```
+
 ### is_noe
 
 ```{code-cell}
@@ -524,8 +540,6 @@ help(casts.months)
 from pydicts import casts
 help(casts.is_noe)
 ```
-
-Return if value is None or an empty string
 
 ```{code-cell}
 from pydicts import casts
