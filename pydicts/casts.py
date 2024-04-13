@@ -187,7 +187,7 @@ def is_naive(dt):
 
 def is_noe(value):
     """
-        Returns a boolean. True if value is null or empty.
+        Returns a boolean. True if value is None or an empty string.
     """
     if value is None:
         return True
