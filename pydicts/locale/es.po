@@ -35,7 +35,7 @@ msgid "Keys names are not correct in dictionary in lod_year_month_value_transpos
 msgstr "Los nombres de las llaves no son correctar en el diccionario de la función lod_year_month_value_transposition"
 
 msgid "Keys names are not correct in dictionary in lod_ymv_transposition function"
-msgstr ""
+msgstr "El nombre de las llaves no es correcto en el diccionario lod_ymv_transposition_function"
 
 msgid "I can't add a column with different size of lol"
 msgstr "No puedo añadir una columna con un tamaño diferente al lol"
