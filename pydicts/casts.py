@@ -9,6 +9,7 @@ from datetime import timedelta, date, datetime, time
 from gettext import translation
 from importlib.resources import files
 from pydicts import exceptions
+from re import match
 from zoneinfo import ZoneInfo
 from base64 import b64encode, b64decode
 from isodate import parse_duration, duration_isoformat
@@ -19,7 +20,7 @@ try:
     _=t.gettext
 except:
     _=str
-
+    
 def object_or_empty(v):
     """
         Returns and empty string if None, else return value
@@ -173,9 +174,6 @@ def bytes2base64bytes(value, ignore_exception=False, ignore_exception_value=None
             raise exceptions.CastException(error)
         else:
             return ignore_exception_value    
-            
-            
-            
 
 ### Returns if a datetime is aware
 def is_aware(dt):
@@ -711,4 +709,16 @@ def str2timedelta(value, ignore_exception=False, ignore_exception_value=None):
             raise exceptions.CastException(error)
         else:
             return ignore_exception_value
+
+def is_email(value):
+    """
+        Returns if a string is a valid email using a regular expression
+    """
+    if not value.__class__==str:
+        return False
+
+    if match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', value):
+        return True
+    else:
+        return False
     

@@ -313,5 +313,19 @@ def test_dtaware2epochmicros():
     
 def test_epochmicros2dtaware():
     pass
+
 def test_epochms2dtaware():
     pass
+
+def test_email():
+    assert casts.is_email(None)==False
+    assert casts.is_email("")==False
+    assert casts.is_email(12)==False
+    assert casts.is_email("hi.hi.com")==False
+    assert casts.is_email("hi@hi@.com")==False
+    assert casts.is_email("hi@hi.com.")==False
+    assert casts.is_email("hi@hi.comm")
+    
+    
+    
+    
