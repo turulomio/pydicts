@@ -13,11 +13,14 @@ kernelspec:
 ---
 # CHANGELOG
 
-## 0.15.0 (2023-3-24)
+## 0.16.0 (2024-04-13)
+- Added is_email method in casts
+
+## 0.15.0 (2024-03-24)
 - Added dod_print, lol_order_by, lod_add_row methods.
 - Added automatic documentation to the whole project.
 
-## 0.14.0 (2023-03-21)
+## 0.14.0 (2024-03-21)
 - Add method lod_remove_duplicates
 - Python>=3.9 is now required
 - Github project pages is now updated with Github Actions
