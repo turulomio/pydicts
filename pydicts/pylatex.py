@@ -2,8 +2,6 @@
     This class is used with the pylatex module to generate table from pydicts structures
     You only have to import pylatex if you're testing
 """
-
-
 from pylatex import LongTabularx, MultiColumn
 from pylatex.basic import NewLine
 from pylatex.utils import NoEscape, bold, escape_latex

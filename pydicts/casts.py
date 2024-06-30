@@ -517,28 +517,32 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
             return ignore_exception_value
 
 def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False, ignore_exception_value=None):
+    """
+        Converts a string to an aware datetime
+        Format uses format codes from https://docs.python.org/3/library/datetime.html#format-codes
+    
+        Specifically prepared formats: 
+        - "%Y-%m-%d %H:%M:%S%z"
+        - "%Y-%m-%d %H:%M:%S.%z", 
+        - "JsUtcIso"
+    """
+    
     original=value
-    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
-    error=f"Error in Pydicts.cast.str2dtaware method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
-    if format not in  allowed or value.__class__!=str:
-        if ignore_exception is False:
-            raise exceptions.CastException(error)
-        else:
-            return ignore_exception_value
+    error=f"Error in Pydicts.cast.str2dtaware method. Value: {original} Value class: {value.__class__.__name__} Format: {format}"
     try:
         if format=="%Y-%m-%d %H:%M:%S%z":#2017-11-20 23:00:00+00:00
             s=value[:-3]+value[-2:]
             dt=datetime.strptime( s, format )
             return dtaware_changes_tz(dt, tz_name)
-        if format=="%Y-%m-%d %H:%M:%S.%z":#2017-11-20 23:00:00.000000+00:00  ==>  microsecond. Notice the point in format
+        elif format=="%Y-%m-%d %H:%M:%S.%z":#2017-11-20 23:00:00.000000+00:00  ==>  microsecond. Notice the point in format
             s=value[:-3]+value[-2:]#quita el :
             arrPunto=s.split(".")
-            s=arrPunto[0]+s[-5:]
+            s=arrPunto[0]+s[-5:]    
             micro=int(arrPunto[1][:-5])
             dt=datetime.strptime( value, "%Y-%m-%d %H:%M:%S%z" )
             dt=dt+timedelta(microseconds=micro)
             return dtaware_changes_tz(dt, tz_name)
-        if format=="JsUtcIso": #2021-08-21T06:27:38.294Z
+        elif format=="JsUtcIso": #2021-08-21T06:27:38.294Z
             if not "Z" in value:
                 raise exceptions.CastException(error)
             s=value.replace("T"," ").replace("Z","")
@@ -546,6 +550,10 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
             dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
             dtaware_utc=dtnaive2dtaware(dtnaive, 'UTC')
             return dtaware_changes_tz(dtaware_utc, tz_name)
+        else:
+            dt=datetime.strptime( value, format )
+            return dtnaive2dtaware(dt, tz_name)
+            
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)

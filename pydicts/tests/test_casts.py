@@ -254,11 +254,12 @@ def test_str2dtnaive():
     assert casts.str2dtnaive("2023-11-26T17:05:05.123456Z", ignore_exception=True)==None
 
 
-def test_str2dtaware():   
+def  test_str2dtaware():   
     with raises(exceptions.CastException):
         casts.str2dtaware("2023-11-26T17:05:05Z", "YYYY-mm-dd")
     
     assert casts.str2dtaware("2023-11-26T17:05:05Z", "YYYY-mm-dd", ignore_exception=True)==None
+    assert casts.str2dtaware("2023-11-26", "%Y-%m-%d")== datetime(2023, 11, 26, 0, 0, tzinfo=ZoneInfo('UTC'))
     assert casts.str2dtaware("2023-11-26T17:05:05Z")==datetime(2023, 11, 26, 17, 5, 5, tzinfo=ZoneInfo('UTC'))
     assert casts.str2dtaware("2023-11-26T17:05:05", "JsUtcIso", ignore_exception=True)==None
 
