@@ -13,6 +13,11 @@ kernelspec:
 ---
 # CHANGELOG
 
+## 0.17.0 (2024-11-03)
+- Added colors module to fast color string programming using colorama
+- Added lod_count method to count dictionaries using a lambda function
+- Updated dependecies to fix several bugs
+
 ## 0.16.0 (2024-04-13)
 - Added is_email method in casts
 

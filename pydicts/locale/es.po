@@ -41,7 +41,7 @@ msgid "I can't add a column with different size of lol"
 msgstr "No puedo añadir una columna con un tamaño diferente al lol"
 
 msgid "I can't add a row with different size of the first row of the lol"
-msgstr ""
+msgstr "No puedo añadir una fila con un tamaño diferente al tamaño de la primera fila del lol"
 
 msgid "I can't remove positions from a None list"
 msgstr "No puedo borrar posiciones de una lista que es None"
