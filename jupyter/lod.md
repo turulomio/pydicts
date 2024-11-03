@@ -144,6 +144,20 @@ lod.lod_calculate(lod_, "d", lambda d, index: d['a']+d['b']+d['c'])
 
 Makes a clone of the list of dictionaries with a new list and new dictionaries
 
+
+## lod_count
+
+Count values in a list of dictioanries
+```{code-cell}
+from pydicts import lod
+lod_= [{'a': 1, 'b': 2, 'c':5}, {'a': 3, 'b': 4, 'c': 6}, {'a': 3, 'b': 4, 'c': None}]
+
+a=lod.lod_count(lod_,lambda d, index: d["a"]>3)
+b=lod.lod_count(lod_,lambda d, index: d["c"] is None)
+c=lod.lod_count(lod_,lambda d, index: index>=0)
+print(a,b,c)
+```
+
 ## lod_filter_dictionaries
 
 Create a new lod leaving filtering dictionaries that returns True to lambda funcion

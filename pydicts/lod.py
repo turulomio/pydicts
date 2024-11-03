@@ -77,6 +77,17 @@ def lod_average_ponderated(lod_, key_numbers, key_values):
         prods=prods+d[key_numbers]*d[key_values]
     return prods/lod_sum(lod_, key_numbers)
 
+def lod_count(lod_, lambdafunction):
+    """
+        Counts dictionaries that cumpliments lambda function
+        lod_count(lod, lambda d,index: d["cmd"]==1)
+    """
+    r=0   
+    for index,  d in enumerate(lod_):
+        if lambdafunction(d,index) is True:
+            r+=1
+    return r
+
 def lod_median(lod_, key):
     from statistics import median
     return median(lod2list(lod_, key, sorted=True))

@@ -96,6 +96,12 @@ def test_lod2dod():
     dod_=lod.lod2dod(lod_, "c")
     print(dod_)
     assert dod_[Decimal("12.32")]==lod_[0]
+
 def test_dod2lod():
     dod_=lod.lod2dod(lod_, "c")
     assert lod_==lod.dod2lod(dod_)
+
+def test_count():
+    assert lod.lod_count(lod_,lambda d, index: d["c"]>0)==1, "Error counting"
+    assert lod.lod_count(lod_,lambda d, index: d["f"] is None)==2, "Error counting"
+    assert lod.lod_count(lod_,lambda d, index: index>0)==1, "Error counting"
