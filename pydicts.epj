@@ -2,7 +2,7 @@
   "header": {
     "comment": "eric project file for project pydicts",
     "copyright": "Copyright (C) 2024 , ",
-    "saved": "2024-03-22, 05:56:31"
+    "saved": "2024-12-07, 10:33:46"
   },
   "project": {
     "AUTHOR": "",
@@ -62,6 +62,7 @@
       "jupyter/_toc.yml",
       "jupyter/casts.md",
       "jupyter/changelog.md",
+      "jupyter/colors.md",
       "jupyter/currency.md",
       "jupyter/dod.md",
       "jupyter/intro.md",
@@ -92,6 +93,7 @@
       "pydicts/__init__.py",
       "pydicts/casts.py",
       "pydicts/classes.py",
+      "pydicts/colors.py",
       "pydicts/currency.py",
       "pydicts/dod.py",
       "pydicts/exceptions.py",
@@ -105,6 +107,7 @@
       "pydicts/pylatex.py",
       "pydicts/tests/__init__.py",
       "pydicts/tests/test_casts.py",
+      "pydicts/tests/test_colors.py",
       "pydicts/tests/test_currency.py",
       "pydicts/tests/test_dod.py",
       "pydicts/tests/test_lod.py",
