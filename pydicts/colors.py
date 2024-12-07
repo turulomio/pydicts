@@ -1,4 +1,5 @@
 from colorama import Style,Fore
+from decimal import Decimal
 from pydicts.currency import Currency
 from pydicts.percentage import Percentage
 
@@ -48,6 +49,10 @@ def currency_color(value, currency_):
     """
         Shows a currency string in green or red color
     """
+    if value.__class__ != (float,  int,  Decimal):
+        return blue("-")
+    
+    
     if value>=0:
         return green(Currency(value,currency_))
     else:
@@ -57,6 +62,8 @@ def percentage_color(value):
     """
         Shows a percentage string in green or red color
     """
+    if value.__class__ != (float,  int,  Decimal):
+        return blue("- %")
     if value>=0:
         return green(Percentage(value,1))
     else:
@@ -66,6 +73,8 @@ def value_color(value):
     """
         Shows a value string in green or red color
     """
+    if value.__class__ != (float,  int,  Decimal):
+        return blue("-")
     if value>=0:
         return green(value)
     else:
