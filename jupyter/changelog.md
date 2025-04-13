@@ -13,6 +13,9 @@ kernelspec:
 ---
 # CHANGELOG
 
+## 1.0.0 (2025-04-13)
+- Migrated to poetry>2.0.0
+
 ## 0.17.0 (2024-11-03)
 - Added colors module to fast color string programming using colorama
 - Added lod_count method to count dictionaries using a lambda function

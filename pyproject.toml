@@ -1,6 +1,6 @@
 [project]
 name = "pydicts"
-version = "0.17.0dev"
+version = "1.0.0"
 description = "Module to use dictionaries in various situations"
 authors = [
     {name = "turulomio",email = "turulomio@yahoo.es"}
