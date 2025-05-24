@@ -258,12 +258,19 @@ lod.lod_order_by(lod_,"b",reverse=True, none_at_top=False)
 
 ## lod_print
 
-Prints a list of dictionaries in a tabulated way
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod
+help(lod.lod_print)
+```
+
 
 ```{code-cell}
 from pydicts.lod import lod_print
 lod_=[{"a":1, "b":4},{"a":2, "b":None}]
-lod_print(lod_)
+lod_print(lod_, align=['center', 'right'])
 ```
 
 ## lod_rename_key
