@@ -1,0 +1,1510 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Casts and other utils &#8212; Pydicts documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'casts';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="DOD" href="dod.html" />
+    <link rel="prev" title="Pydicts project" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/pydicts_jupyter.png" class="logo__image only-light" alt="Pydicts documentation - Home"/>
+    <script>document.write(`<img src="_static/pydicts_jupyter.png" class="logo__image only-dark" alt="Pydicts documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Pydicts project
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Casts and other utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dod.html">DOD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lod.html">LOD</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lod_xyv.html">LOD_XYV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lod_ymv.html">LOD_YMV</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lol.html">LOL</a></li>
+<li class="toctree-l1"><a class="reference internal" href="currency.html">Currency</a></li>
+<li class="toctree-l1"><a class="reference internal" href="percentage.html">Percentage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="myjsonencoder.html">MyJsonEncoder</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pylatex.html">PyLatex</a></li>
+<li class="toctree-l1"><a class="reference internal" href="colors.html">Colors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">CHANGELOG</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/turulomio/pydicts" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/turulomio/pydicts/issues/new?title=Issue%20on%20page%20%2Fcasts.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/casts.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Casts and other utils</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-exception">ignore_exception</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#casts">Casts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#base64bytes2bytes">base64bytes2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2base64bytes">bytes2base64bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2str">bytes2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2dtnaive">dtaware2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochmicros">dtaware2epochmicros</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochms">dtaware2epochms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2str">dtaware2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2dtaware">dtnaive2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2str">dtnaive2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochmicros2dtaware">epochmicros2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochms2dtaware">epochms2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#none2alternative">none2alternative</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bytes">str2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2date">str2date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2decimal">str2decimal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtaware">str2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtnaive">str2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2time">str2time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2timedelta">str2timedelta</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time2str">time2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#timedelta2str">timedelta2str</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-and-time-utils">Date and time utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-month">date_first_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-next-x-months">date_first_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-year">date_first_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-month">date_last_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-next-x-months">date_last_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-year">date_last_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware">dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-changes-tz">dtaware_changes_tz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end">dtaware_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end-from-date">dtaware_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start">dtaware_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start-from-date">dtaware_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-end">dtaware_month_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-start">dtaware_month_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-now">dtaware_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-end">dtaware_year_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-start">dtaware_year_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive">dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end">dtnaive_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end-from-date">dtnaive_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start">dtnaive_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start-from-date">dtnaive_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-now">dtnaive_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-aware">is_aware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-naive">is_naive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#months">months</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utils">Other utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-email">is_email</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-noe">is_noe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#object-or-empty">object_or_empty</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="casts-and-other-utils">
+<h1>Casts and other utils<a class="headerlink" href="#casts-and-other-utils" title="Link to this heading">#</a></h1>
+<p>Casting is essential in programming. With Pydicts I try to put together main castings, to work easyly with all kind of data structures.</p>
+<section id="ignore-exception">
+<h2>ignore_exception<a class="headerlink" href="#ignore-exception" title="Link to this heading">#</a></h2>
+<p>Morever, this module casting function has two additional parameters, that are useful for rapid development:</p>
+<ul class="simple">
+<li><p><strong>ignore_exception</strong>. By default False. If you set this parameter to True, casting with return ignore_exception_value if a CastException happens.</p></li>
+<li><p><strong>ignore_exception_value</strong>. By default None. It’s the value casting will return if a CastException happens</p></li>
+</ul>
+<p>For example, this code  <code class="docutils literal notranslate"><span class="pre">casts.str2bool(None)</span></code>  will raise a CastException, due to None is not a valid value.</p>
+<p>But this code will return None</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydicts</span><span class="w"> </span><span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And this code will return False</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydicts</span><span class="w"> </span><span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">ignore_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">ignore_exception_value</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="casts">
+<h2>Casts<a class="headerlink" href="#casts" title="Link to this heading">#</a></h2>
+<section id="base64bytes2bytes">
+<h3>base64bytes2bytes<a class="headerlink" href="#base64bytes2bytes" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function base64bytes2bytes in module pydicts.casts:
+
+base64bytes2bytes(value, ignore_exception=False, ignore_exception_value=None)
+    Bytes 2 string
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bytes2base64bytes">
+<h3>bytes2base64bytes<a class="headerlink" href="#bytes2base64bytes" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function bytes2base64bytes in module pydicts.casts:
+
+bytes2base64bytes(value, ignore_exception=False, ignore_exception_value=None)
+    String 2 bytes
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="bytes2str">
+<h3>bytes2str<a class="headerlink" href="#bytes2str" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function bytes2str in module pydicts.casts:
+
+bytes2str(value, code=&#39;UTF-8&#39;, ignore_exception=False, ignore_exception_value=None)
+    Bytes 2 string
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware2dtnaive">
+<h3>dtaware2dtnaive<a class="headerlink" href="#dtaware2dtnaive" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware2dtnaive in module pydicts.casts:
+
+dtaware2dtnaive(dtaware)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware2epochmicros">
+<h3>dtaware2epochmicros<a class="headerlink" href="#dtaware2epochmicros" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware2epochmicros in module pydicts.casts:
+
+dtaware2epochmicros(d)
+    ## epoch is the time from 1,1,1970 in UTC
+    ## return now(timezone(self.name))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware2epochms">
+<h3>dtaware2epochms<a class="headerlink" href="#dtaware2epochms" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware2epochms in module pydicts.casts:
+
+dtaware2epochms(d)
+    ## epoch is the time from 1,1,1970 in UTC
+    ## return now(timezone(self.name))
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware2str">
+<h3>dtaware2str<a class="headerlink" href="#dtaware2str" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware2str in module pydicts.casts:
+
+dtaware2str(value, format=&#39;JsUtcIso&#39;, ignore_exception=False, ignore_exception_value=None)
+    ## Returns a formated string of a dtaware string formatting with a zone name
+    ## @param dt datetime aware object
+    ## @return String
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtnaive2dtaware">
+<h3>dtnaive2dtaware<a class="headerlink" href="#dtnaive2dtaware" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtnaive2dtaware in module pydicts.casts:
+
+dtnaive2dtaware(dtnaive, tz_name)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtnaive2str">
+<h3>dtnaive2str<a class="headerlink" href="#dtnaive2str" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtnaive2str in module pydicts.casts:
+
+dtnaive2str(value, format=&#39;JsIso&#39;, ignore_exception=False, ignore_exception_value=None)
+    ## Returns a formated string of a dtaware string formatting with a zone name
+    ## @param dt datetime aware object
+    ## @param format String in [&quot;%Y-%m-%d&quot;, &quot;%Y-%m-%d %H:%M:%S&quot;, &quot;%Y%m%d %H%M&quot;, &quot;%Y%m%d%H%M&quot;]
+    ## @return String
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="epochmicros2dtaware">
+<h3>epochmicros2dtaware<a class="headerlink" href="#epochmicros2dtaware" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function epochmicros2dtaware in module pydicts.casts:
+
+epochmicros2dtaware(n, tz=&#39;UTC&#39;)
+    ## Return a UTC datetime aware
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="epochms2dtaware">
+<h3>epochms2dtaware<a class="headerlink" href="#epochms2dtaware" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function epochms2dtaware in module pydicts.casts:
+
+epochms2dtaware(n, tz=&#39;UTC&#39;)
+    ## Return a UTC datetime aware
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="none2alternative">
+<h3>none2alternative<a class="headerlink" href="#none2alternative" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function none2alternative in module pydicts.casts:
+
+none2alternative(value, alternative)
+    If a value is None, returns an alternative
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="str2bool">
+<h3>str2bool<a class="headerlink" href="#str2bool" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function str2bool in module pydicts.casts:
+
+str2bool(value, ignore_exception=False, ignore_exception_value=None)
+    Converts strings True or False to boolean
+    @param value String
+    @return Boolean
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydicts</span><span class="w"> </span><span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="s2">&quot;true&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydicts</span><span class="w"> </span><span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">str2bool</span><span class="p">(</span><span class="s2">&quot;0&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<p>These calls will raise CastException:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(None)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(True)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">casts.str2bool(&quot;Verdadero&quot;)</span></code></p></li>
+</ul>
+</section>
+<section id="str2bytes">
+<h3>str2bytes<a class="headerlink" href="#str2bytes" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function str2bytes in module pydicts.casts:
+
+str2bytes(value, code=&#39;UTF8&#39;, ignore_exception=False, ignore_exception_value=None)
+    String 2 bytes
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="str2date">
+<h3>str2date<a class="headerlink" href="#str2date" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function str2date in module pydicts.casts:
+
+str2date(value, format=&#39;YYYY-MM-DD&#39;, ignore_exception=False, ignore_exception_value=None)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="str2decimal">
+<h3>str2decimal<a class="headerlink" href="#str2decimal" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function str2decimal in module pydicts.casts:
+
+str2decimal(value, ignore_exception=False, ignore_exception_value=None)
+    Converts a string  to a decimal
+    Parameters:
+        - decimal_separator. Symbol to separate decimals. For example 12.121212 (decimal_separator=&quot;.&quot;) 12.122,1223 (decimal_separator=&quot;,&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="str2dtaware">
+<h3>str2dtaware<a class="headerlink" href="#str2dtaware" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function str2dtaware in module pydicts.casts:
+
+str2dtaware(value, format=&#39;JsUtcIso&#39;, tz_name=&#39;UTC&#39;, ignore_exception=False, ignore_exception_value=None)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="str2dtnaive">
+<h3>str2dtnaive<a class="headerlink" href="#str2dtnaive" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function str2dtnaive in module pydicts.casts:
+
+str2dtnaive(value, format=&#39;JsIso&#39;, ignore_exception=False, ignore_exception_value=None)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="str2time">
+<h3>str2time<a class="headerlink" href="#str2time" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function str2time in module pydicts.casts:
+
+str2time(value, format=&#39;JsIso&#39;, ignore_exception=False, ignore_exception_value=None)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="str2timedelta">
+<h3>str2timedelta<a class="headerlink" href="#str2timedelta" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function str2timedelta in module pydicts.casts:
+
+str2timedelta(value, ignore_exception=False, ignore_exception_value=None)
+    Converts a string in ISO_8601 in a timedelta or duration
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="time2str">
+<h3>time2str<a class="headerlink" href="#time2str" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function time2str in module pydicts.casts:
+
+time2str(value, format=&#39;JsIso&#39;, ignore_exception=False, ignore_exception_value=None)
+    ## Converts a time to a string
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="timedelta2str">
+<h3>timedelta2str<a class="headerlink" href="#timedelta2str" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function timedelta2str in module pydicts.casts:
+
+timedelta2str(value, ignore_exception=False, ignore_exception_value=None)
+    Converts a timedelta object into a string in ISO_8601
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="date-and-time-utils">
+<h2>Date and time utils<a class="headerlink" href="#date-and-time-utils" title="Link to this heading">#</a></h2>
+<section id="date-first-of-the-month">
+<h3>date_first_of_the_month<a class="headerlink" href="#date-first-of-the-month" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function date_first_of_the_month in module pydicts.casts:
+
+date_first_of_the_month(year, month)
+    ## Returns a date with the first date of the month
+    ## @param year Year to search fist day
+    ## @param month Month to search first day
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="date-first-of-the-next-x-months">
+<h3>date_first_of_the_next_x_months<a class="headerlink" href="#date-first-of-the-next-x-months" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function date_first_of_the_next_x_months in module pydicts.casts:
+
+date_first_of_the_next_x_months(year, month, x)
+    ## Returns a date with the first date of the month after x months
+    ## @param year Year to search  day
+    ## @param month Month to search day
+    ## @param x Number of months after parameters. Cab be positive to add months or negative to substract months
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="date-first-of-the-year">
+<h3>date_first_of_the_year<a class="headerlink" href="#date-first-of-the-year" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function date_first_of_the_year in module pydicts.casts:
+
+date_first_of_the_year(year)
+    ## Returns a date with the first date of the year
+    ## @param year Year to search first day
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="date-last-of-the-month">
+<h3>date_last_of_the_month<a class="headerlink" href="#date-last-of-the-month" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function date_last_of_the_month in module pydicts.casts:
+
+date_last_of_the_month(year, month)
+    ## Returns a date with the last date of the month
+    ## @param year Year to search last day
+    ## @param month Month to search last day
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="date-last-of-the-next-x-months">
+<h3>date_last_of_the_next_x_months<a class="headerlink" href="#date-last-of-the-next-x-months" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function date_last_of_the_next_x_months in module pydicts.casts:
+
+date_last_of_the_next_x_months(year, month, x)
+    ## Returns a date with the last date of the month after x months
+    ## @param year Year to search  day
+    ## @param month Month to search day
+    ## @param x Number of months after parameters. Cab be positive to add months or negative to substract months
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="date-last-of-the-year">
+<h3>date_last_of_the_year<a class="headerlink" href="#date-last-of-the-year" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function date_last_of_the_year in module pydicts.casts:
+
+date_last_of_the_year(year)
+    ## Returns a date with the last date of the year
+    ## @param year Year to search last day
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware">
+<h3>dtaware<a class="headerlink" href="#dtaware" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware in module pydicts.casts:
+
+dtaware(date_, time_, tz_name)
+    ## Function to create a datetime aware object
+    ## @param date datetime.date object
+    ## @param hour hour object
+    ## @param tz_name String with datetime tz_name name. For example &quot;Europe/Madrid&quot;
+    ## @return datetime aware
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware-changes-tz">
+<h3>dtaware_changes_tz<a class="headerlink" href="#dtaware-changes-tz" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware_changes_tz in module pydicts.casts:
+
+dtaware_changes_tz(dt, tzname)
+    ## Changes zoneinfo from a dtaware object
+    ## For example:
+    ## - datetime.datetime(2018, 5, 18, 8, 12, tzinfo=&lt;DstTzInfo &#39;Europe/Madrid&#39; CEST+2:00:00 DST&gt;)
+    ## - libcaloriestrackerfunctions.dtaware_changes_tz(a,&quot;Europe/London&quot;)
+    ## - datetime.datetime(2018, 5, 18, 7, 12, tzinfo=&lt;DstTzInfo &#39;Europe/London&#39; BST+1:00:00 DST&gt;)
+    ## @param dt datetime aware object
+    ## @param tzname String with datetime zone. For example: &quot;Europe/Madrid&quot;
+    ## @return datetime aware object
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware-day-end">
+<h3>dtaware_day_end<a class="headerlink" href="#dtaware-day-end" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware_day_end in module pydicts.casts:
+
+dtaware_day_end(dt, tz_name)
+    Returns the last  datetime (microsecond  level) of the  day in tz_name zone
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware-day-end-from-date">
+<h3>dtaware_day_end_from_date<a class="headerlink" href="#dtaware-day-end-from-date" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware_day_end_from_date in module pydicts.casts:
+
+dtaware_day_end_from_date(date, tz_name)
+    ## Returns the end of the day dtaware in utc format
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware-day-start">
+<h3>dtaware_day_start<a class="headerlink" href="#dtaware-day-start" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware_day_start in module pydicts.casts:
+
+dtaware_day_start(dt, tz_name)
+    ## Returns a dtnaive or dtawre (as parameter) with the end of the day in zone tz_name
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware-day-start-from-date">
+<h3>dtaware_day_start_from_date<a class="headerlink" href="#dtaware-day-start-from-date" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware_day_start_from_date in module pydicts.casts:
+
+dtaware_day_start_from_date(date, tz_name)
+    ## Returns the end of the day dtaware of the tz_name timezone from a date
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware-month-end">
+<h3>dtaware_month_end<a class="headerlink" href="#dtaware-month-end" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware_month_end in module pydicts.casts:
+
+dtaware_month_end(year, month, tz_name)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware-month-start">
+<h3>dtaware_month_start<a class="headerlink" href="#dtaware-month-start" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware_month_start in module pydicts.casts:
+
+dtaware_month_start(year, month, tz_name)
+    ## Returns the start of a month in utc format
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware-now">
+<h3>dtaware_now<a class="headerlink" href="#dtaware-now" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware_now in module pydicts.casts:
+
+dtaware_now(tzname=None)
+    If tzname is None: returns UTC dtaware
+</pre></div>
+</div>
+</div>
+</div>
+<p>Returns a aware datetime object of current moment. By default returns UTC timezone</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydicts</span><span class="w"> </span><span class="kn">import</span> <span class="n">casts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtaware_now</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtaware_now</span><span class="p">(</span><span class="s2">&quot;Europe/Madrid&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2025-05-24 05:53:20.698660+00:00
+2025-05-24 07:53:20.699778+02:00
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware-year-end">
+<h3>dtaware_year_end<a class="headerlink" href="#dtaware-year-end" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware_year_end in module pydicts.casts:
+
+dtaware_year_end(year, tz_name)
+    ## Returns an aware datetime with the last of year
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtaware-year-start">
+<h3>dtaware_year_start<a class="headerlink" href="#dtaware-year-start" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtaware_year_start in module pydicts.casts:
+
+dtaware_year_start(year, tz_name)
+    ## Returns an aware datetime with the start of year
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtnaive">
+<h3>dtnaive<a class="headerlink" href="#dtnaive" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtnaive in module pydicts.casts:
+
+dtnaive(date_, hour)
+    ## Function to create a datetime aware object
+    ## @param date datetime.date object
+    ## @param hour hour object
+    ## @return datetime naive
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtnaive-day-end">
+<h3>dtnaive_day_end<a class="headerlink" href="#dtnaive-day-end" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtnaive_day_end in module pydicts.casts:
+
+dtnaive_day_end(dt)
+    Returns the last  datetime (microsecond  level) of the  day in naive format
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtnaive-day-end-from-date">
+<h3>dtnaive_day_end_from_date<a class="headerlink" href="#dtnaive-day-end-from-date" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtnaive_day_end_from_date in module pydicts.casts:
+
+dtnaive_day_end_from_date(date_)
+    ## Returns the end of the day dtnaive from a date
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtnaive-day-start">
+<h3>dtnaive_day_start<a class="headerlink" href="#dtnaive-day-start" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtnaive_day_start in module pydicts.casts:
+
+dtnaive_day_start(dt)
+    ## Returns a dtnaive or dtawre (as parameter) with the end of the day
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtnaive-day-start-from-date">
+<h3>dtnaive_day_start_from_date<a class="headerlink" href="#dtnaive-day-start-from-date" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtnaive_day_start_from_date in module pydicts.casts:
+
+dtnaive_day_start_from_date(date_)
+    ## Returns the end of the day dtnaive from a date
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="dtnaive-now">
+<h3>dtnaive_now<a class="headerlink" href="#dtnaive-now" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function dtnaive_now in module pydicts.casts:
+
+dtnaive_now()
+</pre></div>
+</div>
+</div>
+</div>
+<p>Returns a naive datetime object of current moment. By default returns UTC timezone</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydicts</span><span class="w"> </span><span class="kn">import</span> <span class="n">casts</span>
+<span class="n">casts</span><span class="o">.</span><span class="n">dtnaive_now</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>datetime.datetime(2025, 5, 24, 5, 53, 20, 744438)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="is-aware">
+<h3>is_aware<a class="headerlink" href="#is-aware" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function is_aware in module pydicts.casts:
+
+is_aware(dt)
+    ### Returns if a datetime is aware
+</pre></div>
+</div>
+</div>
+</div>
+<p>Returns if a datetime object is aware (with timezone)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydicts</span><span class="w"> </span><span class="kn">import</span> <span class="n">casts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_aware</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtaware_now</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_aware</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtnaive_now</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+False
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="is-naive">
+<h3>is_naive<a class="headerlink" href="#is-naive" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function is_naive in module pydicts.casts:
+
+is_naive(dt)
+    ## Returns if a datetime is naive
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydicts</span><span class="w"> </span><span class="kn">import</span> <span class="n">casts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_naive</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtaware_now</span><span class="p">()))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_naive</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">dtnaive_now</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+True
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="months">
+<h3>months<a class="headerlink" href="#months" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function months in module pydicts.casts:
+
+months(year_from, month_from, year_to=None, month_to=None)
+    ## Returns a list of tuples (year, month) from a month to another month, both included
+    ## @param year_from Integer
+    ## @param month_from Integer
+    ## @param year_to Integer If none uses current year
+    ## @param month_to Integer If none uses current month
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="other-utils">
+<h2>Other utils<a class="headerlink" href="#other-utils" title="Link to this heading">#</a></h2>
+<section id="is-email">
+<h3>is_email<a class="headerlink" href="#is-email" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function is_email in module pydicts.casts:
+
+is_email(value)
+    Returns if a string is a valid email using a regular expression
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydicts</span><span class="w"> </span><span class="kn">import</span> <span class="n">casts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_email</span><span class="p">(</span><span class="s2">&quot;hi.hi.com&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_email</span><span class="p">(</span><span class="s2">&quot;hi@hi.com&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_email</span><span class="p">(</span><span class="s2">&quot;hi@hi.com.&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+True
+False
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="is-noe">
+<h3>is_noe<a class="headerlink" href="#is-noe" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function is_noe in module pydicts.casts:
+
+is_noe(value)
+    Returns a boolean. True if value is None or an empty string.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pydicts</span><span class="w"> </span><span class="kn">import</span> <span class="n">casts</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_noe</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_noe</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">casts</span><span class="o">.</span><span class="n">is_noe</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>True
+True
+False
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="object-or-empty">
+<h3>object_or_empty<a class="headerlink" href="#object-or-empty" title="Link to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Help on function object_or_empty in module pydicts.casts:
+
+object_or_empty(v)
+    Returns and empty string if None, else return value
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Pydicts project</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="dod.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">DOD</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ignore-exception">ignore_exception</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#casts">Casts</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#base64bytes2bytes">base64bytes2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2base64bytes">bytes2base64bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bytes2str">bytes2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2dtnaive">dtaware2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochmicros">dtaware2epochmicros</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2epochms">dtaware2epochms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware2str">dtaware2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2dtaware">dtnaive2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive2str">dtnaive2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochmicros2dtaware">epochmicros2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epochms2dtaware">epochms2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#none2alternative">none2alternative</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bool">str2bool</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2bytes">str2bytes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2date">str2date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2decimal">str2decimal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtaware">str2dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2dtnaive">str2dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2time">str2time</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#str2timedelta">str2timedelta</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time2str">time2str</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#timedelta2str">timedelta2str</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#date-and-time-utils">Date and time utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-month">date_first_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-next-x-months">date_first_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-first-of-the-year">date_first_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-month">date_last_of_the_month</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-next-x-months">date_last_of_the_next_x_months</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#date-last-of-the-year">date_last_of_the_year</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware">dtaware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-changes-tz">dtaware_changes_tz</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end">dtaware_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-end-from-date">dtaware_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start">dtaware_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-day-start-from-date">dtaware_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-end">dtaware_month_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-month-start">dtaware_month_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-now">dtaware_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-end">dtaware_year_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtaware-year-start">dtaware_year_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive">dtnaive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end">dtnaive_day_end</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-end-from-date">dtnaive_day_end_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start">dtnaive_day_start</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-day-start-from-date">dtnaive_day_start_from_date</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dtnaive-now">dtnaive_now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-aware">is_aware</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-naive">is_naive</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#months">months</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#other-utils">Other utils</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-email">is_email</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#is-noe">is_noe</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#object-or-empty">object_or_empty</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Turulomio
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
