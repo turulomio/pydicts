@@ -102,8 +102,8 @@ class Currency:
     ## Returs a typical currency string
     ## @param digits int that defines the number of decimals. 2 by default
     ## @return string
-    def string(self,   digits=2):
-        return "{} {}".format(round(self.amount, digits), currencies[self.currency]["symbol"])
+    def string(self,   decimals=2):
+        return "{} {}".format(round(self.amount, decimals), currencies[self.currency]["symbol"])
 
     def isZero(self):
         if self.amount==Decimal(0):
@@ -139,8 +139,8 @@ class Currency:
         """Devuelve otro other con el amount con signo cambiado"""
         return Currency(-self.amount, self.currency)
 
-    def round(self, digits=2):
-        return round(self.amount, digits)
+    def round(self, decimals=2):
+        return round(self.amount, decimals)
 
 
 
