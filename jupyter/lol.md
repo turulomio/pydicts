@@ -63,8 +63,8 @@ help(lol.lol_print)
 
 ```{code-cell}
 from pydicts import lol
-lol_=[[1, 2, 3], [4, 5, 6]]
-lol.lol_print(lol_)
+lol_=[[1, 22, 3], [41, 5, 6000]]
+lol.lol_print(lol_, align=['left', 'right', 'center'])
 
 ```
 

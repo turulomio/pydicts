@@ -270,7 +270,7 @@ help(lod.lod_print)
 ```{code-cell}
 from pydicts.lod import lod_print
 lod_=[{"a":1, "b":4},{"a":2, "b":None}]
-lod_print(lod_)
+lod_print(lod_, align=['center', 'right'])
 ```
 
 ## lod_rename_key

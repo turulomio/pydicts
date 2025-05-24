@@ -34,11 +34,9 @@ def lod_print(lod_, number=None, align=None):
     """
     Prints a list of dictionaries with tabulate module.
 
-    @param lod_
-    @type List of dictionaries
-    @param number Number of dictionaries in the list to print. If None prints all lod_. (defaults to None)
-    @param align Cells alignment with tabultate sintaxis. (defaults to None). Possible column alignments are: right, center, left, decimal (only for numbers), and None (to disable alignment). Omitting an alignment uses the default. For example:
-    @type Integer
+        - lod_: List of dictionaries
+        - number: Number of dictionaries in the list to print. If None prints all lod_. (defaults to None)
+        - align: Cells alignment with tabultate sintaxis. (defaults to None). Possible column alignments are: right, center, left, decimal (only for numbers), and None (to disable alignment). Omitting an alignment uses the default. For example:
     """
     number=len(lod_) if number is None else number
     if len(lod_)==0:
