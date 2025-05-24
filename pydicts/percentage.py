@@ -78,10 +78,10 @@ class Percentage:
             return None
         return float(self.value)
 
-    def string(self, rnd=2):
+    def string(self, decimals=2):
         if self.value is None:
             return "None %"
-        return "{} %".format(round(self.value_100(), rnd))
+        return "{} %".format(round(self.value_100(), decimals))
 
     ## Returns if the percentage is valid. I mean it's value different of None
     def isValid(self):

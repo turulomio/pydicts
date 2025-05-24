@@ -45,7 +45,7 @@ def cyan(s):
     """
     return Style.BRIGHT + Fore.CYAN + str(s) + Style.RESET_ALL
 
-def currency_color(value, currency_):
+def currency_color(value, currency_, decimals=2):
     """
         Shows a currency string in green or red color
     """
@@ -54,28 +54,28 @@ def currency_color(value, currency_):
     
     
     if value>=0:
-        return green(Currency(value,currency_))
+        return green(Currency(value,currency_).string(decimals))
     else:
-        return red(Currency(value,currency_))
+        return red(Currency(value,currency_).string(decimals))
 
-def percentage_color(value):
+def percentage_color(value, decimals=2):
     """
         Shows a percentage string in green or red color
     """
     if value.__class__ != (float,  int,  Decimal):
         return blue("- %")
     if value>=0:
-        return green(Percentage(value,1))
+        return green(Percentage(value,1).string(decimals))
     else:
-        return red(Currency(value,1))
+        return red(Currency(value,1).string(decimals))
 
-def value_color(value):
+def value_color(value, decimals=2):
     """
         Shows a value string in green or red color
     """
     if value.__class__ != (float,  int,  Decimal):
         return blue("-")
     if value>=0:
-        return green(value)
+        return green(round(value, decimals))
     else:
-        return red(value)
+        return red(round(value, decimals))
