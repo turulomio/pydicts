@@ -49,9 +49,8 @@ def currency_color(value, currency_, decimals=2):
     """
         Shows a currency string in green or red color
     """
-    if value.__class__ != (float,  int,  Decimal):
+    if value.__class__ not in (float,  int,  Decimal):
         return blue("-")
-    
     
     if value>=0:
         return green(Currency(value,currency_).string(decimals))
@@ -62,7 +61,7 @@ def percentage_color(value, decimals=2):
     """
         Shows a percentage string in green or red color
     """
-    if value.__class__ != (float,  int,  Decimal):
+    if value.__class__ not in (float,  int,  Decimal):
         return blue("- %")
     if value>=0:
         return green(Percentage(value,1).string(decimals))
@@ -73,7 +72,7 @@ def value_color(value, decimals=2):
     """
         Shows a value string in green or red color
     """
-    if value.__class__ != (float,  int,  Decimal):
+    if value.__class__ not in  (float,  int,  Decimal):
         return blue("-")
     if value>=0:
         return green(round(value, decimals))
