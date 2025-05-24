@@ -141,13 +141,14 @@ def lol_sum_column(lol, column, from_index, to_index, zerovalue=0):
                 s=s + row[column]
     return s
 
-def lol_print(lol_, number=None):
+def lol_print(lol_, number=None, align=None):
     """
         Prints a list of list with tabulate module.
         
         Parameters:
             - lol_: List of list
             - number: Númber of lists to print. If None prints all lod. (defaults to None)
+            - align: Cells alignment with tabultate sintaxis. (defaults to None). Possible column alignments are: right, center, left, decimal (only for numbers), and None (to disable alignment). Omitting an alignment uses the default. For example:
     """
     number=len(lol_) if number is None else number
 
@@ -157,4 +158,4 @@ def lol_print(lol_, number=None):
     if number==0:
         print(_("lol_print: No data was printed due to you selected 0 rows"))
         return
-    print(tabulate(lol_[0:number], tablefmt="psql"))
+    print(tabulate(lol_[0:number], tablefmt="psql", colalign=align))

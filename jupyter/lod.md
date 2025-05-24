@@ -258,7 +258,14 @@ lod.lod_order_by(lod_,"b",reverse=True, none_at_top=False)
 
 ## lod_print
 
-Prints a list of dictionaries in a tabulated way
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod
+help(lod.lod_print)
+```
+
 
 ```{code-cell}
 from pydicts.lod import lod_print

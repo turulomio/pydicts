@@ -1,6 +1,6 @@
 from datetime import datetime, date
 from decimal import Decimal
-from pydicts import lod
+from pydicts import lod, currency, percentage
 from pytest import raises, fixture
 
 empty_lod=[]
@@ -9,8 +9,8 @@ empty_lod=[]
 def reload_lod_():
     global lod_
     lod_=[]
-    lod_.append({"a": datetime.now(), "b": date.today(), "c": Decimal('12.32'), "d": None, "e": int(12), "f":None, "g":True, "h":False})
-    lod_.append({"a": datetime.now(), "b": date.today(), "c": Decimal('-12.32'), "d": 16, "e": int(12), "f":None, "g":True, "h":False})
+    lod_.append({"a": datetime.now(), "b": date.today(), "c": Decimal('12.32'), "d": None, "e": int(12), "f":None, "g":True, "h":False, "i": currency.Currency(0.12, 'EUR'), "j": 0.12345})
+    lod_.append({"a": datetime.now(), "b": date.today(), "c": Decimal('-12.32'), "d": 16, "e": int(12), "f":None, "g":True, "h":False, "i": currency.Currency(0.12345, 'EUR').string(5), "j": 123.12})
 
 
 def tests_dictkv():
@@ -101,7 +101,10 @@ def test_dod2lod():
     dod_=lod.lod2dod(lod_, "c")
     assert lod_==lod.dod2lod(dod_)
 
-def test_count():
+def test_lod_count():
     assert lod.lod_count(lod_,lambda d, index: d["c"]>0)==1, "Error counting"
     assert lod.lod_count(lod_,lambda d, index: d["f"] is None)==2, "Error counting"
     assert lod.lod_count(lod_,lambda d, index: index>0)==1, "Error counting"
+
+def test_lod_print():
+    lod.lod_print(lod_, align=["left","center","right"]*3+["decimal"])
