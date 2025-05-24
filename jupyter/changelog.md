@@ -13,6 +13,10 @@ kernelspec:
 ---
 # CHANGELOG
 
+## 1.1.0 (2025-05-24)
+- Added align parameter to lod_print and lol_print methods.
+- Added decimals parameter to currency_color, percentage_color, value_color methods.
+
 ## 1.0.0 (2025-04-13)
 - Migrated to poetry>2.0.0
 
