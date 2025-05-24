@@ -9,9 +9,9 @@ license = {text = "GPL-3.0-only"}
 readme = "README.md"
 requires-python = ">=3.9,<4"
 dependencies = [
-    "tabulate (>=0.9.0,<0.10.0)",
-    "isodate (>=0.7.2,<0.8.0)",
-    "colorama (>=0.4.6,<0.5.0)"
+    "tabulate >=0.9.0",
+    "isodate >=0.7.2",
+    "colorama >=0.4.6"
 ]
 
 
@@ -22,10 +22,10 @@ latex = [  "pylatex >=1.4.2,<2.0.0" ]
 [tool.poetry]
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3.5"
-poethepoet = "^0.33.1"
-coverage = "^7.8.0"
-jupyter-book = "^1.0.4.post1"
+pytest = ">=8.3.5"
+poethepoet = ">=0.34.0"
+coverage = ">=7.8.2"
+jupyter-book = ">=1.0.4.post1"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
