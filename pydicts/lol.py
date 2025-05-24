@@ -148,7 +148,9 @@ def lol_print(lol_, number=None, align=None):
         Parameters:
             - lol_: List of list
             - number: Númber of lists to print. If None prints all lod. (defaults to None)
-            - align: Cells alignment with tabultate sintaxis. (defaults to None). Possible column alignments are: right, center, left, decimal (only for numbers), and None (to disable alignment). Omitting an alignment uses the default. For example:
+            - align: Cells alignment with tabultate sintaxis. (defaults to None). Possible column alignments
+                     are: right, center, left, decimal (only for numbers), and None (to disable alignment). 
+                     Omitting an alignment uses the default
     """
     number=len(lol_) if number is None else number
 
