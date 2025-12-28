@@ -4,7 +4,7 @@ on:
     branches:
       - main  # Set this to your default branch.
       - 103-update-for-security-reasons
-      
+
 
 jobs:
   build:
@@ -23,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install jupyter-book ghp-import
+          pip install jupyter-book ghp-import pydicts
       - name: Configure git authentication
         run: |
           git config --global user.email "turulomio@yahoo.es" #gh-pages branch
