@@ -5,7 +5,7 @@ project:
   description: Pydicts project
   # keywords: []
   authors:
-    - id: turulomio
+    - id: Turulomio
       name: Turulomio
       email: turulomio@yahoo.es
 
@@ -28,7 +28,7 @@ site:
   template: book-theme
   options:
     logo: ../images/pydicts_jupyter.png
-  actions:
-    - title: Learn More
-      url: https://mystmd.org/guide
+  # actions:
+  #   - title: Learn More
+  #     url: https://mystmd.org/guide
   domains: []
