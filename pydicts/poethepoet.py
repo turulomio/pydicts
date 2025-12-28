@@ -31,7 +31,7 @@ def jupyter():
         This command is for developing
         This page is published into https://turulomio.github.io/pydicts/ with github actions
     """
-    system("jupyter-book build jupyter")
+    system("cd jupyter && jupyter book build")
     system("rm -Rf docs")
     system("mv jupyter/_build/html docs/")
     system("touch docs/.nojekyll")

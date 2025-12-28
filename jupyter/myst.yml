@@ -5,30 +5,29 @@ project:
   description: Pydicts project
   # keywords: []
   authors:
-    - name: Turulomio
+    - id: turulomio
+      name: Turulomio
       email: turulomio@yahoo.es
 
   github: https://github.com/turulomio/pydicts
   toc:
     - file: intro.md
-    - file: articles.md
-    - file: articles/first.md
-    - file: casts
-    - file: dod
-    - file: lod
-    - file: lod_xyv
-    - file: lod_ymv
-    - file: lol
-    - file: currency
-    - file: percentage
-    - file: myjsonencoder
-    - file: pylatex
-    - file: colors
-    - file: changelog
+    - file: casts.md
+    - file: dod.md
+    - file: lod.md
+    - file: lod_xyv.md
+    - file: lod_ymv.md
+    - file: lol.md
+    - file: currency.md
+    - file: percentage.md
+    - file: myjsonencoder.md
+    - file: pylatex.md
+    - file: colors.md
+    - file: changelog.md
 site:
   template: book-theme
   options:
-    logo: ../images/pydicts_jupyter
+    logo: ../images/pydicts_jupyter.png
   actions:
     - title: Learn More
       url: https://mystmd.org/guide
