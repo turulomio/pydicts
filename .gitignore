@@ -25,3 +25,5 @@ jupyter/_build/
 .coverage
 images/other/
 docs/
+# MyST build outputs
+_build

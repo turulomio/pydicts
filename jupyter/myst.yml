@@ -1,0 +1,35 @@
+version: 1
+project:
+  id: fa34de0e-b728-4645-9a49-05223634502
+  title: Pydicts documentation
+  description: Pydicts project
+  # keywords: []
+  authors:
+    - name: Turulomio
+      email: turulomio@yahoo.es
+
+  github: https://github.com/turulomio/pydicts
+  toc:
+    - file: intro.md
+    - file: articles.md
+    - file: articles/first.md
+    - file: casts
+    - file: dod
+    - file: lod
+    - file: lod_xyv
+    - file: lod_ymv
+    - file: lol
+    - file: currency
+    - file: percentage
+    - file: myjsonencoder
+    - file: pylatex
+    - file: colors
+    - file: changelog
+site:
+  template: book-theme
+  options:
+    logo: ../images/pydicts_jupyter
+  actions:
+    - title: Learn More
+      url: https://mystmd.org/guide
+  domains: []
