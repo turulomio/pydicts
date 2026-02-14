@@ -21,9 +21,9 @@ latex = [  "pylatex >=1.4.2,<2.0.0" ]
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=9.0.2"
-poethepoet = ">=0.39.0"
-coverage = ">=7.8.2"
-jupyter-book = ">=2.1.0"
+poethepoet = ">=0.41.0"
+coverage = ">=7.13.4"
+jupyter-book = ">=2.1.2"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
