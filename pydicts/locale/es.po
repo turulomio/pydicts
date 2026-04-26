@@ -3,13 +3,13 @@
 # Copyright (C) 2015 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# root <turulomio@yahoo.es>, 2015, 2020.
+# root <turulomio@yahoo.es>, 2015, 2020, 2024.
 msgid ""
 msgstr ""
-"Project-Id-Version: TooManyFiles\n"
+"Project-Id-Version: pydicts\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-24 09:37+0100\n"
-"PO-Revision-Date: 2020-04-03 08:54+0200\n"
+"POT-Creation-Date: 2026-04-26 11:32+0200\n"
+"PO-Revision-Date: 2024-05-15 10:00+0000\n"
 "Last-Translator: trabajo <turulomio@yahoo.es>\n"
 "Language-Team: Spanish <kde-i18n-doc@kde.org>\n"
 "Language: es\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Gemini Code Assist\n"
 
 msgid "A datetime with timezone is needed"
 msgstr "Se necesita una fecha y hora con zona horaria"
@@ -30,6 +30,9 @@ msgstr "Debe establecer su lod en {}"
 
 msgid "This list of dictionaries hasn't data to print"
 msgstr "Esta lista de diccionarios no tiene datos para imprimir"
+
+msgid "No data was printed due to you selected 0 rows"
+msgstr "No se imprimieron datos porque seleccionaste 0 filas"
 
 msgid "Keys names are not correct in dictionary in lod_year_month_value_transposition function"
 msgstr "Los nombres de las llaves no son correctar en el diccionario de la función lod_year_month_value_transposition"
@@ -44,10 +47,10 @@ msgid "I can't add a row with different size of the first row of the lol"
 msgstr "No puedo añadir una fila con un tamaño diferente al tamaño de la primera fila del lol"
 
 msgid "I can't remove positions from a None list"
-msgstr "No puedo borrar posiciones de una lista que es None"
+msgstr "No puedo eliminar posiciones de una lista que es None"
 
-msgid "I can't traspaso a None object"
-msgstr ""
+msgid "I can't transpose a None object"
+msgstr "No puedo transponer un objeto None"
 
 msgid "lol_print: This list of lists hasn't data to print"
 msgstr "lol_print: Esta lista de listas no tiene data para imprimir"

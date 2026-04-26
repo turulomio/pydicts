@@ -28,7 +28,6 @@ Module to use dictionaries, list of dictionaries and other data structures
 
 * https://github.com/turulomio/pydicts/
 * https://pypi.org/project/pydicts/
-* [Changelog](./changelog.md)
 
 ## Acronyms
 

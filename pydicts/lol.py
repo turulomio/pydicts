@@ -144,7 +144,7 @@ def lol_transposed(lol):
         exceptions.LolException: If the input `lol` is None.
     """
     if lol is None:
-        raise exceptions.LolException(_("I can't traspaso a None object"))
+        raise exceptions.LolException(_("I can't transpose a None object"))
     if len(lol)==0:
         return []
     r=[]

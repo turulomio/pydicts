@@ -23,7 +23,6 @@ project:
     - file: myjsonencoder.md
     - file: pylatex.md
     - file: colors.md
-    - file: changelog.md
 site:
   template: book-theme
   options:

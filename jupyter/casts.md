@@ -64,6 +64,16 @@ help(casts.bytes2base64bytes)
 from pydicts import casts
 help(casts.bytes2str)
 ```
+
+### date2str
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.date2str)
+```
+
 ### dtaware2dtnaive
 
 ```{code-cell}
