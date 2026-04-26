@@ -525,7 +525,7 @@ def test_date2str_localization_with_system_locale():
         except locale.Error:
             pytest.skip("Spanish locale not available on this system for testing strftime localization.")
 
-        assert date2str(test_date, format="long date str") == "enero 15, 2023"
+        assert date2str(test_date, format="long string") == "15 de enero de 2023"
     finally:
         locale.setlocale(locale.LC_TIME, original_locale) # Always restore the original locale
 
@@ -536,7 +536,18 @@ def test_date2str_success():
     assert date2str(test_date, format="JsIso") == "2023-01-15"
     assert date2str(test_date, format="DD/MM/YYYY") == "15/01/2023"
     assert date2str(test_date, format="DD.MM.YYYY") == "15.01.2023"
-    assert date2str(test_date, format="long date str") == "January 15, 2023"
+
+    # Test 'long string' with explicit English locale for robustness
+    original_locale = locale.getlocale()
+    try:
+        # Try to set an English locale. This might fail on some systems.
+        try:
+            locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
+        except locale.Error:
+            pytest.skip("English locale not available on this system for testing strftime localization.")
+        assert date2str(test_date, format="long string") == "January 15, 2023"
+    finally:
+        locale.setlocale(locale.LC_TIME, original_locale) # Always restore the original locale
 
 def test_date2str_failure():
     """Tests failed date to string conversion and exception handling."""
@@ -704,6 +715,50 @@ def test_dtnaive2str_failure():
 def test_dtnaive2str_ignore_exception():
     """Tests aware datetime to string conversion with exception ignoring."""
     assert dtnaive2str(datetime.now(ZoneInfo('UTC')), format="%Y-%m-%d", ignore_exception=True, ignore_exception_value="fail") == "fail"
+
+# Test dtnaive2str with "long string" format
+def test_dtnaive2str_long_string_success():
+    test_dt_naive = datetime(2023, 1, 15, 10, 30, 0)
+    original_locale = locale.getlocale()
+    try:
+        # Test English locale
+        try:
+            locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
+        except locale.Error:
+            pytest.skip("English locale not available on this system for testing strftime localization.")
+        assert dtnaive2str(test_dt_naive, format="long string") == "January 15, 2023 at 10:30"
+
+        # Test Spanish locale
+        try:
+            locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+        except locale.Error:
+            pytest.skip("Spanish locale not available on this system for testing strftime localization.")
+        assert dtnaive2str(test_dt_naive, format="long string") == "15 de enero de 2023 a las 10:30"
+    finally:
+        locale.setlocale(locale.LC_TIME, original_locale)
+
+# Test dtaware2str with "long string" format
+def test_dtaware2str_long_string_success():
+    test_dt_aware = datetime(2023, 1, 15, 10, 30, 0, tzinfo=ZoneInfo('UTC'))
+    test_dt_aware_madrid = datetime(2023, 1, 15, 10, 30, 0, tzinfo=ZoneInfo('Europe/Madrid'))
+    original_locale = locale.getlocale()
+    try:
+        # Test English locale
+        try:
+            locale.setlocale(locale.LC_TIME, 'en_US.UTF-8')
+        except locale.Error:
+            pytest.skip("English locale not available on this system for testing strftime localization.")
+        assert dtaware2str(test_dt_aware, format="long string") == "January 15, 2023 at 10:30 UTC"
+
+        # Test Spanish locale
+        try:
+            locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+        except locale.Error:
+            pytest.skip("Spanish locale not available on this system for testing strftime localization.")
+        assert dtaware2str(test_dt_aware, format="long string") == "15 de enero de 2023 a las 10:30 UTC"
+        assert dtaware2str(test_dt_aware_madrid, format="long string") == "15 de enero de 2023 a las 10:30 CET"
+    finally:
+        locale.setlocale(locale.LC_TIME, original_locale)
 
 # Test dtaware_changes_tz
 def test_dtaware_changes_tz():

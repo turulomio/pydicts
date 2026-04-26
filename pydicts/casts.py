@@ -5,6 +5,7 @@
 """
 
 from decimal import Decimal
+import locale
 from datetime import timedelta, date, datetime, time
 from gettext import translation
 from importlib.resources import files
@@ -20,6 +21,18 @@ try:
     _=t.gettext
 except:
     _=str
+
+dict_month_names={
+    "es":{1:"Enero", 2:"Febrero", 3:"Marzo", 4:"Abril", 5:"Mayo", 6:"Junio", 7:"Julio", 8:"Agosto", 9:"Septiembre", 10:"Octubre", 11:"Noviembre", 12:"Diciembre"},
+}
+
+
+def get_locale():
+    current_locale = locale.getlocale()[0]
+    if current_locale is None:
+        current_locale = locale.getlocale(locale.LC_TIME)[0] 
+    return current_locale
+
     
 def object_or_empty(v):
     """Returns an empty string if the input value is None, otherwise returns the value itself.
@@ -754,7 +767,7 @@ def date2str(value, format="JsIso", ignore_exception=False, ignore_exception_val
         str: The string representation of the date.
     """
     original = value
-    allowed = ["JsIso", "DD/MM/YYYY", "DD.MM.YYYY", "long date str"]
+    allowed = ["JsIso", "DD/MM/YYYY", "DD.MM.YYYY", "long string"]
     error = f"Error in Pydicts.cast.date2str method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
 
     if not isinstance(value, date) or format not in allowed:
@@ -769,9 +782,13 @@ def date2str(value, format="JsIso", ignore_exception=False, ignore_exception_val
             return value.strftime("%d/%m/%Y")
         elif format == "DD.MM.YYYY":
             return value.strftime("%d.%m.%Y")
-        elif format == "long date str":
-            # Uses system locale for month name localization
-            return value.strftime("%B %d, %Y")
+        elif format == "long string":
+            current_locale = get_locale()
+            if current_locale and current_locale.startswith("es"):# Spanish format
+                return f"{value.day} de {dict_month_names["es"][value.month].lower()} de {value.year}"
+            else:
+                # Default to English-like format
+                return value.strftime("%B %d, %Y")
     except Exception: # Catch any potential strftime errors
         if ignore_exception:
             return ignore_exception_value
@@ -792,8 +809,8 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
     Returns:
         datetime: The converted timezone-naive `datetime.datetime` object.
     """
-    original=value
-    allowed=["%Y%m%d%H%M","%Y-%m-%d %H:%M:%S","%d/%m/%Y %H:%M","%d %m %H:%M %Y","%Y-%m-%d %H:%M:%S.","%H:%M:%S", '%b %d %H:%M:%S', "JsIso"]
+    original = value
+    allowed = ["%Y%m%d%H%M", "%Y-%m-%d %H:%M:%S", "%d/%m/%Y %H:%M", "%d %m %H:%M %Y", "%Y-%m-%d %H:%M:%S.", "%H:%M:%S", '%b %d %H:%M:%S', "JsIso", "long string"]
     error=f"Error in Pydicts.cast.str2dtnaive method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     if format not in  allowed or value.__class__!=str:
         if ignore_exception is False:
@@ -831,6 +848,11 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
             dtnaive=str2dtnaive(value,"%Y-%m-%d %H:%M:%S.")
 
             return dtnaive
+        elif format == "long string":
+            # This format is for date only, so it doesn't make sense for a full datetime string input
+            # However, if the user explicitly asks for it, we should raise an error or return alternative
+            # as it implies a conversion from a date-only string, not a datetime string.
+            raise exceptions.CastException(f"Format 'long string' is not applicable for parsing a full datetime string: {value}")
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -852,7 +874,7 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
         datetime: The converted timezone-aware `datetime.datetime` object.
     """
     original=value
-    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
+    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso", "long string"]
     error=f"Error in Pydicts.cast.str2dtaware method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     if format not in  allowed or value.__class__!=str:
         if ignore_exception is False:
@@ -876,6 +898,11 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
             # datetime.fromisoformat handles 'Z' and fractional seconds correctly
             dt_utc_aware = datetime.fromisoformat(value.replace('Z', '+00:00'))
             return dtaware_changes_tz(dt_utc_aware, tz_name)
+        elif format == "long string":
+            # Similar to str2dtnaive, this format is for date only.
+            # If the user explicitly asks for it, we should raise an error or return alternative.
+            # It implies a conversion from a date-only string, not a datetime string.
+            raise exceptions.CastException(f"Format 'long string' is not applicable for parsing a full datetime string: {value}")
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -941,7 +968,7 @@ def dtaware2str(value, format="JsUtcIso", ignore_exception=False, ignore_excepti
         str: The string representation of the datetime.
     """
     original=value
-    allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso"]
+    allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso", "long string"]
     error=f"Error in Pydicts.cast.dtaware2str method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     
     if format not in  allowed or value.__class__!=datetime or is_naive(value):
@@ -961,6 +988,13 @@ def dtaware2str(value, format="JsUtcIso", ignore_exception=False, ignore_excepti
         elif format=="JsUtcIso":
             value=dtaware_changes_tz(value, "UTC")
             return value.isoformat().replace("+00:00","Z")
+        elif format == "long string":
+            current_locale = get_locale()
+            if current_locale and current_locale.startswith("es"):
+                return date2str(value.date(), format="long string", ignore_exception=ignore_exception, ignore_exception_value=ignore_exception_value) + " a las " + time2str(value.time(), "HH:MM", ignore_exception=ignore_exception, ignore_exception_value=ignore_exception_value) + " (" + value.tzinfo.tzname(value) +")"
+            else:
+                # Default to English-like format including timezone name
+                return value.strftime("%B %d, %Y at %H:%M %Z")
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -982,7 +1016,7 @@ def dtnaive2str(value, format="JsIso", ignore_exception=False, ignore_exception_
         str: The string representation of the datetime.
     """
     original=value
-    allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsIso"]
+    allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsIso", "long string"]
     error=f"Error in Pydicts.cast.dtnaive2str method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     if format not in  allowed or value.__class__!=datetime or is_aware(value):
         if ignore_exception is False:
@@ -1001,6 +1035,12 @@ def dtnaive2str(value, format="JsIso", ignore_exception=False, ignore_exception_
             return value.strftime("%Y%m%d%H%M")
         elif format=="JsIso":
             return value.strftime("%Y-%m-%dT%H:%M:%S")+"."+str(value.microsecond).zfill(6)
+        elif format == "long string":
+            current_locale = get_locale()
+            if current_locale and current_locale.startswith("es"):
+                return date2str(value.date(), format="long string", ignore_exception=ignore_exception, ignore_exception_value=ignore_exception_value) + " a las " + time2str(value.time(), "HH:MM", ignore_exception=ignore_exception, ignore_exception_value=ignore_exception_value)
+            else:
+                return value.strftime("%B %d, %Y at %H:%M")
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
