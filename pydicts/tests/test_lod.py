@@ -5,7 +5,10 @@ from collections import OrderedDict # Import OrderedDict
 from pytest import raises, fixture
 
 @fixture
-def sample_lod():
+def sample_lod(): # Renamed to sample_lod for consistency
+    """
+    Fixture that provides a sample list of dictionaries (LoD) for testing.
+    """
     lod_ = []
     lod_.append({"a": datetime.now(), "b": date.today(), "c": Decimal('12.32'), "d": None, "e": int(12), "f":None, "g":True, "h":False, "i": currency.Currency(0.12, 'EUR'), "j": 0.12345}) # d is None
     lod_.append({"a": datetime.now(), "b": date.today(), "c": Decimal('-12.32'), "d": 16, "e": int(12), "f":None, "g":True, "h":False, "i": currency.Currency(0.12345, 'EUR'), "j": 123.12}) # d is 16
@@ -13,6 +16,9 @@ def sample_lod():
 
 @fixture
 def another_lod():
+    """
+    Fixture that provides another sample list of dictionaries (LoD) for testing.
+    """
     return [
         {"id": 1, "name": "Alice", "age": 30, "city": "NY"},
         {"id": 2, "name": "Bob", "age": 25, "city": "LA"},
@@ -23,10 +29,16 @@ def another_lod():
     ]
 
 @fixture
-def empty_lod():
+def empty_lod(): # Renamed to empty_lod for consistency
+    """
+    Fixture that provides an empty list of dictionaries (LoD) for testing.
+    """
     return []
 
 def tests_dictkv(sample_lod):
+    """
+    Tests the lod2dictkv function to convert a list of dictionaries to a dictionary of key-value pairs.
+    """
     d=lod.lod2dictkv(sample_lod, "a","b")
     assert list(d.values())[0]==date.today()
     
@@ -49,11 +61,17 @@ def test_lod_order_by(another_lod):
     assert ordered_lod_name[2]["name"] == "Bob"
 
 def tests_lod_has_key(sample_lod, empty_lod):
+    """
+    Tests the lod_has_key function to check if a key exists in the dictionaries within the list.
+    """
     assert lod.lod_has_key(sample_lod,"c")==True
     assert lod.lod_has_key(sample_lod,"cc")==False
     assert lod.lod_has_key(empty_lod, "c")==False
     
 def test_lod_print(sample_lod):
+    """
+    Tests the lod_print function to ensure it runs without errors for various inputs.
+    """
     # This test primarily checks if the function runs without error
     # Actual output assertion is difficult for print functions
     lod.lod_print(sample_lod)
@@ -62,15 +80,24 @@ def test_lod_print(sample_lod):
 
 def test_lod_print_empty(empty_lod, capsys):
     lod.lod_print(empty_lod)
+    """
+    Tests lod_print with an empty list of dictionaries.
+    """
     captured = capsys.readouterr()
     assert "This list of dictionaries hasn't data to print" in captured.out
 
 def test_lod_print_zero_rows(sample_lod, capsys):
     lod.lod_print(sample_lod, number=0)
+    """
+    Tests lod_print when explicitly asked to print zero rows.
+    """
     captured = capsys.readouterr()
     # Assert against the English translation, as the _() function is active
     assert "No data was printed due to you selected 0 rows" in captured.out
 def test_lod_sum(sample_lod):
+    """
+    Tests the lod_sum function for summing values in a specific key.
+    """
     assert lod.lod_sum(sample_lod, "c")==0
     assert lod.lod_sum(sample_lod, "d")==16
     with raises(TypeError) as excinfo:
@@ -79,21 +106,26 @@ def test_lod_sum(sample_lod):
     assert lod.lod_sum(sample_lod, "d", ignore_nones=True) == 16
     
 def test_lod_average(sample_lod):
+    """Tests the lod_average function."""
     # lod.lod_print(sample_lod) # Remove debug print
     assert lod.lod_average(sample_lod,"c")==0
     assert lod.lod_average(sample_lod,"d")==8
 
 def test_lod_average_ponderated(sample_lod):
+    """Tests the lod_average_ponderated function."""
     assert lod.lod_average_ponderated(sample_lod,"e", "c")==0
     
 def test_lod_median(sample_lod):
+    """Tests the lod_median function."""
     assert lod.lod_median(sample_lod,"c")==0
     
 def tests_lod_sum_positives(sample_lod):
+    """Tests the lod_sum_positives function."""
     assert lod.lod_sum_positives(sample_lod, "c")==Decimal("12.32")
     assert lod.lod_sum_positives(sample_lod, "d")==16
     
 def tests_lod_sum_negatives(sample_lod):
+    """Tests the lod_sum_negatives function."""
     assert lod.lod_sum_negatives(sample_lod, "c")==Decimal("-12.32")
     assert lod.lod_sum_negatives(sample_lod, "d")==0
     
@@ -114,6 +146,9 @@ def test_lod_remove_duplicates(another_lod):
     assert unique_lod[3]["id"] == 4 # This is the 4th item in the original list
 
 def test_lod_rename_key(sample_lod): # Renamed tests_lod_rename_key to test_lod_rename_key for consistency
+    """
+    Tests the lod_rename_key function to rename a key in all dictionaries.
+    """
     cloned_lod = lod.lod_clone(sample_lod) # Clone to avoid modifying original fixture
     lod.lod_rename_key(cloned_lod, "c", "new_c")
     assert not lod.lod_has_key(cloned_lod, "c")
@@ -121,6 +156,9 @@ def test_lod_rename_key(sample_lod): # Renamed tests_lod_rename_key to test_lod_
     assert cloned_lod[0]["new_c"] == Decimal('12.32')
 
 def test_lod_remove_key(sample_lod):
+    """
+    Tests the lod_remove_key function to remove a key from all dictionaries.
+    """
     cloned_lod = lod.lod_clone(sample_lod) # Clone to avoid modifying original fixture
     assert lod.lod_has_key(cloned_lod, "d")
     lod.lod_remove_key(cloned_lod, "d")
@@ -129,11 +167,17 @@ def test_lod_remove_key(sample_lod):
     assert lod.lod_has_key(cloned_lod, "a")
 
 def test_lod_keys(sample_lod, empty_lod):
+    """Tests the lod_keys function to retrieve all keys from the first dictionary."""
+
+def test_lod_keys(sample_lod, empty_lod):
     keys = lod.lod_keys(sample_lod)
     assert isinstance(keys, list)
     assert "a" in keys
     assert "c" in keys
     assert lod.lod_keys(empty_lod) is None
+
+def test_lod_clone(sample_lod):
+    """Tests the lod_clone function for creating a deep copy of a list of dictionaries."""
 
 def test_lod_clone(sample_lod):
     cloned_lod = lod.lod_clone(sample_lod)
@@ -144,6 +188,9 @@ def test_lod_clone(sample_lod):
     assert sample_lod[0]["c"] != Decimal("999") # Ensure deep copy for dicts
 
 def test_lod_filter_keys(sample_lod):
+    """Tests the lod_filter_keys function to create a new list of dictionaries with only specified keys."""
+
+def test_lod_filter_keys(sample_lod):
     new_lod=lod.lod_filter_keys(sample_lod,  ["g", "h"])
     assert "a" not in lod.lod_keys(new_lod)
     assert "g" in lod.lod_keys(new_lod)
@@ -151,6 +198,9 @@ def test_lod_filter_keys(sample_lod):
     assert len(new_lod[0]) == 2
 
 def test_lod_filter_dictionaries(sample_lod):
+    """
+    Tests the lod_filter_dictionaries function to filter dictionaries based on a lambda function.
+    """
     #Filtering by index
     new_lod=lod.lod_filter_dictionaries(sample_lod, lambda d,  index: index==1)
     # lod.lod_print(new_lod) # Remove debug print
@@ -167,6 +217,9 @@ def test_lod_filter_dictionaries(sample_lod):
     assert new_lod[0]["c"] == Decimal('12.32')
 
 def test_calculate_clone(sample_lod):
+    """
+    Tests the lod_calculate function with the clone=True option, ensuring the original list is not modified.
+    """
     new_lod=lod.lod_calculate(sample_lod, "NEW C",   lambda d,  index: d['c']*100, clone=True)
     # lod.lod_print(new_lod) # Remove debug print
     assert "NEW C" in lod.lod_keys(new_lod)
@@ -174,6 +227,9 @@ def test_calculate_clone(sample_lod):
     assert new_lod[0]["NEW C"] == Decimal('1232.00')
 
 def test_calculate(sample_lod):
+    """
+    Tests the lod_calculate function without cloning, ensuring the original list is modified.
+    """
     new_lod=lod.lod_calculate(sample_lod, "NEW C",   lambda d,  index: d['c']*100)
     # lod.lod_print(new_lod) # Remove debug print
     assert "NEW C" in lod.lod_keys(new_lod)
@@ -181,6 +237,9 @@ def test_calculate(sample_lod):
     assert new_lod[0]["NEW C"] == Decimal('1232.00')
 
 def test_lod2dod(sample_lod):
+    """
+    Tests the lod2dod function to convert a list of dictionaries to a dictionary of dictionaries.
+    """
     dod_=lod.lod2dod(sample_lod, "c")
     # print(dod_) # Remove debug print
     assert dod_[Decimal("12.32")]==sample_lod[0]
@@ -188,6 +247,9 @@ def test_lod2dod(sample_lod):
     assert len(dod_) == 2
 
 def test_lod2odod(sample_lod):
+    """
+    Tests the lod2odod function to convert a list of dictionaries to an OrderedDict of dictionaries.
+    """
     odod_ = lod.lod2odod(sample_lod, "c")
     assert isinstance(odod_, OrderedDict) # Now OrderedDict is imported
     assert list(odod_.keys()) == [Decimal("12.32"), Decimal("-12.32")]
@@ -195,6 +257,9 @@ def test_lod2odod(sample_lod):
 
 def test_lod2dod_tuple(sample_lod):
     dod_tuple = lod.lod2dod_tuple(sample_lod, "g", "h")
+    """
+    Tests the lod2dod_tuple function to convert a list of dictionaries to a dictionary using a tuple as key.
+    """
     # Both dictionaries in sample_lod have (True, False) for "g", "h". lod2dod_tuple will overwrite entries with the same key, so it will contain the last one.
     # The previous error was due to sample_lod[1]["i"] being a string, causing comparison issues.
     assert dod_tuple[(True, False)] == sample_lod[1]
@@ -202,9 +267,15 @@ def test_lod2dod_tuple(sample_lod):
 
 def test_dod2lod(sample_lod):
     dod_=lod.lod2dod(sample_lod, "c")
+    """
+    Tests the dod2lod function to convert a dictionary of dictionaries back to a list of dictionaries.
+    """
     assert sample_lod==lod.dod2lod(dod_)
 
 def test_lod2list(sample_lod):
+    """
+    Tests the lod2list function to extract values for a specific key into a list.
+    """
     # Test basic extraction
     c_list = lod.lod2list(sample_lod, "c")
     assert c_list == [Decimal('12.32'), Decimal('-12.32')]
@@ -218,6 +289,9 @@ def test_lod2list(sample_lod):
     assert c_list_str == ["12.32", "-12.32"]
 
 def test_lod2list_distinct(another_lod):
+    """
+    Tests the lod2list_distinct function to extract distinct values for a specific key into a list.
+    """
     names = lod.lod2list_distinct(another_lod, "name", sorted=True)
     assert len(names) == 5
 
@@ -225,6 +299,9 @@ def test_lod2list_distinct(another_lod):
     assert cities == [None, "LA", "NY", "SF"] # None is now handled by custom sort in lod2list_distinct
 
 def test_lod2lol(sample_lod):
+    """
+    Tests the lod2lol function to convert a list of dictionaries to a list of lists.
+    """
     lol_data = lod.lod2lol(sample_lod, keys=["c", "d"])
     assert lol_data == [[Decimal('12.32'), None], [Decimal('-12.32'), 16]]
     assert len(lol_data) == 2
@@ -232,6 +309,9 @@ def test_lod2lol(sample_lod):
 
 def test_lod2lood(sample_lod):
     lood_data = lod.lod2lood(sample_lod, keys=["c", "d"])
+    """
+    Tests the lod2lood function to convert a list of dictionaries to a list of OrderedDicts.
+    """
     assert len(lood_data) == 2
     assert isinstance(lood_data[0], OrderedDict) # Now OrderedDict is imported
     assert list(lood_data[0].keys()) == ["c", "d"]
@@ -239,15 +319,22 @@ def test_lod2lood(sample_lod):
 
 def test_lod_max_value(another_lod, empty_lod):
     assert lod.lod_max_value(another_lod, "age") == 35 # None values are now ignored
+    """
+    Tests the lod_max_value function to find the maximum value for a given key.
+    """
     assert lod.lod_max_value(another_lod, "id") == 6
     assert lod.lod_max_value(empty_lod, "age") is None
 
 def test_lod_min_value(another_lod, empty_lod):
     assert lod.lod_min_value(another_lod, "age") == 25 # None values are now ignored
+    """
+    Tests the lod_min_value function to find the minimum value for a given key.
+    """
     assert lod.lod_min_value(another_lod, "id") == 1
     assert lod.lod_min_value(empty_lod, "age") is None
 
 def test_lod_count(sample_lod):
+    """Tests the lod_count function to count dictionaries based on a lambda condition."""
     assert lod.lod_count(sample_lod,lambda d, index: d["c"]>0)==1, "Error counting"
     assert lod.lod_count(sample_lod,lambda d, index: d["f"] is None)==2, "Error counting"
     assert lod.lod_count(sample_lod,lambda d, index: index>0)==1, "Error counting"

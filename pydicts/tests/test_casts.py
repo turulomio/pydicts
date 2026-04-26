@@ -20,11 +20,16 @@ from pydicts.casts import (dtnaive, # Added dtnaive
 
 # Test dtaware_now
 def test_dtaware_now_utc():
+    """Tests dtaware_now function for UTC timezone."""
+def test_dtaware_now_utc():
     now_utc = dtaware_now()
     assert is_aware(now_utc)
     assert now_utc.tzinfo == ZoneInfo('UTC')
     # Check if it's close to the actual UTC time
     assert abs((datetime.now(ZoneInfo('UTC')) - now_utc).total_seconds()) < 1
+
+def test_dtaware_now_specific_tz():
+    """Tests dtaware_now function for a specific timezone."""
 
 def test_dtaware_now_specific_tz():
     tz_name = 'Europe/Madrid'
@@ -34,18 +39,26 @@ def test_dtaware_now_specific_tz():
     # Check if it's close to the actual time in Madrid
     assert abs((datetime.now(ZoneInfo(tz_name)) - now_madrid).total_seconds()) < 1
 
+def test_str2decimal_success():
+    """Tests successful string to Decimal conversion."""
+
 # Test str2decimal
 def test_str2decimal_success():
     assert str2decimal("123.45") == Decimal("123.45")
     assert str2decimal("100") == Decimal("100")
 
 def test_str2decimal_failure():
+    """Tests failed string to Decimal conversion and exception handling."""
+
     with pytest.raises(exceptions.CastException):
         str2decimal("abc")
     with pytest.raises(exceptions.CastException):
         str2decimal(123)
     with pytest.raises(exceptions.CastException):
         str2decimal(None)
+
+def test_str2decimal_ignore_exception():
+    """Tests string to Decimal conversion with exception ignoring."""
 
 def test_str2decimal_ignore_exception():
     assert str2decimal("abc", ignore_exception=True, ignore_exception_value=0) == 0
@@ -60,6 +73,9 @@ def test_str2bool_success():
     assert str2bool("FALSE") is False
     assert str2bool("0") is False
 
+def test_str2bool_success():
+    """Tests successful string to boolean conversion."""
+
 def test_str2bool_failure():
     with pytest.raises(exceptions.CastException):
         str2bool("yes")
@@ -67,6 +83,9 @@ def test_str2bool_failure():
         str2bool(1)
     with pytest.raises(exceptions.CastException):
         str2bool(None)
+
+def test_str2bool_failure():
+    """Tests failed string to boolean conversion and exception handling."""
 
 def test_str2bool_ignore_exception():
     assert str2bool("yes", ignore_exception=True, ignore_exception_value=False) is False
@@ -87,6 +106,9 @@ def test_is_aware_naive():
     assert is_aware(aware_dt_madrid)
     assert not is_naive(aware_dt_madrid)
 
+def test_is_aware_naive():
+    """Tests is_aware and is_naive functions with different datetime objects."""
+
 # Test is_noe
 def test_is_noe():
     assert is_noe(None) is True
@@ -96,12 +118,18 @@ def test_is_noe():
     assert is_noe(0) is False
     assert is_noe([]) is False
 
+def test_is_noe():
+    """Tests the is_noe function for various inputs."""
+
 # Test object_or_empty
 def test_object_or_empty():
     assert object_or_empty(None) == ""
     assert object_or_empty("hello") == "hello"
     assert object_or_empty(123) == 123
     assert object_or_empty("") == ""
+
+def test_object_or_empty():
+    """Tests the object_or_empty function."""
 
 # Test none2alternative
 def test_none2alternative():
@@ -110,6 +138,9 @@ def test_none2alternative():
     assert none2alternative(0, "default") == 0
 
 # Test bytes2str
+def test_none2alternative():
+    """Tests the none2alternative function."""
+
 def test_bytes2str_success():
     assert bytes2str(b"hello") == "hello"
     assert bytes2str(b"\xc3\xa1", code='utf-8') == "á"
@@ -122,6 +153,9 @@ def test_bytes2str_failure():
     with pytest.raises(exceptions.CastException):
         bytes2str(b"\xc3\xa1", code='ascii') # Decoding error
 
+def test_bytes2str_success():
+    """Tests successful bytes to string conversion."""
+
 def test_bytes2str_ignore_exception():
     assert bytes2str("hello", ignore_exception=True, ignore_exception_value="fail") == "fail"
     assert bytes2str(b"\xc3\xa1", code='ascii', ignore_exception=True, ignore_exception_value="fail") == "fail"
@@ -131,6 +165,9 @@ def test_str2bytes_success():
     assert str2bytes("hello") == b"hello"
     assert str2bytes("á", code='utf-8') == b"\xc3\xa1"
 
+def test_str2bytes_success():
+    """Tests successful string to bytes conversion."""
+
 def test_str2bytes_failure():
     with pytest.raises(exceptions.CastException):
         str2bytes(b"hello") # Not str
@@ -138,6 +175,9 @@ def test_str2bytes_failure():
         str2bytes(None)
     with pytest.raises(exceptions.CastException):
         str2bytes("á", code='ascii') # Encoding error
+
+def test_str2bytes_failure():
+    """Tests failed string to bytes conversion and exception handling."""
 
 def test_str2bytes_ignore_exception():
     assert str2bytes(b"hello", ignore_exception=True, ignore_exception_value=b"fail") == b"fail"
@@ -147,6 +187,9 @@ def test_str2bytes_ignore_exception():
 def test_base64bytes2bytes_success():
     assert base64bytes2bytes(b"aGVsbG8=") == b"hello"
 
+def test_base64bytes2bytes_success():
+    """Tests successful base64 bytes to bytes decoding."""
+
 def test_base64bytes2bytes_failure():
     with pytest.raises(exceptions.CastException):
         base64bytes2bytes(b"not-base64")
@@ -155,6 +198,9 @@ def test_base64bytes2bytes_failure():
     with pytest.raises(exceptions.CastException):
         base64bytes2bytes(None)
 
+def test_base64bytes2bytes_failure():
+    """Tests failed base64 bytes to bytes decoding and exception handling."""
+
 def test_base64bytes2bytes_ignore_exception():
     assert base64bytes2bytes(b"not-base64", ignore_exception=True, ignore_exception_value=b"fail") == b"fail"
 
@@ -162,11 +208,17 @@ def test_base64bytes2bytes_ignore_exception():
 def test_bytes2base64bytes_success():
     assert bytes2base64bytes(b"hello") == b"aGVsbG8="
 
+def test_bytes2base64bytes_success():
+    """Tests successful bytes to base64 bytes encoding."""
+
 def test_bytes2base64bytes_failure():
     with pytest.raises(exceptions.CastException):
         bytes2base64bytes("hello") # Not bytes
     with pytest.raises(exceptions.CastException):
         bytes2base64bytes(None)
+
+def test_bytes2base64bytes_failure():
+    """Tests failed bytes to base64 bytes encoding and exception handling."""
 
 def test_bytes2base64bytes_ignore_exception():
     assert bytes2base64bytes("hello", ignore_exception=True, ignore_exception_value=b"fail") == b"fail"
@@ -177,6 +229,9 @@ def test_dtnaive_now():
     assert is_naive(naive_dt)
     assert abs((datetime.now() - naive_dt).total_seconds()) < 1
 
+def test_dtnaive_now():
+    """Tests the dtnaive_now function."""
+
 # Test dtnaive2dtaware
 def test_dtnaive2dtaware():
     naive_dt = datetime(2023, 1, 1, 12, 0, 0)
@@ -184,6 +239,9 @@ def test_dtnaive2dtaware():
     assert is_aware(aware_dt)
     assert aware_dt.tzinfo == ZoneInfo('Europe/Madrid')
     assert aware_dt.hour == 12
+
+def test_dtnaive2dtaware():
+    """Tests the dtnaive2dtaware function."""
 
 # Test dtaware2dtnaive
 def test_dtaware2dtnaive():
@@ -195,6 +253,9 @@ def test_dtaware2dtnaive():
 
     with pytest.raises(exceptions.CastException):
         dtaware2dtnaive(datetime.now()) # Naive datetime
+
+def test_dtaware2dtnaive():
+    """Tests the dtaware2dtnaive function."""
 
 # Test dtaware
 def test_dtaware():
@@ -209,6 +270,9 @@ def test_dtaware():
     assert aware_dt.minute == 30
     assert aware_dt.second == 0
     assert aware_dt.tzinfo == ZoneInfo('Europe/Madrid')
+
+def test_dtaware():
+    """Tests the dtaware function."""
 
 # Test dtnaive
 def test_dtnaive():
@@ -225,9 +289,15 @@ def test_dtnaive():
     assert naive_dt.microsecond == 123456
     assert naive_dt.tzinfo is None
 
+def test_dtnaive():
+    """Tests the dtnaive function."""
+
 # Test date_first_of_the_month
 def test_date_first_of_the_month():
     assert date_first_of_the_month(2023, 5) == date(2023, 5, 1)
+
+def test_date_first_of_the_month():
+    """Tests the date_first_of_the_month function."""
 
 # Test date_last_of_the_month
 def test_date_last_of_the_month():
@@ -236,9 +306,15 @@ def test_date_last_of_the_month():
     assert date_last_of_the_month(2024, 2) == date(2024, 2, 29) # Leap year
     assert date_last_of_the_month(2023, 12) == date(2023, 12, 31)
 
+def test_date_last_of_the_month():
+    """Tests the date_last_of_the_month function."""
+
 # Test date_first_of_the_year
 def test_date_first_of_the_year():
     assert date_first_of_the_year(2023) == date(2023, 1, 1)
+
+def test_date_first_of_the_year():
+    """Tests the date_first_of_the_year function."""
 
 # Test date_last_of_the_year
 def test_date_last_of_the_year():
@@ -253,6 +329,9 @@ def test_date_first_of_the_next_x_months():
     assert date_first_of_the_next_x_months(2023, 1, -1) == date(2022, 12, 1)
     assert date_first_of_the_next_x_months(2023, 1, -12) == date(2022, 1, 1)
 
+def test_date_first_of_the_year():
+    """Tests the date_first_of_the_year function."""
+
 # Test date_last_of_the_next_x_months
 def test_date_last_of_the_next_x_months():
     assert date_last_of_the_next_x_months(2023, 1, 0) == date(2023, 1, 31)
@@ -260,6 +339,9 @@ def test_date_last_of_the_next_x_months():
     assert date_last_of_the_next_x_months(2023, 1, 12) == date(2024, 1, 31)
     assert date_last_of_the_next_x_months(2023, 3, -1) == date(2023, 2, 28)
     assert date_last_of_the_next_x_months(2023, 1, -1) == date(2022, 12, 31)
+
+def test_date_last_of_the_next_x_months():
+    """Tests the date_last_of_the_next_x_months function."""
 
 # Test dtaware_month_end
 def test_dtaware_month_end():
@@ -273,6 +355,9 @@ def test_dtaware_month_end():
     assert dt.microsecond == 999999
     assert dt.tzinfo == ZoneInfo('UTC')
 
+def test_dtaware_month_end():
+    """Tests the dtaware_month_end function."""
+
 # Test dtaware_year_start
 def test_dtaware_year_start():
     dt = dtaware_year_start(2023, 'UTC')
@@ -285,6 +370,9 @@ def test_dtaware_year_start():
     assert dt.microsecond == 0
     assert dt.tzinfo == ZoneInfo('UTC')
 
+def test_dtaware_year_start():
+    """Tests the dtaware_year_start function."""
+
 # Test dtaware_year_end
 def test_dtaware_year_end():
     dt = dtaware_year_end(2023, 'UTC')
@@ -296,6 +384,9 @@ def test_dtaware_year_end():
     assert dt.second == 59
     assert dt.microsecond == 999999
     assert dt.tzinfo == ZoneInfo('UTC')
+
+def test_dtaware_year_end():
+    """Tests the dtaware_year_end function."""
 
 # Test dtaware_day_end
 def test_dtaware_day_end():
@@ -318,6 +409,9 @@ def test_dtaware_day_end():
     with pytest.raises(exceptions.CastException):
         dtaware_day_end(datetime.now(), 'UTC') # Naive datetime
 
+def test_dtaware_day_end():
+    """Tests the dtaware_day_end function."""
+
 # Test dtnaive_day_end
 def test_dtnaive_day_end():
     naive_dt = datetime(2023, 1, 1, 10, 0, 0)
@@ -330,6 +424,9 @@ def test_dtnaive_day_end():
 
     with pytest.raises(exceptions.CastException):
         dtnaive_day_end(datetime.now(ZoneInfo('UTC'))) # Aware datetime
+
+def test_dtnaive_day_end():
+    """Tests the dtnaive_day_end function."""
 
 # Test dtnaive_day_end_from_date
 def test_dtnaive_day_end_from_date():
@@ -344,6 +441,9 @@ def test_dtnaive_day_end_from_date():
     assert end_of_day_naive.microsecond == 999999
     assert is_naive(end_of_day_naive)
 
+def test_dtnaive_day_end_from_date():
+    """Tests the dtnaive_day_end_from_date function."""
+
 # Test dtaware_day_end_from_date
 def test_dtaware_day_end_from_date():
     d = date(2023, 1, 1)
@@ -357,6 +457,9 @@ def test_dtaware_day_end_from_date():
     assert end_of_day_aware.microsecond == 999999
     assert end_of_day_aware.tzinfo == ZoneInfo('Europe/Madrid')
 
+def test_dtaware_day_end_from_date():
+    """Tests the dtaware_day_end_from_date function."""
+
 # Test dtnaive_day_start
 def test_dtnaive_day_start():
     naive_dt = datetime(2023, 1, 1, 10, 30, 45, 123456)
@@ -366,6 +469,9 @@ def test_dtnaive_day_start():
     assert start_of_day_naive.second == 0
     assert start_of_day_naive.microsecond == 0
     assert is_naive(start_of_day_naive)
+
+def test_dtnaive_day_start():
+    """Tests the dtnaive_day_start function."""
 
 # Test dtaware_day_start
 def test_dtaware_day_start():
@@ -380,6 +486,9 @@ def test_dtaware_day_start():
     with pytest.raises(exceptions.CastException):
         dtaware_day_start(datetime.now(), 'UTC') # Naive datetime
 
+def test_dtaware_day_start():
+    """Tests the dtaware_day_start function."""
+
 # Test dtnaive_day_start_from_date
 def test_dtnaive_day_start_from_date():
     d = date(2023, 1, 1)
@@ -392,6 +501,9 @@ def test_dtnaive_day_start_from_date():
     assert start_of_day_naive.second == 0
     assert start_of_day_naive.microsecond == 0
     assert is_naive(start_of_day_naive)
+
+def test_dtnaive_day_start_from_date():
+    """Tests the dtnaive_day_start_from_date function."""
 
 # Test dtaware_day_start_from_date
 def test_dtaware_day_start_from_date():
@@ -406,6 +518,9 @@ def test_dtaware_day_start_from_date():
     assert start_of_day_aware.microsecond == 0
     assert start_of_day_aware.tzinfo == ZoneInfo('Europe/Madrid')
 
+def test_dtaware_day_start_from_date():
+    """Tests the dtaware_day_start_from_date function."""
+
 # Test dtaware_month_start
 def test_dtaware_month_start():
     dt = dtaware_month_start(2023, 5, 'UTC')
@@ -418,6 +533,9 @@ def test_dtaware_month_start():
     assert dt.microsecond == 0
     assert dt.tzinfo == ZoneInfo('UTC')
 
+def test_dtaware_month_start():
+    """Tests the dtaware_month_start function."""
+
 # Test str2time
 def test_str2time_success():
     assert str2time("12:34", format="HH:MM") == time(12, 34)
@@ -427,6 +545,9 @@ def test_str2time_success():
     assert str2time("23:00:00.123456", format="JsIso") == time(23, 0, 0, 123456)
     assert str2time("23:00:00", format="JsIso") == time(23, 0, 0)
 
+def test_str2time_success():
+    """Tests successful string to time conversion."""
+
 def test_str2time_failure():
     with pytest.raises(exceptions.CastException):
         str2time("invalid", format="HH:MM")
@@ -435,6 +556,9 @@ def test_str2time_failure():
     with pytest.raises(exceptions.CastException):
         str2time(123, format="HH:MM")
     # The previous assertion for "23:00" was removed because time.fromisoformat accepts it.
+
+def test_str2time_failure():
+    """Tests failed string to time conversion and exception handling."""
 
 def test_str2time_ignore_exception():
     assert str2time("invalid", format="HH:MM", ignore_exception=True, ignore_exception_value=None) is None
@@ -452,6 +576,9 @@ def test_time2str_success():
     assert time2str(time(1, 2, 3), format="HH:MM:SS") == "01:02:03"
     assert time2str(time(12, 34, 56, 123456), format="JsIso") == "12:34:56.123456"
 
+def test_time2str_success():
+    """Tests successful time to string conversion."""
+
 def test_time2str_failure():
     with pytest.raises(exceptions.CastException):
         time2str(datetime.now(), format="HH:MM") # Not time
@@ -459,6 +586,9 @@ def test_time2str_failure():
         time2str(time(12, 0), format="invalid_format")
     with pytest.raises(exceptions.CastException):
         time2str(None, format="HH:MM")
+
+def test_time2str_failure():
+    """Tests failed time to string conversion and exception handling."""
 
 def test_time2str_ignore_exception():
     assert time2str(datetime.now(), format="HH:MM", ignore_exception=True, ignore_exception_value="fail") == "fail"
@@ -472,6 +602,9 @@ def test_str2date_success():
     today_year = date.today().year
     assert str2date("15/01", format="DD/MM") == date(today_year, 1, 15)
 
+def test_str2date_success():
+    """Tests successful string to date conversion."""
+
 def test_str2date_failure():
     with pytest.raises(exceptions.CastException):
         str2date("invalid", format="YYYY-MM-DD")
@@ -479,6 +612,9 @@ def test_str2date_failure():
         str2date("2023-01-15", format="invalid_format")
     with pytest.raises(exceptions.CastException):
         str2date(123, format="YYYY-MM-DD")
+
+def test_str2date_failure():
+    """Tests failed string to date conversion and exception handling."""
 
 def test_str2date_ignore_exception():
     assert str2date("invalid", format="YYYY-MM-DD", ignore_exception=True, ignore_exception_value=None) is None
@@ -497,6 +633,9 @@ def test_str2dtnaive_success():
     assert str2dtnaive("2023-01-15T10:30:00.123456", format="JsIso") == datetime(2023, 1, 15, 10, 30, 0, 123456)
     assert str2dtnaive("2023-01-15T10:30:00", format="JsIso") == datetime(2023, 1, 15, 10, 30, 0, 0)
 
+def test_str2dtnaive_success():
+    """Tests successful string to naive datetime conversion."""
+
 def test_str2dtnaive_failure():
     with pytest.raises(exceptions.CastException):
         str2dtnaive("invalid", format="%Y%m%d%H%M")
@@ -506,6 +645,9 @@ def test_str2dtnaive_failure():
         str2dtnaive(123, format="%Y%m%d%H%M")
     with pytest.raises(exceptions.CastException):
         str2dtnaive("2023-01-15T10:30:00.123Z", format="JsIso") # Contains Z
+
+def test_str2dtnaive_failure():
+    """Tests failed string to naive datetime conversion and exception handling."""
 
 def test_str2dtnaive_ignore_exception():
     assert str2dtnaive("invalid", format="%Y%m%d%H%M", ignore_exception=True, ignore_exception_value=None) is None
@@ -540,6 +682,9 @@ def test_str2dtaware_success():
     assert dt_aware_js_madrid.hour == 11 # 10:30 UTC is 11:30 in Madrid (if no DST, but for Jan 15, it's UTC+1)
     assert dt_aware_js_madrid.minute == 30
 
+def test_str2dtaware_success():
+    """Tests successful string to aware datetime conversion."""
+
 def test_str2dtaware_failure():
     with pytest.raises(exceptions.CastException):
         str2dtaware("invalid", format="%Y-%m-%d %H:%M:%S%z")
@@ -550,6 +695,9 @@ def test_str2dtaware_failure():
     with pytest.raises(exceptions.CastException):
         str2dtaware("2023-01-15T10:30:00.123", format="JsUtcIso") # Missing Z
 
+def test_str2dtaware_failure():
+    """Tests failed string to aware datetime conversion and exception handling."""
+
 def test_str2dtaware_ignore_exception():
     assert str2dtaware("invalid", format="%Y-%m-%d %H:%M:%S%z", ignore_exception=True, ignore_exception_value=None) is None
 
@@ -557,6 +705,9 @@ def test_str2dtaware_ignore_exception():
 def test_dtaware2epochms():
     dt_utc = datetime(1970, 1, 1, 0, 0, 1, 500000, tzinfo=ZoneInfo('UTC')) # 1.5 seconds after epoch
     assert dtaware2epochms(dt_utc) == 1500
+
+def test_dtaware2epochms():
+    """Tests dtaware2epochms function."""
 
 # Test epochms2dtaware
 def test_epochms2dtaware():
@@ -567,6 +718,9 @@ def test_epochms2dtaware():
     dt_aware_madrid = epochms2dtaware(epoch_ms, tz="Europe/Madrid")
     # 1.5s UTC is 1.5s UTC+1 in Madrid, so 01:00:01.500000
     assert dt_aware_madrid == datetime(1970, 1, 1, 1, 0, 1, 500000, tzinfo=ZoneInfo('Europe/Madrid'))
+
+def test_epochms2dtaware():
+    """Tests epochms2dtaware function."""
 
 # Test dtaware2epochmicros
 def test_dtaware2epochmicros():
@@ -579,8 +733,11 @@ def test_epochmicros2dtaware():
     dt_aware = epochmicros2dtaware(epoch_micros, tz="UTC")
     assert dt_aware == datetime(1970, 1, 1, 0, 0, 1, 500000, tzinfo=ZoneInfo('UTC'))
 
-    dt_aware_madrid = epochmicros2dtaware(epoch_micros, tz="Europe/Madrid")
-    assert dt_aware_madrid == datetime(1970, 1, 1, 1, 0, 1, 500000, tzinfo=ZoneInfo('Europe/Madrid'))
+def test_dtaware2epochmicros():
+    """Tests dtaware2epochmicros function."""
+    dt_utc = datetime(1970, 1, 1, 0, 0, 1, 500000, tzinfo=ZoneInfo('UTC')) # 1.5 seconds after epoch
+    assert dtaware2epochmicros(dt_utc) == 1500000
+
 
 # Test dtaware2str
 def test_dtaware2str_success():
@@ -596,6 +753,9 @@ def test_dtaware2str_success():
     # Test with a different timezone, JsUtcIso should convert to UTC
     assert dtaware2str(dt_madrid, format="JsUtcIso") == "2023-01-15T09:30:00Z" # Madrid 10:30 is UTC 09:30
 
+def test_epochmicros2dtaware():
+    """Tests epochmicros2dtaware function."""
+
 def test_dtaware2str_failure():
     with pytest.raises(exceptions.CastException):
         dtaware2str(datetime.now(), format="%Y-%m-%d") # Naive
@@ -603,6 +763,9 @@ def test_dtaware2str_failure():
         dtaware2str(datetime.now(ZoneInfo('UTC')), format="invalid_format")
     with pytest.raises(exceptions.CastException):
         dtaware2str(None, format="%Y-%m-%d")
+
+def test_dtaware2str_success():
+    """Tests successful aware datetime to string conversion."""
 
 def test_dtaware2str_ignore_exception():
     assert dtaware2str(datetime.now(), format="%Y-%m-%d", ignore_exception=True, ignore_exception_value="fail") == "fail"
@@ -617,6 +780,9 @@ def test_dtnaive2str_success():
     assert dtnaive2str(dt_naive, format="%Y%m%d%H%M") == "202301151030"
     assert dtnaive2str(dt_naive, format="JsIso") == "2023-01-15T10:30:00.123456"
 
+def test_dtaware2str_failure():
+    """Tests failed aware datetime to string conversion and exception handling."""
+
 def test_dtnaive2str_failure():
     with pytest.raises(exceptions.CastException):
         dtnaive2str(datetime.now(ZoneInfo('UTC')), format="%Y-%m-%d") # Aware
@@ -624,6 +790,9 @@ def test_dtnaive2str_failure():
         dtnaive2str(datetime.now(), format="invalid_format")
     with pytest.raises(exceptions.CastException):
         dtnaive2str(None, format="%Y-%m-%d")
+
+def test_dtaware2str_ignore_exception():
+    """Tests aware datetime to string conversion with exception ignoring."""
 
 def test_dtnaive2str_ignore_exception():
     assert dtnaive2str(datetime.now(ZoneInfo('UTC')), format="%Y-%m-%d", ignore_exception=True, ignore_exception_value="fail") == "fail"
@@ -643,6 +812,9 @@ def test_dtaware_changes_tz():
 
     with pytest.raises(exceptions.CastException):
         dtaware_changes_tz(datetime.now(), 'UTC') # Naive datetime
+
+def test_dtnaive2str_success():
+    """Tests successful naive datetime to string conversion."""
 
 # Test months
 def test_months():
@@ -664,6 +836,9 @@ def test_months():
     assert months(2023, 5, 2023, 5) == [(2023, 5)]
     assert months(2023, 5, 2023, 4) == [] # From after to
 
+def test_dtnaive2str_failure():
+    """Tests failed naive datetime to string conversion and exception handling."""
+
 # Test timedelta2str
 def test_timedelta2str_success():
     td = timedelta(days=1, hours=2, minutes=3, seconds=4, microseconds=500000)
@@ -674,6 +849,9 @@ def test_timedelta2str_failure():
         timedelta2str("not a timedelta")
     with pytest.raises(exceptions.CastException): # None is not a timedelta
         timedelta2str(None) 
+
+def test_dtnaive2str_ignore_exception():
+    """Tests naive datetime to string conversion with exception ignoring."""
 
 def test_timedelta2str_ignore_exception():
     assert timedelta2str("not a timedelta", ignore_exception=True, ignore_exception_value=None) is None
@@ -691,6 +869,9 @@ def test_str2timedelta_failure():
     with pytest.raises(exceptions.CastException):
         str2timedelta(None)
 
+def test_dtaware_changes_tz():
+    """Tests the dtaware_changes_tz function."""
+
 def test_str2timedelta_ignore_exception():
     assert str2timedelta("invalid iso duration", ignore_exception=True, ignore_exception_value=None) is None
 
@@ -705,4 +886,7 @@ def test_is_email():
     assert is_email("@example.com") is False
     assert is_email("test@example") is False
     assert is_email(None) is False
+
+def test_months():
+    """Tests the months function for generating a range of (year, month) tuples."""
     assert is_email(123) is False

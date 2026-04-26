@@ -18,6 +18,9 @@ d["Decimal"]=Decimal("12.12123414")
 
 
 def test_myjsonencoder():
+    """
+    Tests the MyJSONEncoder and MyJSONEncoder_loads functions for correct serialization and deserialization of various Python types.
+    """
     print("DICCIONARIO", d)
     json_string=myjsonencoder.MyJSONEncoder_dumps(d)
     print("Antes",  json_string)
@@ -35,6 +38,10 @@ def test_myjsonencoder():
     assert json_["Timedelta"]==d["Timedelta"] 
 
 def test_myjsonencoder_decimals_as_float():
+    """
+    Tests the MyJSONEncoderDecimalsAsFloat_dumps and MyJSONEncoderDecimalsAsFloat_loads functions.
+    Ensures Decimal objects are serialized as floats and deserialized correctly (though with potential precision loss).
+    """
     json_string=myjsonencoder.MyJSONEncoderDecimalsAsFloat_dumps(d)
     json_=myjsonencoder.MyJSONEncoderDecimalsAsFloat_loads(json_string)
     assert json_["None"]==d["None"]
@@ -50,6 +57,10 @@ def test_myjsonencoder_decimals_as_float():
 
 
 def test_myjsonencoder_decimals_as_string():
+    """
+    Tests the MyJSONEncoderDecimalsAsString_dumps and MyJSONEncoderDecimalsAsString_loads functions.
+    Ensures Decimal objects are serialized as strings and deserialized correctly.
+    """
     json_string=myjsonencoder.MyJSONEncoderDecimalsAsString_dumps(d)
     json_=myjsonencoder.MyJSONEncoderDecimalsAsString_loads(json_string)
     assert json_["None"]==d["None"]

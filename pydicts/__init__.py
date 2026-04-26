@@ -1,3 +1,6 @@
+"""
+PyDicts: A Python library for convenient dictionary and list of dictionary manipulations.
+"""
 from datetime import datetime
 __version__="1.1.0"
 __versiondatetime__= datetime(2025, 5, 24, 7, 48)

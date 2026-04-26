@@ -209,19 +209,37 @@ def lod_ymv_transposition_sum(lymv_a, lymv_b):
             month_key = f"m{i}"
             val_a = entry_a.get(month_key, 0)
             val_b = entry_b.get(month_key, 0)
-            new_entry[month_key] = val_a + val_b
-        
+            new_entry[month_key] = val_a + val_b # Sum corresponding month values
+
         # Sum total values
         total_a = entry_a.get("total", 0)
         total_b = entry_b.get("total", 0)
         new_entry["total"] = total_a + total_b
-        
+
         result_lod.append(new_entry)
-    
+
     return result_lod
 
-## Converts a tipical groyp by lor with year, month (normaly extracted from db to fill empty values)
 def lod_ymv_filling(lod, year_from, year_to=date.today().year, fill_value=0, key_year="year", key_month="month", key_value="value"):
+    """
+    Fills missing year-month entries in a list of dictionaries with a specified fill_value.
+
+    This function is useful for creating a complete time series from sparse data.
+
+    Args:
+        lod (list): The input list of dictionaries, each expected to have year, month, and value keys.
+        year_from (int): The starting year for the filling process.
+        year_to (int, optional): The ending year for the filling process. Defaults to the current year.
+        fill_value (int or float, optional): The value to use for missing entries. Defaults to 0.
+        key_year (str, optional): The key for the year in the input dictionaries. Defaults to "year".
+        key_month (str, optional): The key for the month in the input dictionaries. Defaults to "month".
+        key_value (str, optional): The key for the value in the input dictionaries. Defaults to "value".
+
+    Returns:
+        list: A new list of dictionaries with all year-month combinations from `year_from` to `year_to`
+              (inclusive), filled with `fill_value` where original data was missing. Existing entries
+              retain their original values and any other keys. The list is sorted by year and month.
+    """
     # Create a dictionary for quick lookup of existing entries
     existing_entries = {}
     for d in lod:
