@@ -739,6 +739,45 @@ def str2date(value, format="YYYY-MM-DD", ignore_exception=False, ignore_exceptio
         else:
             return ignore_exception_value
 
+def date2str(value, format="JsIso", ignore_exception=False, ignore_exception_value=None):
+    """Converts a datetime.date object to its string representation.
+
+    Args:
+        value (date): The datetime.date object to convert.
+        format (str, optional): The desired output format. Allowed values:
+                                "JsIso" (YYYY-MM-DD), "DD/MM/YYYY", "DD.MM.YYYY", "long date str".
+                                Defaults to "JsIso".
+        ignore_exception (bool, optional): If True, returns `ignore_exception_value` on error instead of raising an exception. Defaults to False.
+        ignore_exception_value (any, optional): The value to return if an exception is ignored. Defaults to None.
+
+    Returns:
+        str: The string representation of the date.
+    """
+    original = value
+    allowed = ["JsIso", "DD/MM/YYYY", "DD.MM.YYYY", "long date str"]
+    error = f"Error in Pydicts.cast.date2str method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
+
+    if not isinstance(value, date) or format not in allowed:
+        if ignore_exception:
+            return ignore_exception_value
+        raise exceptions.CastException(error)
+
+    try:
+        if format == "JsIso":
+            return value.isoformat()
+        elif format == "DD/MM/YYYY":
+            return value.strftime("%d/%m/%Y")
+        elif format == "DD.MM.YYYY":
+            return value.strftime("%d.%m.%Y")
+        elif format == "long date str":
+            # Uses system locale for month name localization
+            return value.strftime("%B %d, %Y")
+    except Exception: # Catch any potential strftime errors
+        if ignore_exception:
+            return ignore_exception_value
+        raise exceptions.CastException(error)
+
+
 def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_value=None):
     """Converts a string representation of a datetime to a timezone-naive `datetime.datetime` object.
 

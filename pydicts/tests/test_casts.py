@@ -1,4 +1,5 @@
 import pytest
+import locale # Added for locale-dependent date formatting tests
 from datetime import datetime, date, time, timedelta
 from decimal import Decimal
 from zoneinfo import ZoneInfo
@@ -11,7 +12,7 @@ from pydicts.casts import (dtnaive, # Added dtnaive
     date_last_of_the_year, date_first_of_the_next_x_months, date_last_of_the_next_x_months,
     dtaware_month_end, dtaware_year_start, dtaware_year_end,
     dtaware_day_end, dtnaive_day_end, dtnaive_day_end_from_date, dtaware_day_end_from_date,
-    dtnaive_day_start, dtaware_day_start, dtnaive_day_start_from_date, dtaware_day_start_from_date,
+    dtnaive_day_start, dtaware_day_start, dtnaive_day_start_from_date, dtaware_day_start_from_date, date2str,
     dtaware_month_start, str2time, time2str, str2date, str2dtnaive, str2dtaware,
     dtaware2epochms, epochms2dtaware, dtaware2epochmicros, epochmicros2dtaware,
     dtaware2str, dtnaive2str, dtaware_changes_tz, months, timedelta2str, str2timedelta,
@@ -506,6 +507,54 @@ def test_str2date_ignore_exception():
     assert str2date("invalid", format="YYYY-MM-DD", ignore_exception=True, ignore_exception_value=None) is None
 
 # Test str2dtnaive
+
+def test_date2str_localization_with_system_locale():
+    """
+    Tests date2str with 'long date str' format by explicitly setting a system locale.
+    WARNING: Changing the global locale can have side effects and is generally
+    not recommended within library functions. This test demonstrates how strftime
+    behaves when the system locale is set.
+    """
+    test_date = date(2023, 1, 15)
+    original_locale = locale.getlocale(locale.LC_TIME) # Save current locale
+
+    try:
+        # Try to set a Spanish locale. This might fail on some systems.
+        try:
+            locale.setlocale(locale.LC_TIME, 'es_ES.UTF-8')
+        except locale.Error:
+            pytest.skip("Spanish locale not available on this system for testing strftime localization.")
+
+        assert date2str(test_date, format="long date str") == "enero 15, 2023"
+    finally:
+        locale.setlocale(locale.LC_TIME, original_locale) # Always restore the original locale
+
+# Test date2str
+def test_date2str_success():
+    """Tests successful date to string conversion."""
+    test_date = date(2023, 1, 15)
+    assert date2str(test_date, format="JsIso") == "2023-01-15"
+    assert date2str(test_date, format="DD/MM/YYYY") == "15/01/2023"
+    assert date2str(test_date, format="DD.MM.YYYY") == "15.01.2023"
+    assert date2str(test_date, format="long date str") == "January 15, 2023"
+
+def test_date2str_failure():
+    """Tests failed date to string conversion and exception handling."""
+    test_date = date(2023, 1, 15)
+    with pytest.raises(exceptions.CastException):
+        date2str("not a date", format="JsIso") # Not a date object
+    with pytest.raises(exceptions.CastException):
+        date2str(test_date, format="invalid_format") # Invalid format
+    with pytest.raises(exceptions.CastException):
+        date2str(None, format="JsIso") # None value
+
+def test_date2str_ignore_exception():
+    """Tests date to string conversion with exception ignoring."""
+    test_date = date(2023, 1, 15)
+    assert date2str("not a date", ignore_exception=True, ignore_exception_value="fail") == "fail"
+    assert date2str(test_date, format="invalid_format", ignore_exception=True, ignore_exception_value=None) is None
+    assert date2str(None, ignore_exception=True, ignore_exception_value="") == ""
+
 def test_str2dtnaive_success():
     assert str2dtnaive("202301151030", format="%Y%m%d%H%M") == datetime(2023, 1, 15, 10, 30)
     assert str2dtnaive("2023-01-15 10:30:00", format="%Y-%m-%d %H:%M:%S") == datetime(2023, 1, 15, 10, 30, 0)
