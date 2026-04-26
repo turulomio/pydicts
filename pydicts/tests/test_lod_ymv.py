@@ -1,39 +1,295 @@
 from decimal import Decimal
 from pydicts import lod_ymv
+import pytest
 
-def tests_lod_year_month_value_transposition():
+# Helper function to create a full year dictionary for tests
+def _create_full_year_dict(year, values_by_month=None, total=0):
+    d = {"year": year}
+    values_by_month = values_by_month or {}
+    for i in range(1, 13):
+        d[f"m{i}"] = values_by_month.get(i, 0)
+    d["total"] = total
+    return d
+def test_lod_ymv_transposition():
     o=[
         {"year": 2022, "month": 1, "my_sum": 12},
         {"year": 2021, "month": 2, "my_sum": 123},
         {"year": 2019, "month": 5, "my_sum": 1},
         {"year": 2022, "month": 12, "my_sum": 12},
+        {"year": 2022, "month": 1, "my_sum": 8}, # Duplicate month/year, should sum
+        {"year": 2020, "month": 3, "my_sum": 50},
+        {"year": 2020, "month": 4, "my_sum": 20},
     ]
     t=lod_ymv.lod_ymv_transposition(o,key_value="my_sum")
-    assert t[0]["year"]==2019
-    assert t[3]["total"]==24
 
-def tests_lod_ymv_transposition_with_percentages():
-    o=[
-        {'year': 2007, 'm1': 0, 'm2': 0, 'm3': 0, 'm4': 0, 'm5': 0, 'm6': 0, 'm7': 0, 'm8': 0, 'm9': 0, 'm10': 0, 'm11': 0, 'm12': Decimal('673.420708'), 'total': Decimal('673.420708')}, 
-        {'year': 2008, 'm1': Decimal('675.290000'), 'm2': Decimal('676.693600'), 'm3': Decimal('678.143600'), 'm4': Decimal('680.077800'), 'm5': Decimal('682.077700'), 'm6': Decimal('684.066600'), 'm7': Decimal('686.693400'), 'm8': Decimal('688.976400'), 'm9': Decimal('691.204200'), 'm10': Decimal('693.323500'), 'm11': Decimal('695.197600'), 'm12': Decimal('696.811800'), 'total': Decimal('8228.556200')}, 
-        {'year': 2009, 'm1': Decimal('698.369800'), 'm2': Decimal('699.044640'), 'm3': Decimal('699.605900'), 'm4': Decimal('699.651500'), 'm5': Decimal('700.358200'), 'm6': Decimal('701.290400'), 'm7': Decimal('702.576900'), 'm8': Decimal('703.238700'), 'm9': Decimal('704.174500'), 'm10': Decimal('704.765900'), 'm11': Decimal('704.954900'), 'm12': Decimal('705.687800'), 'total': Decimal('8423.719140')}, 
-        {'year': 2010, 'm1': Decimal('705.792600'), 'm2': Decimal('706.240800'), 'm3': Decimal('706.816500'), 'm4': Decimal('706.845800'), 'm5': Decimal('706.185000'), 'm6': Decimal('705.700900'), 'm7': 0, 'm8': 0, 'm9': 0, 'm10': 0, 'm11': 0, 'm12': Decimal('710.218060'), 'total': Decimal('4947.799660')}, 
-        {'year': 2011, 'm1': Decimal('711.104600'), 'm2': Decimal('711.649500'), 'm3': Decimal('712.384100'), 'm4': Decimal('713.220700'), 'm5': Decimal('714.362200'), 'm6': Decimal('715.415800'), 'm7': Decimal('716.354600'), 'm8': Decimal('718.111300'), 'm9': Decimal('719.274200'), 'm10': Decimal('720.421000'), 'm11': Decimal('720.365000'), 'm12': Decimal('725.471500'), 'total': Decimal('8598.134500')}, 
-        {'year': 2012, 'm1': Decimal('728.814700'), 'm2': Decimal('729.283100'), 'm3': 0, 'm4': 0, 'm5': 0, 'm6': 0, 'm7': 0, 'm8': 0, 'm9': 0, 'm10': 0, 'm11': 0, 'm12': 0, 'total': Decimal('1458.097800')}, 
-        {'year': 2013, 'm1': 0, 'm2': 0, 'm3': 0, 'm4': 0, 'm5': 0, 'm6': 0, 'm7': 0, 'm8': 0, 'm9': Decimal('758.550000'), 'm10': 0, 'm11': 0, 'm12': 0, 'total': Decimal('758.550000')}, 
-        {'year': 2014, 'm1': 0, 'm2': 0, 'm3': 0, 'm4': 0, 'm5': 0, 'm6': 0, 'm7': 0, 'm8': 0, 'm9': 0, 'm10': 0, 'm11': 0, 'm12': Decimal('768.387330'), 'total': Decimal('768.387330')}, 
-        {'year': 2015, 'm1': Decimal('768.600000'), 'm2': Decimal('768.790000'), 'm3': Decimal('768.860000'), 'm4': Decimal('768.890000'), 'm5': Decimal('768.810000'), 'm6': Decimal('769.050000'), 'm7': Decimal('769.060000'), 'm8': Decimal('769.010000'), 'm9': Decimal('768.950000'), 'm10': Decimal('768.910000'), 'm11': Decimal('769.070000'), 'm12': Decimal('768.970000'), 'total': Decimal('9226.970000')}, 
-        {'year': 2016, 'm1': Decimal('768.940000'), 'm2': Decimal('768.830000'), 'm3': Decimal('768.810000'), 'm4': Decimal('768.750000'), 'm5': Decimal('768.690000'), 'm6': Decimal('768.520000'), 'm7': Decimal('768.340000'), 'm8': Decimal('768.460000'), 'm9': Decimal('768.270000'), 'm10': Decimal('768.150000'), 'm11': Decimal('768.000000'), 'm12': Decimal('767.850000'), 'total': Decimal('9221.610000')}, 
-        {'year': 2017, 'm1': Decimal('767.670000'), 'm2': Decimal('767.490000'), 'm3': Decimal('767.260000'), 'm4': Decimal('767.090000'), 'm5': Decimal('766.870000'), 'm6': Decimal('766.650000'), 'm7': Decimal('766.410000'), 'm8': Decimal('766.070000'), 'm9': Decimal('765.790000'), 'm10': Decimal('765.490000'), 'm11': Decimal('765.150000'), 'm12': Decimal('764.800000'), 'total': Decimal('9196.740000')}, 
-        {'year': 2018, 'm1': Decimal('764.440000'), 'm2': Decimal('764.080000'), 'm3': Decimal('763.640000'), 'm4': Decimal('763.290000'), 'm5': Decimal('762.450000'), 'm6': Decimal('762.130000'), 'm7': Decimal('761.880000'), 'm8': Decimal('761.430000'), 'm9': Decimal('761.090000'), 'm10': Decimal('760.680000'), 'm11': Decimal('760.060000'), 'm12': Decimal('759.750000'), 'total': Decimal('9144.920000')},
-        {'year': 2019, 'm1': Decimal('759.610000'), 'm2': Decimal('759.390000'), 'm3': Decimal('759.160000'), 'm4': Decimal('758.870000'), 'm5': Decimal('758.390000'), 'm6': Decimal('758.280000'), 'm7': Decimal('758.110000'), 'm8': Decimal('757.710000'), 'm9': Decimal('757.360000'), 'm10': Decimal('756.950000'), 'm11': Decimal('756.570000'), 'm12': Decimal('756.180000'), 'total': Decimal('9096.580000')}, 
-        {'year': 2020, 'm1': Decimal('755.990000'), 'm2': Decimal('755.450000'), 'm3': Decimal('751.600000'), 'm4': Decimal('752.320000'), 'm5': Decimal('752.750000'), 'm6': Decimal('753.350000'), 'm7': Decimal('753.410000'), 'm8': Decimal('753.390000'), 'm9': Decimal('753.110000'), 'm10': Decimal('752.940000'), 'm11': Decimal('752.420000'), 'm12': Decimal('752.030000'), 'total': Decimal('9038.760000')}, 
-        {'year': 2021, 'm1': Decimal('751.640000'), 'm2': 0, 'm3': 0, 'm4': 0, 'm5': Decimal('750.040000'), 'm6': 0, 'm7': 0, 'm8': 0, 'm9': 0, 'm10': 0, 'm11': 0, 'm12': 0, 'total': Decimal('1501.680000')}, 
-        {'year': 2022, 'm1': 0, 'm2': 0, 'm3': 0, 'm4': 0, 'm5': 0, 'm6': 0, 'm7': 0, 'm8': 0, 'm9': 0, 'm10': 0, 'm11': 0, 'm12': 0, 'total': 0}, 
-        {'year': 2023, 'm1': 0, 'm2': 0, 'm3': 0, 'm4': 0, 'm5': 0, 'm6': Decimal('748.982000'), 'm7': 0, 'm8': 0, 'm9': 0, 'm10': 0, 'm11': 0, 'm12': 0, 'total': Decimal('748.982000')}
+    # Expected structure:
+    # 2019: m5=1, total=1
+    # 2020: m3=50, m4=20, total=70
+    # 2021: m2=123, total=123
+    # 2022: m1=12+8=20, m12=12, total=32
+
+    assert len(t) == 4 # Years 2019, 2020, 2021, 2022
+
+    # Year 2019
+    y2019 = t[0]
+    assert y2019["year"] == 2019
+    assert y2019["m5"] == 1
+    assert y2019["total"] == 1
+    assert all(y2019[f"m{i}"] == 0 for i in range(1, 13) if i != 5)
+
+    # Year 2020
+    y2020 = t[1]
+    assert y2020["year"] == 2020
+    assert y2020["m3"] == 50
+    assert y2020["m4"] == 20
+    assert y2020["total"] == 70
+    assert all(y2020[f"m{i}"] == 0 for i in range(1, 13) if i not in [3, 4])
+
+    # Year 2021
+    y2021 = t[2]
+    assert y2021["year"] == 2021
+    assert y2021["m2"] == 123
+    assert y2021["total"] == 123
+    assert all(y2021[f"m{i}"] == 0 for i in range(1, 13) if i != 2)
+
+    # Year 2022
+    y2022 = t[3]
+    assert y2022["year"] == 2022
+    assert y2022["m1"] == 20 # 12 + 8
+    assert y2022["m12"] == 12
+    assert y2022["total"] == 32
+    assert all(y2022[f"m{i}"] == 0 for i in range(1, 13) if i not in [1, 12])
+
+    # Test with empty input
+    assert lod_ymv.lod_ymv_transposition([], key_value="my_sum") == []
+
+    # Test with missing keys
+    o_bad_key = [{"year": 2022, "month": 1, "bad_key": 10}]
+    assert lod_ymv.lod_ymv_transposition(o_bad_key, key_value="my_sum") is None
+
+def test_is_noz():
+    assert lod_ymv.is_noz(None) is True
+    assert lod_ymv.is_noz(0) is True
+    assert lod_ymv.is_noz(Decimal('0')) is True
+    assert lod_ymv.is_noz(1) is False
+    assert lod_ymv.is_noz(Decimal('1')) is False
+    assert lod_ymv.is_noz("hello") is False
+    assert lod_ymv.is_noz("") is False
+    assert lod_ymv.is_noz([]) is False
+
+def test_ymv_transposition_first_value_not_noz():
+    # Use the helper to create complete dictionaries
+    lod_data = [
+        _create_full_year_dict(2020, {3: 10, 4: 20}),
+        _create_full_year_dict(2021, {1: 30, 2: 40, 3: 50, 4: 60}),
     ]
-    from pydicts import lod
-    r=lod_ymv.lod_ymv_transposition_with_percentages(o)
-    lod.lod_print(o)
-    lod.lod_print(r)
-    assert 1==1# Change to 2 to debug
+    result = lod_ymv.ymv_transposition_first_value_not_noz(lod_data)
+    assert result == {"year": 2020, "month": 3, "value": 10}
+
+    lod_data_all_zero = [
+        _create_full_year_dict(2020),
+        _create_full_year_dict(2021),
+    ]
+    result_all_zero = lod_ymv.ymv_transposition_first_value_not_noz(lod_data_all_zero)
+    assert result_all_zero is None
+
+    lod_data_empty = []
+    result_empty = lod_ymv.ymv_transposition_first_value_not_noz(lod_data_empty)
+    assert result_empty is None
+    lod_data_first_month = [
+        _create_full_year_dict(2020, {1: 5}),
+    ]
+    result_first_month = lod_ymv.ymv_transposition_first_value_not_noz(lod_data_first_month)
+    assert result_first_month == {"year": 2020, "month": 1, "value": 5}
+def test_d_ymv_transposition_first_key_not_noz():
+    d1 = _create_full_year_dict(0, {2: 10, 3: 20, 6: 30}, total=60)
+    assert lod_ymv.d_ymv_transposition_first_key_not_noz(d1) == "m2"
+    d2 = _create_full_year_dict(0, {1: 5, 2: 10, 3: 20}, total=35)
+    assert lod_ymv.d_ymv_transposition_first_key_not_noz(d2) == "m1"
+    d3 = _create_full_year_dict(0, {}, total=0)
+    assert lod_ymv.d_ymv_transposition_first_key_not_noz(d3) is None
+    d4 = _create_full_year_dict(0, {3: 15}, total=15)
+    d4["m1"] = None # Explicitly set None
+    d4["m2"] = None # Explicitly set None
+    assert lod_ymv.d_ymv_transposition_first_key_not_noz(d4) == "m3"
+def test_d_ymv_transposition_last_key_not_noz():
+    d1 = _create_full_year_dict(0, {2: 10, 3: 20, 6: 30}, total=60)
+    assert lod_ymv.d_ymv_transposition_last_key_not_noz(d1) == "m6"
+    d2 = _create_full_year_dict(0, {1: 5, 2: 10, 3: 0}, total=15)
+    assert lod_ymv.d_ymv_transposition_last_key_not_noz(d2) == "m2"
+    d3 = _create_full_year_dict(0, {}, total=0)
+    assert lod_ymv.d_ymv_transposition_last_key_not_noz(d3) is None
+    d4 = _create_full_year_dict(0, {1: 15}, total=15)
+    d4["m2"] = None
+    d4["m3"] = None
+    assert lod_ymv.d_ymv_transposition_last_key_not_noz(d4) == "m1"
+def test_lod_ymv_transposition_with_percentages():
+    # Smaller, more controlled dataset for testing percentages
+    o = [
+        {'year': 2020, 'm1': Decimal('100'), 'm2': Decimal('110'), 'm3': Decimal('100'), 'm4': Decimal('120'), 'm5': Decimal('0'), 'm6': Decimal('0'), 'm7': Decimal('0'), 'm8': Decimal('0'), 'm9': Decimal('0'), 'm10': Decimal('0'), 'm11': Decimal('0'), 'm12': Decimal('130'), 'total': Decimal('460')},
+        {'year': 2021, 'm1': Decimal('130'), 'm2': Decimal('140'), 'm3': Decimal('120'), 'm4': Decimal('0'), 'm5': Decimal('0'), 'm6': Decimal('0'), 'm7': Decimal('0'), 'm8': Decimal('0'), 'm9': Decimal('0'), 'm10': Decimal('0'), 'm11': Decimal('0'), 'm12': Decimal('150'), 'total': Decimal('540')},
+        {'year': 2022, 'm1': Decimal('0'), 'm2': Decimal('0'), 'm3': Decimal('0'), 'm4': Decimal('0'), 'm5': Decimal('0'), 'm6': Decimal('0'), 'm7': Decimal('0'), 'm8': Decimal('0'), 'm9': Decimal('0'), 'm10': Decimal('0'), 'm11': Decimal('0'), 'm12': Decimal('0'), 'total': Decimal('0')},
+        {'year': 2023, 'm1': Decimal('10'), 'm2': Decimal('20'), 'm3': Decimal('30'), 'm4': Decimal('40'), 'm5': Decimal('50'), 'm6': Decimal('60'), 'm7': Decimal('70'), 'm8': Decimal('80'), 'm9': Decimal('90'), 'm10': Decimal('100'), 'm11': Decimal('110'), 'm12': Decimal('120'), 'total': Decimal('780')},
+    ]
+    r = lod_ymv.lod_ymv_transposition_with_percentages(o)
+
+    assert len(r) == 4
+
+    # Year 2020
+    assert r[0]["year"] == 2020
+    assert r[0]["m1"] is None # No previous year's m12
+    assert r[0]["m2"] == pytest.approx(Decimal('0.1'))
+    assert r[0]["m3"] == pytest.approx(Decimal('-0.0909090909090909090909090909')) # (100-110)/110
+    assert r[0]["m4"] == pytest.approx(Decimal('0.2'))
+    assert r[0]["m5"] is None # 0/120
+    assert r[0]["m12"] is None # 130/0
+    assert r[0]["total"] == pytest.approx(Decimal('0.3')) # (130-100)/100
+    assert r[0]["from_first_quote"] == pytest.approx(Decimal('0.3')) # (130-100)/100
+
+    # Year 2021
+    assert r[1]["year"] == 2021
+    assert r[1]["m1"] == pytest.approx(Decimal('0.0')) # (130-130)/130
+    assert r[1]["m2"] == pytest.approx(Decimal('0.0769230769230769230769230769')) # (140-130)/130
+    assert r[1]["m3"] == pytest.approx(Decimal('-0.1428571428571428571428571429')) # (120-140)/140
+    assert r[1]["m4"] is None
+    assert r[1]["m12"] is None
+    assert r[1]["total"] == pytest.approx(Decimal('0.1538461538461538461538461538')) # (150-130)/130
+    assert r[1]["from_first_quote"] == pytest.approx(Decimal('0.5')) # (150-100)/100
+
+    # Year 2022 (all zeros)
+    assert r[2]["year"] == 2022
+    for i in range(1, 13):
+        assert r[2][f"m{i}"] is None # All month values are 0, so percentage is None
+    assert r[2]["total"] is None
+    assert r[2]["from_first_quote"] is None
+
+    # Year 2023
+    assert r[3]["year"] == 2023
+    assert r[3]["m1"] is None # (10-0)/0
+    assert r[3]["m2"] == pytest.approx(Decimal('1.0')) # (20-10)/10
+    assert r[3]["m12"] == pytest.approx(Decimal('0.0909090909090909090909090909')) # (120-110)/110
+    assert r[3]["total"] is None # (120-0)/0 (total is calculated from first_value_not_noz and last_value_not_noz of the current year, if first is 0, then None)
+    assert r[3]["from_first_quote"] == pytest.approx(Decimal('0.2')) # (120-100)/100
+
+    # Test with empty input
+    assert lod_ymv.lod_ymv_transposition_with_percentages([]) == []
+
+    # Test with all None/zero values
+    o_all_none_zero = [
+        {'year': 2020, 'm1': Decimal('0'), 'm2': Decimal('0'), 'm3': Decimal('0'), 'm4': Decimal('0'), 'm5': Decimal('0'), 'm6': Decimal('0'), 'm7': Decimal('0'), 'm8': Decimal('0'), 'm9': Decimal('0'), 'm10': Decimal('0'), 'm11': Decimal('0'), 'm12': Decimal('0'), 'total': Decimal('0')},
+        {'year': 2021, 'm1': Decimal('0'), 'm2': Decimal('0'), 'm3': Decimal('0'), 'm4': Decimal('0'), 'm5': Decimal('0'), 'm6': Decimal('0'), 'm7': Decimal('0'), 'm8': Decimal('0'), 'm9': Decimal('0'), 'm10': Decimal('0'), 'm11': Decimal('0'), 'm12': Decimal('0'), 'total': Decimal('0')},
+    ]
+    r_all_none_zero = lod_ymv.lod_ymv_transposition_with_percentages(o_all_none_zero)
+    assert len(r_all_none_zero) == 2
+    assert all(v is None for k, v in r_all_none_zero[0].items() if k != 'year')
+    assert all(v is None for k, v in r_all_none_zero[1].items() if k != 'year')
+
+def test_lod_ymv_transposition_sum():
+    lymv_a = [ # Using helper for consistency
+        _create_full_year_dict(2020, {1: 10, 2: 20}, total=30),
+        _create_full_year_dict(2021, {1: 100, 2: 200}, total=300),
+    ]
+    lymv_b = [ # Using helper for consistency
+        _create_full_year_dict(2020, {1: 1, 2: 2}, total=3),
+        _create_full_year_dict(2022, {1: 1000, 2: 2000}, total=3000),
+    ]
+
+    result = lod_ymv.lod_ymv_transposition_sum(lymv_a, lymv_b)
+
+    # Expected:
+    # 2020: m1=10+1=11, m2=20+2=22, total=30+3=33
+    # 2021: m1=100, m2=200, total=300 (from lymv_a only)
+    # 2022: m1=1000, m2=2000, total=3000 (from lymv_b only)
+
+    assert len(result) == 3
+    assert result[0]["year"] == 2020
+    assert result[0]["m1"] == 11
+    assert result[0]["m2"] == 22
+    assert result[0]["total"] == 33
+
+    assert result[1]["year"] == 2021
+    assert result[1]["m1"] == 100
+    assert result[1]["m2"] == 200
+    assert result[1]["total"] == 300
+
+    assert result[2]["year"] == 2022
+    assert result[2]["m1"] == 1000
+    assert result[2]["m2"] == 2000
+    assert result[2]["total"] == 3000
+
+    # Test with empty lists
+    assert lod_ymv.lod_ymv_transposition_sum([], lymv_b) == lymv_b
+    assert lod_ymv.lod_ymv_transposition_sum(lymv_a, []) == lymv_a
+
+    # Test with overlapping years but one list has more years
+    lymv_c = [ # Using helper for consistency
+        _create_full_year_dict(2019, {1: 5, 2: 5}, total=10),
+        _create_full_year_dict(2020, {1: 10, 2: 20}, total=30),
+    ]
+    lymv_d = [ # Using helper for consistency
+        _create_full_year_dict(2020, {1: 1, 2: 2}, total=3),
+        _create_full_year_dict(2021, {1: 3, 2: 4}, total=7),
+    ]
+    result_overlap = lod_ymv.lod_ymv_transposition_sum(lymv_c, lymv_d)
+    assert len(result_overlap) == 3
+    assert result_overlap[0]["year"] == 2019
+    assert result_overlap[0]["m1"] == 5
+    assert result_overlap[1]["year"] == 2020
+    assert result_overlap[1]["m1"] == 11
+    assert result_overlap[2]["year"] == 2021
+    assert result_overlap[2]["m1"] == 3
+
+def test_lod_ymv_filling():
+    initial_lod = [
+        {"year": 2020, "month": 1, "value": 10, "other_data": "A"},
+        {"year": 2020, "month": 3, "value": 30, "other_data": "C"},
+        {"year": 2021, "month": 2, "value": 20, "other_data": "B"},
+    ]
+
+    # Fill from 2020 to 2021
+    filled_lod = lod_ymv.lod_ymv_filling(initial_lod, 2020, 2021, fill_value=0, key_value="value")
+
+    # Expected: 2 years * 12 months = 24 entries
+    assert len(filled_lod) == 24
+
+    # Check specific filled values and order
+    # The filled_lod should be sorted by year, then month
+    assert filled_lod[0] == {"year": 2020, "month": 1, "value": 10, "other_data": "A"}
+    assert filled_lod[1] == {"year": 2020, "month": 2, "value": 0} # New entry, only specified keys
+    assert filled_lod[2] == {"year": 2020, "month": 3, "value": 30, "other_data": "C"}
+    assert filled_lod[11] == {"year": 2020, "month": 12, "value": 0}
+    assert filled_lod[12] == {"year": 2021, "month": 1, "value": 0}
+    assert filled_lod[13] == {"year": 2021, "month": 2, "value": 20, "other_data": "B"}
+    assert filled_lod[23] == {"year": 2021, "month": 12, "value": 0}
+
+    # Test with an empty initial lod
+    filled_empty_lod = lod_ymv.lod_ymv_filling([], 2022, 2022, fill_value=-1, key_value="value")
+    assert len(filled_empty_lod) == 12
+    for d in filled_empty_lod:
+        assert d["year"] == 2022
+        assert d["value"] == -1
+        assert "month" in d # Ensure month key is present
+
+    # Test with already full lod (should not change values)
+    full_lod = []
+    for m in range(1, 13):
+        full_lod.append({"year": 2023, "month": m, "value": m * 10, "extra": "X"})
+    filled_full_lod = lod_ymv.lod_ymv_filling(full_lod, 2023, 2023, fill_value=0, key_value="value")
+    assert len(filled_full_lod) == 12
+    for m in range(1, 13):
+        # Original dictionaries should be preserved
+        assert filled_full_lod[m-1]["year"] == 2023
+        assert filled_full_lod[m-1]["month"] == m
+        assert filled_full_lod[m-1]["value"] == m * 10
+        assert filled_full_lod[m-1]["extra"] == "X"
+
+    # Test with different key names
+    initial_lod_custom_keys = [
+        {"y": 2020, "m": 1, "val": 10, "other": "data"},
+    ]
+    filled_custom_keys = lod_ymv.lod_ymv_filling(initial_lod_custom_keys, 2020, 2020, fill_value=0, key_year="y", key_month="m", key_value="val")
+    assert len(filled_custom_keys) == 12
+    # Check first existing entry
+    assert filled_custom_keys[0] == {"y": 2020, "m": 1, "val": 10, "other": "data"}
+    assert filled_custom_keys[1] == {"y": 2020, "m": 2, "val": 0}
+    assert filled_custom_keys[11] == {"y": 2020, "m": 12, "val": 0}
