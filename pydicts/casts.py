@@ -859,6 +859,11 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
             dtnaive=str2dtnaive(value,"%Y-%m-%d %H:%M:%S.")
 
             return dtnaive
+        elif format == "long string":
+            # This format is for date only, so it doesn't make sense for a full datetime string input
+            # However, if the user explicitly asks for it, we should raise an error or return alternative
+            # as it implies a conversion from a date-only string, not a datetime string.
+            raise exceptions.CastException(f"Format 'long string' is not applicable for parsing a full datetime string: {value}")
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -880,7 +885,7 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
         datetime: The converted timezone-aware `datetime.datetime` object.
     """
     original=value
-    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
+    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso", "long string"]
     error=f"Error in Pydicts.cast.str2dtaware method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     if format not in  allowed or value.__class__!=str:
         if ignore_exception is False:
