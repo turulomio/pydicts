@@ -80,11 +80,10 @@ class Currency:
     ##
     ## En caso de querer multiplicar por un numero debe ser despues. For example: other*4
     def __mul__(self, other):
-        if other.__class__.__name__ in ("int",  "float", "Decimal"):
-            return Currency(self.amount*other, self.currency)
-
+        if isinstance(other, (int, float, Decimal)):
+            return Currency(self.amount * Decimal(str(other)), self.currency)
         if self.currency==other.currency:
-            print(self.amount, other.amount, self.amount*other.amount)
+            # Removed debug print statement
             return Currency(self.amount*other.amount, self.currency)
         else:
             raise exceptions.CurrencyOperationsException("Before multiplying, please convert to the same currency")
@@ -141,8 +140,3 @@ class Currency:
 
     def round(self, decimals=2):
         return round(self.amount, decimals)
-
-
-
-
-
