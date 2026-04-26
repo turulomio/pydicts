@@ -1,6 +1,6 @@
 [project]
 name = "pydicts"
-version = "1.1.0"
+version = "1.2.0"
 description = "Module to use dictionaries in various situations"
 authors = [
     {name = "turulomio",email = "turulomio@yahoo.es"}
@@ -40,4 +40,3 @@ currencies = { script = "pydicts.poethepoet:currencies" }
 [project.urls] 
 homepage = "https://github.com/turulomio/pydicts/"
 repository = "https://github.com/turulomio/pydicts/"
-changelog = "https://github.com/turulomio/pydicts#changelog"

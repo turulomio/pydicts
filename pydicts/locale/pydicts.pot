@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-24 07:51+0200\n"
+"POT-Creation-Date: 2026-04-26 11:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,6 +29,9 @@ msgstr ""
 msgid "This list of dictionaries hasn't data to print"
 msgstr ""
 
+msgid "No data was printed due to you selected 0 rows"
+msgstr ""
+
 msgid "Keys names are not correct in dictionary in lod_year_month_value_transposition function"
 msgstr ""
 
@@ -44,7 +47,7 @@ msgstr ""
 msgid "I can't remove positions from a None list"
 msgstr ""
 
-msgid "I can't traspaso a None object"
+msgid "I can't transpose a None object"
 msgstr ""
 
 msgid "lol_print: This list of lists hasn't data to print"

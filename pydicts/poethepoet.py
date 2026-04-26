@@ -10,7 +10,6 @@ def release():
   * Cambiar la versión y la fecha en __init__.py
   * Ejecutar otra vez poe release
   * git checkout -b pydicts-{0}
-  * Modificar el Changelog en jupyter/changelog.md
   * poe translate
   * linguist
   * poe translate
