@@ -24,13 +24,14 @@ except:
 
 dict_month_names={
     "es":{1:"Enero", 2:"Febrero", 3:"Marzo", 4:"Abril", 5:"Mayo", 6:"Junio", 7:"Julio", 8:"Agosto", 9:"Septiembre", 10:"Octubre", 11:"Noviembre", 12:"Diciembre"},
+    "en":{1:"January", 2:"February", 3:"March", 4:"April", 5:"May", 6:"June", 7:"July", 8:"August", 9:"September", 10:"October", 11:"November", 12:"December"},
 }
 
 
 def get_locale():
-    current_locale = locale.getlocale()[0]
+    current_locale = locale.getlocale(locale.LC_TIME)[0] 
     if current_locale is None:
-        current_locale = locale.getlocale(locale.LC_TIME)[0] 
+        current_locale = locale.getlocale()[0]
     return current_locale
 
     
@@ -758,13 +759,19 @@ def date2str(value, format="JsIso", ignore_exception=False, ignore_exception_val
     Args:
         value (date): The datetime.date object to convert.
         format (str, optional): The desired output format. Allowed values:
-                                "JsIso" (YYYY-MM-DD), "DD/MM/YYYY", "DD.MM.YYYY", "long date str".
+                                "JsIso" (YYYY-MM-DD), "DD/MM/YYYY", "DD.MM.YYYY",
+                                "long string" (e.g., "January 15, 2023" or "15 de enero de 2023" based on locale).
                                 Defaults to "JsIso".
         ignore_exception (bool, optional): If True, returns `ignore_exception_value` on error instead of raising an exception. Defaults to False.
         ignore_exception_value (any, optional): The value to return if an exception is ignored. Defaults to None.
 
     Returns:
         str: The string representation of the date.
+
+    Note:
+        The "long string" format is locale-dependent. It attempts to format the date
+        in a human-readable way based on the system's current locale (e.g., English, Spanish).
+        If the locale is not explicitly handled, it defaults to an English-like format.
     """
     original = value
     allowed = ["JsIso", "DD/MM/YYYY", "DD.MM.YYYY", "long string"]
@@ -777,7 +784,7 @@ def date2str(value, format="JsIso", ignore_exception=False, ignore_exception_val
 
     try:
         if format == "JsIso":
-            return value.isoformat()
+            return value.strftime("%Y-%m-%d")
         elif format == "DD/MM/YYYY":
             return value.strftime("%d/%m/%Y")
         elif format == "DD.MM.YYYY":
@@ -802,7 +809,10 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
         value (str): The string to convert.
         format (str, optional): The format of the input string. Allowed values:
                                 "%Y%m%d%H%M", "%Y-%m-%d %H:%M:%S", "%d/%m/%Y %H:%M", "%d %m %H:%M %Y",
-                                "%Y-%m-%d %H:%M:%S.", "%H:%M:%S", '%b %d %H:%M:%S', "JsIso". Defaults to "JsIso".
+                                "%Y-%m-%d %H:%M:%S.", "%H:%M:%S",
+                                '%b %d %H:%M:%S' (e.g., "Jan 15 10:30:00", locale-dependent month abbreviation),
+                                "JsIso" (e.g., "2021-08-21T06:27:38.294").
+                                Defaults to "JsIso".
         ignore_exception (bool, optional): If True, returns `ignore_exception_value` on error instead of raising an exception. Defaults to False.
         ignore_exception_value (any, optional): The value to return if an exception is ignored. Defaults to None.
 
@@ -810,7 +820,7 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
         datetime: The converted timezone-naive `datetime.datetime` object.
     """
     original = value
-    allowed = ["%Y%m%d%H%M", "%Y-%m-%d %H:%M:%S", "%d/%m/%Y %H:%M", "%d %m %H:%M %Y", "%Y-%m-%d %H:%M:%S.", "%H:%M:%S", '%b %d %H:%M:%S', "JsIso", "long string"]
+    allowed = ["%Y%m%d%H%M", "%Y-%m-%d %H:%M:%S", "%d/%m/%Y %H:%M", "%d %m %H:%M %Y", "%Y-%m-%d %H:%M:%S.", "%H:%M:%S", '%b %d %H:%M:%S', "JsIso"]
     error=f"Error in Pydicts.cast.str2dtnaive method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     if format not in  allowed or value.__class__!=str:
         if ignore_exception is False:
@@ -842,17 +852,13 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
             s=f"{date.today().year} {value}"
             return datetime.strptime(s, '%Y %b %d %H:%M:%S')
         if format=="JsIso": #2021-08-21T06:27:38.294
+            # JsIso for naive datetime should not contain 'Z'
             if "Z" in value:
                 raise exceptions.CastException(error)
             value=value.replace("T"," ")
             dtnaive=str2dtnaive(value,"%Y-%m-%d %H:%M:%S.")
 
             return dtnaive
-        elif format == "long string":
-            # This format is for date only, so it doesn't make sense for a full datetime string input
-            # However, if the user explicitly asks for it, we should raise an error or return alternative
-            # as it implies a conversion from a date-only string, not a datetime string.
-            raise exceptions.CastException(f"Format 'long string' is not applicable for parsing a full datetime string: {value}")
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -874,7 +880,7 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
         datetime: The converted timezone-aware `datetime.datetime` object.
     """
     original=value
-    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso", "long string"]
+    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
     error=f"Error in Pydicts.cast.str2dtaware method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     if format not in  allowed or value.__class__!=str:
         if ignore_exception is False:
@@ -898,11 +904,7 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
             # datetime.fromisoformat handles 'Z' and fractional seconds correctly
             dt_utc_aware = datetime.fromisoformat(value.replace('Z', '+00:00'))
             return dtaware_changes_tz(dt_utc_aware, tz_name)
-        elif format == "long string":
-            # Similar to str2dtnaive, this format is for date only.
-            # If the user explicitly asks for it, we should raise an error or return alternative.
-            # It implies a conversion from a date-only string, not a datetime string.
-            raise exceptions.CastException(f"Format 'long string' is not applicable for parsing a full datetime string: {value}")
+
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -960,12 +962,19 @@ def dtaware2str(value, format="JsUtcIso", ignore_exception=False, ignore_excepti
     Args:
         value (datetime): A timezone-aware datetime object.
         format (str, optional): The desired output format. Allowed values:
-                                "%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso". Defaults to "JsUtcIso".
+                                "%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso",
+                                "long string" (e.g., "January 15, 2023 at 10:30 UTC" or "15 de enero de 2023 a las 10:30 (UTC)" based on locale).
+                                Defaults to "JsUtcIso".
         ignore_exception (bool, optional): If True, returns `ignore_exception_value` on error instead of raising an exception. Defaults to False.
         ignore_exception_value (any, optional): The value to return if an exception is ignored. Defaults to None.
 
     Returns:
         str: The string representation of the datetime.
+
+    Note:
+        The "long string" format is locale-dependent. It attempts to format the datetime
+        in a human-readable way including the timezone name, based on the system's current locale.
+        If the locale is not explicitly handled, it defaults to an English-like format.
     """
     original=value
     allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsUtcIso", "long string"]
@@ -1008,12 +1017,19 @@ def dtnaive2str(value, format="JsIso", ignore_exception=False, ignore_exception_
     Args:
         value (datetime): A timezone-naive datetime object.
         format (str, optional): The desired output format. Allowed values:
-                                "%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsIso". Defaults to "JsIso".
+                                "%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsIso",
+                                "long string" (e.g., "January 15, 2023 at 10:30" or "15 de enero de 2023 a las 10:30" based on locale).
+                                Defaults to "JsIso".
         ignore_exception (bool, optional): If True, returns `ignore_exception_value` on error instead of raising an exception. Defaults to False.
         ignore_exception_value (any, optional): The value to return if an exception is ignored. Defaults to None.
 
     Returns:
         str: The string representation of the datetime.
+
+    Note:
+        The "long string" format is locale-dependent. It attempts to format the datetime
+        in a human-readable way based on the system's current locale.
+        If the locale is not explicitly handled, it defaults to an English-like format.
     """
     original=value
     allowed=["%Y-%m-%d", "%Y-%m-%d %H:%M:%S", "%Y%m%d %H%M", "%Y%m%d%H%M", "JsIso", "long string"]
