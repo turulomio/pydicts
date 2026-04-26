@@ -298,9 +298,9 @@ def dtaware_day_end(dt, tz_name):
     """
         Returns the last  datetime (microsecond  level) of the  day in tz_name zone
     """
-    if is_naive():
+    if is_naive(dt):
         raise exceptions.CastException(_("A datetime with timezone is needed"))
-    dt=dtaware_changes_tz(dt, tz_name)
+    dt = dtaware_changes_tz(dt, tz_name)
     return dt.replace(hour=23, minute=59, second=59, microsecond=999999)
     
 def dtnaive_day_end(dt):
@@ -326,7 +326,7 @@ def dtnaive_day_start(dt):
 
 ## Returns a dtnaive or dtawre (as parameter) with the end of the day in zone tz_name
 def dtaware_day_start(dt, tz_name):
-    if is_naive():
+    if is_naive(dt):
         raise exceptions.CastException(_("A datetime with timezone is needed"))
     dt=dtaware_changes_tz(dt, tz_name)
     return dt.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -391,16 +391,29 @@ def str2time(value, format="JsIso", ignore_exception=False, ignore_exception_val
         elif format=="HH:MM:SS":#12:12:12
             a=value.split(":")
             return time(int(a[0]), int(a[1]), int(a[2]))
-        elif format=="HH:MMxx": #5:12am o pm
-            value=value.upper()
-            value=value.replace("AM", "")
-            if value.find("PM"):
-                value=value.replace("PM", "")
-                points=value.split(":")
-                return time(int(points[0])+12, int(points[1]))
-            else:#AM
-                points=value.split(":")
-                return time(int(points[0]), int(points[1]))
+        elif format == "HH:MMxx":  # 5:12am or 5:12PM
+            value_lower = value.lower()
+            is_pm = False
+            clean_value = value_lower
+
+            if "pm" in value_lower:
+                is_pm = True
+                clean_value = value_lower.replace("pm", "")
+            elif "am" in value_lower:
+                is_pm = False
+                clean_value = value_lower.replace("am", "")
+            else:
+                raise exceptions.CastException(f"Missing AM/PM indicator for HH:MMxx format: {value}")
+
+            points = clean_value.split(":")
+            h = int(points[0])
+            m = int(points[1])
+
+            if is_pm and h != 12:  # If PM and not 12 PM, add 12 hours
+                h += 12
+            elif not is_pm and h == 12:  # If AM and 12 AM, set hour to 0 (midnight)
+                h = 0
+            return time(h, m)
         elif format=="JsIso":#23:00:00.000000  
             if not ":" in value:
                 raise exceptions.CastException(error)
@@ -424,10 +437,7 @@ def time2str(value, format="JsIso" , ignore_exception=False, ignore_exception_va
 
     try:
         if format=="Xulpymoney":
-            if value.microsecond in (4, 5):
-                return str(value)[11:-13]
-            else:
-                return str(value)[11:-6]
+            return value.strftime("%H:%M:%S")
         elif format=="HH:MM":
             return ("{}:{}".format(str(value.hour).zfill(2), str(value.minute).zfill(2)))
         elif format=="HH:MM:SS":
@@ -492,7 +502,7 @@ def str2dtnaive(value, format="JsIso", ignore_exception=False, ignore_exception_
             return datetime.strptime( value, format)
         if format=="%Y-%m-%d %H:%M:%S.":#2017-11-20 23:00:00.000000  ==>  microsecond. Notice the point in format
             arrPunto=value.split(".")
-            micro=int(arrPunto[1]) if len(arrPunto)==2 else 0
+            micro=int(arrPunto[1]) if len(arrPunto)==2 and arrPunto[1] else 0
             dt=datetime.strptime( arrPunto[0],  "%Y-%m-%d %H:%M:%S" )
             dt=dt+timedelta(microseconds=micro)
             return dt
@@ -527,25 +537,21 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
             return ignore_exception_value
     try:
         if format=="%Y-%m-%d %H:%M:%S%z":#2017-11-20 23:00:00+00:00
-            s=value[:-3]+value[-2:]
-            dt=datetime.strptime( s, format )
+            dt=datetime.strptime( value, format )
             return dtaware_changes_tz(dt, tz_name)
         if format=="%Y-%m-%d %H:%M:%S.%z":#2017-11-20 23:00:00.000000+00:00  ==>  microsecond. Notice the point in format
-            s=value[:-3]+value[-2:]#quita el :
-            arrPunto=s.split(".")
-            s=arrPunto[0]+s[-5:]
-            micro=int(arrPunto[1][:-5])
-            dt=datetime.strptime( value, "%Y-%m-%d %H:%M:%S%z" )
-            dt=dt+timedelta(microseconds=micro)
+            # datetime.strptime can handle %f for microseconds and %z for timezone offset directly
+            # The input string "2023-01-15 10:30:00.123456+01:00" matches "%Y-%m-%d %H:%M:%S.%f%z"
+            # No need for manual splitting and rejoining
+            dt = datetime.strptime(value, "%Y-%m-%d %H:%M:%S.%f%z")
+            # dt = dt.replace(tzinfo=ZoneInfo(tz_name)) # This is handled by dtaware_changes_tz
             return dtaware_changes_tz(dt, tz_name)
         if format=="JsUtcIso": #2021-08-21T06:27:38.294Z
             if not "Z" in value:
                 raise exceptions.CastException(error)
-            s=value.replace("T"," ").replace("Z","")
-
-            dtnaive=str2dtnaive(s,"%Y-%m-%d %H:%M:%S.")
-            dtaware_utc=dtnaive2dtaware(dtnaive, 'UTC')
-            return dtaware_changes_tz(dtaware_utc, tz_name)
+            # datetime.fromisoformat handles 'Z' and fractional seconds correctly
+            dt_utc_aware = datetime.fromisoformat(value.replace('Z', '+00:00'))
+            return dtaware_changes_tz(dt_utc_aware, tz_name)
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -554,13 +560,12 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
 
 ## epoch is the time from 1,1,1970 in UTC
 ## return now(timezone(self.name))
-def dtaware2epochms(d):
-    return d.timestamp()*1000
+def dtaware2epochms(d: datetime):
+    return int(d.timestamp() * 1000)
     
 ## Return a UTC datetime aware
-def epochms2dtaware(n, tz="UTC"):
-    utc_unaware=datetime.utcfromtimestamp(n/1000)
-    utc_aware=utc_unaware.replace(tzinfo=ZoneInfo('UTC'))#Due to epoch is in UTC
+def epochms2dtaware(n: int | float, tz="UTC"):
+    utc_aware = datetime.fromtimestamp(n / 1000, ZoneInfo('UTC')) # Use timezone-aware fromtimestamp
     return dtaware_changes_tz(utc_aware, tz)
 
 ## epoch is the time from 1,1,1970 in UTC
@@ -569,10 +574,8 @@ def dtaware2epochmicros(d):
     return int(d.timestamp()*1000000)
 ## Return a UTC datetime aware
 def epochmicros2dtaware(n, tz="UTC"):
-    utc_unaware=datetime.utcfromtimestamp(n/1000000)
-    utc_aware=utc_unaware.replace(tzinfo=ZoneInfo('UTC'))#Due to epoch is in UTC
+    utc_aware = datetime.fromtimestamp(n / 1000000, ZoneInfo('UTC')) # Use timezone-aware fromtimestamp
     return dtaware_changes_tz(utc_aware, tz)
-
 
 ## Returns a formated string of a dtaware string formatting with a zone name
 ## @param dt datetime aware object
@@ -677,12 +680,12 @@ def timedelta2str(value, ignore_exception=False, ignore_exception_value=None):
     """
     original=value
     error=f"Error in Pydicts.cast.timedelta2str method. Value: {original} Value class: {value.__class__.__name__}"
-    if is_noe(value):
-        if ignore_exception is False:
-            raise exceptions.CastException(error)
-        else:
-            return ignore_exception_value
-            
+    # Check ignore_exception first for type mismatches
+    if not isinstance(value, timedelta):
+        if ignore_exception: return ignore_exception_value
+        raise exceptions.CastException(error)
+    # is_noe is not appropriate for timedelta objects, as timedelta(0) is a valid value
+    # and None is already handled by the isinstance check.
     try:
         return duration_isoformat(value)
     except:
@@ -697,11 +700,13 @@ def str2timedelta(value, ignore_exception=False, ignore_exception_value=None):
     """
     original=value
     error=f"Error in Pydicts.cast.str2timedelta method. Value: {original} Value class: {value.__class__.__name__}"
-    if is_noe(value):
-        if ignore_exception is False:
-            raise exceptions.CastException(error)
-        else:
-            return ignore_exception_value
+    # Check ignore_exception first for type mismatches
+    if not isinstance(value, str):
+        if ignore_exception: return ignore_exception_value
+        raise exceptions.CastException(error)
+    if is_noe(value): # Check for empty string after type check
+        if ignore_exception: return ignore_exception_value
+        raise exceptions.CastException(error)
     try:
         return parse_duration(value)
     except:
