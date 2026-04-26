@@ -43,6 +43,10 @@ def lod_print(lod_, number=None, align=None):
     number=len(lod_) if number is None else number
     if len(lod_)==0:
         print(_("This list of dictionaries hasn't data to print"))
+        return # Added return for empty list
+    if number == 0:
+        print(_("No data was printed due to you selected 0 rows"))
+        return # Return after printing the message for zero rows
     print(tabulate(lod_[0:number], headers="keys", tablefmt="psql", colalign=align))
 
 def lod_sum(lod_, key, ignore_nones=True):
@@ -198,25 +202,38 @@ def lod2lood(ld, keys):
 
 ## Returns maximum value of a given key. Is unique. REturns NOne if lod_ is empty
 def lod_max_value(ld, key):
-     if len(ld)>0:
-          r=ld[0][key]
-     else:
-         return None
-     for d in ld:
-         if  d[key]>r:
-             r=d[key]
-     return r
+    non_none_values = [d[key] for d in ld if d[key] is not None]
+    if not non_none_values:
+        return None
+    return max(non_none_values)
 
 ## Returns minimum value of a given key. Is unique. REturns NOne if lod_ is empty
 def lod_min_value(ld, key):
-     if len(ld)>0:
-          r=ld[0][key]
-     else:
-         return None
-     for d in ld:
-         if  d[key]<r:
-             r=d[key]
-     return r
+    non_none_values = [d[key] for d in ld if d[key] is not None]
+    if not non_none_values:
+        return None
+    return min(non_none_values)
+
+## Returns a list from a lod_ key, with distinct values, not all values
+## @param lod_
+## @param key String with the key to extract
+## @param sorted Boolean. If true sorts final result
+## @param cast String. "str", "float", casts the content of the key
+def lod2list_distinct(lod_, key, sorted=False, cast=None):
+    set_ = set()
+    for ld in lod_:
+        val = ld[key]
+        if cast is None:
+            set_.add(val)
+        elif cast == "str":
+            set_.add(str(val))
+        elif cast == "float":
+            set_.add(float(val))
+    r = list(set_)
+    if sorted is True:
+        # Custom sort key to handle None values: None comes first (False < True)
+        r.sort(key=lambda x: (x is not None, x))
+    return r
 
 def lod_remove_duplicates(lod_):
     """
