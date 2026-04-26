@@ -19,16 +19,20 @@ except:
 
 def pylatex_table(
     doc, 
-    lod_, 
-    code_=None, 
-    text_no_results=_("No data to show"), 
+    lod_,
+    code_=None,
+    text_no_results=_("No data to show"),
 ):
     """
     Creates a table in a pylatex document
 
-    @param doc pylatex document object
-    @param lod 
-    @param code_ |c|r|l|
+    Args:
+        doc (pylatex.Document): The pylatex document object to add the table to.
+        lod_ (list): The list of dictionaries containing the data for the table.
+        code_ (str, optional): LaTeX column format string (e.g., "|c|r|l|").
+                               If None, it will be generated based on the number of columns.
+        text_no_results (str, optional): The message to display if `lod_` is empty.
+                                         Defaults to "No data to show".
     """
     
     keys= lod.lod_keys(lod_)

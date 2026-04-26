@@ -2,6 +2,9 @@ from pydicts import __version__, lod
 from os import system
 
 def release():
+    """
+    Prints instructions for creating a new release of the pydicts library.
+    """
     print("""Nueva versión:
   * Cambiar la version en pyproject.toml
   * Cambiar la versión y la fecha en __init__.py
@@ -28,8 +31,8 @@ def release():
 
 def jupyter():
     """
-        This command is for developing
-        This page is published into https://turulomio.github.io/pydicts/ with github actions
+    Builds the Jupyter Book documentation and moves it to the 'docs' directory
+    for GitHub Pages publication.
     """
     system("cd jupyter && jupyter book build --html")
     system("rm -Rf docs")
@@ -37,10 +40,18 @@ def jupyter():
     system("touch docs/.nojekyll")
     
 def coverage():
+    """
+    Runs pytest with coverage, generates a coverage report, and creates an HTML report.
+    """
     system("coverage run --omit='*uno.py' -m pytest && coverage report && coverage html")
 
 
 def translate():
+    """
+    Generates translation files (.pot, .po, .mo) for the pydicts project.
+    It extracts translatable strings, merges them with existing translations,
+    and compiles them into binary message catalogs.
+    """
     #es
     system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o pydicts/locale/pydicts.pot pydicts/*.py")
     system("msgmerge -N --no-wrap -U pydicts/locale/es.po pydicts/locale/pydicts.pot")
@@ -50,19 +61,23 @@ def translate():
     
 def currencies():
     """
-        Due to slow ccy updates to python new releases I decided to covert currency list to a updatable json file with this scripts
-        
-        Currency list is obtained from https://github.com/quantmind/ccy/ project this is its licence:
-        
-        YOU NEED TO INSTALL CCY MODULE MANUALLY  WHEN YOU WANT TO UPDATE currencies.json FILE (pip install ccy)
-        
-        Copyright (c) 2009-2023, Quantmind
-        All rights reserved.
+    Updates the `currencies.json` file with the latest currency data from the `ccy` module.
 
-        Redistribution and use in source and binary forms, with or without modification,
-        are permitted provided that the following conditions are met:
+    This script is necessary because `ccy` updates can be slow, and this allows
+    for a more up-to-date currency list.
 
-         * Redistributions of source code must retain the above copyright notice,
+    **Note:** The `ccy` module must be installed manually (`pip install ccy`)
+    before running this function to update `currencies.json`.
+
+    The original `ccy` project license is included below for reference:
+
+    Copyright (c) 2009-2023, Quantmind
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without modification,
+    are permitted provided that the following conditions are met:
+
+        * Redistributions of source code must retain the above copyright notice,
            this list of conditions and the following disclaimer.
          * Redistributions in binary form must reproduce the above copyright notice,
            this list of conditions and the following disclaimer in the documentation

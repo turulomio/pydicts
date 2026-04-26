@@ -14,5 +14,8 @@ def reload_lod_():
     dod_["second"]=d
 
 
-def test_dod_print():
+def test_dod_print(): # Renamed to test_dod_print for consistency
+    """
+    Tests the dod_print function to ensure it runs without errors.
+    """
     dod.dod_print(dod_)

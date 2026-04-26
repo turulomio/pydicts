@@ -145,17 +145,18 @@ def lod_ymv_transposition_with_percentages(lod_ymv_transposition):
         Replace a lod_ymv_transposition values to Percentages
     """
     def percentage(from_,  to_):
-        if from_ is None or from_==0:
+        if from_ is None or from_ == 0:
             return None
-        if to_ is None or to_==0:
+        if to_ is None or to_ == 0:
             return None
         return (to_-from_)/from_
     ###########################
     
-    first_value_not_noz=ymv_transposition_first_value_not_noz(lod_ymv_transposition)
-    r=[]
-    if first_value_not_noz is None:
-        return r
+    if not lod_ymv_transposition:
+        return []
+
+    first_value_not_noz = ymv_transposition_first_value_not_noz(lod_ymv_transposition)
+    r = []
     for i, d in enumerate(lod_ymv_transposition):
         new_d={"year":d["year"]}
         new_d["m1"]=None if i==0 else percentage(lod_ymv_transposition[i-1]["m12"], d["m1"])
@@ -185,50 +186,76 @@ def lod_ymv_transposition_sum(lymv_a, lymv_b):
     """
         Sums to lod_ymv_transpositions
     """
-    def get_younger(year, field):
-        if year in d_younger:
-            return d_younger[year][field]
-        else:
-            return 0
-    
-    if len(lymv_a)==0:
+    if not lymv_a:
         return lymv_b
-    if len(lymv_b)==0:
+    if not lymv_b:
         return lymv_a
-    year_lymv_a=lymv_a[0]["year"]
-    year_lymv_b=lymv_b[0]["year"]
-    print(year_lymv_a, year_lymv_b)
-    older=lymv_a if year_lymv_a<year_lymv_b else lymv_b
-    younger=lymv_a if year_lymv_a>year_lymv_b else lymv_b
-    d_younger=lod.lod2dod(younger, "year")
-    r=[]
-    for d in older:
-        new={}
-        new["year"]=d["year"]
-        new["m1"]=d["m1"]+get_younger(d["year"],"m1")
-        new["m2"]=d["m2"]+get_younger(d["year"],"m2")
-        new["m3"]=d["m3"]+get_younger(d["year"],"m3")
-        new["m4"]=d["m4"]+get_younger(d["year"],"m4")
-        new["m5"]=d["m5"]+get_younger(d["year"],"m5")
-        new["m6"]=d["m6"]+get_younger(d["year"],"m6")
-        new["m7"]=d["m7"]+get_younger(d["year"],"m7")
-        new["m8"]=d["m8"]+get_younger(d["year"],"m8")
-        new["m9"]=d["m9"]+get_younger(d["year"],"m9")
-        new["m10"]=d["m10"]+get_younger(d["year"],"m10")
-        new["m11"]=d["m11"]+get_younger(d["year"],"m11")
-        new["m12"]=d["m12"]+get_younger(d["year"],"m12")
-        new["total"]=d["total"]+get_younger(d["year"],"total")
-        r.append(new)
-    return r
 
-## Converts a tipical groyp by lor with year, month (normaly extracted from db to fill empty values)
+    # Convert both lists to dictionaries keyed by year for easier merging
+    dict_a = {d["year"]: d for d in lymv_a}
+    dict_b = {d["year"]: d for d in lymv_b}
+
+    # Get all unique years from both lists and sort them
+    all_years = sorted(list(set(dict_a.keys()) | set(dict_b.keys())))
+
+    result_lod = []
+    for year in all_years:
+        new_entry = {"year": year}
+        entry_a = dict_a.get(year, {})
+        entry_b = dict_b.get(year, {})
+
+        # Sum month values
+        for i in range(1, 13):
+            month_key = f"m{i}"
+            val_a = entry_a.get(month_key, 0)
+            val_b = entry_b.get(month_key, 0)
+            new_entry[month_key] = val_a + val_b # Sum corresponding month values
+
+        # Sum total values
+        total_a = entry_a.get("total", 0)
+        total_b = entry_b.get("total", 0)
+        new_entry["total"] = total_a + total_b
+
+        result_lod.append(new_entry)
+
+    return result_lod
+
 def lod_ymv_filling(lod, year_from, year_to=date.today().year, fill_value=0, key_year="year", key_month="month", key_value="value"):
-    ld_tuple=lod.lod2dod_tuple(lod, key_year, key_month)
-    for year in range(year_from,year_to+1):
-        for month in range (1,13):
-            if not (key_year,key_month) in ld_tuple:
-                ld_tuple[(key_year,key_month)]={key_year: year, key_month: month, key_value:fill_value}
-    r=[]
-    for d in ld_tuple.values:
-        r.append(d)
-    return r
+    """
+    Fills missing year-month entries in a list of dictionaries with a specified fill_value.
+
+    This function is useful for creating a complete time series from sparse data.
+
+    Args:
+        lod (list): The input list of dictionaries, each expected to have year, month, and value keys.
+        year_from (int): The starting year for the filling process.
+        year_to (int, optional): The ending year for the filling process. Defaults to the current year.
+        fill_value (int or float, optional): The value to use for missing entries. Defaults to 0.
+        key_year (str, optional): The key for the year in the input dictionaries. Defaults to "year".
+        key_month (str, optional): The key for the month in the input dictionaries. Defaults to "month".
+        key_value (str, optional): The key for the value in the input dictionaries. Defaults to "value".
+
+    Returns:
+        list: A new list of dictionaries with all year-month combinations from `year_from` to `year_to`
+              (inclusive), filled with `fill_value` where original data was missing. Existing entries
+              retain their original values and any other keys. The list is sorted by year and month.
+    """
+    # Create a dictionary for quick lookup of existing entries
+    existing_entries = {}
+    for d in lod:
+        existing_entries[(d[key_year], d[key_month])] = d
+
+    result_lod = []
+    for year in range(year_from, year_to + 1):
+        for month in range(1, 13):
+            current_key = (year, month)
+            if current_key in existing_entries:
+                result_lod.append(existing_entries[current_key])
+            else:
+                # Create a new dictionary for the missing entry with only the specified keys
+                new_entry = {key_year: year, key_month: month, key_value: fill_value}
+                result_lod.append(new_entry)
+    
+    # Sort the result by year and month to ensure consistent order
+    result_lod.sort(key=lambda d: (d[key_year], d[key_month]))
+    return result_lod
