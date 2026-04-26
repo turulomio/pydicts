@@ -185,22 +185,21 @@ def test_bytes2base64bytes_ignore_exception():
     """Tests failed bytes to base64 bytes encoding and exception handling."""
     assert bytes2base64bytes("hello", ignore_exception=True, ignore_exception_value=b"fail") == b"fail"
 
-# Test dtnaive_now
+
 def test_dtnaive_now():
+    """Tests the dtnaive_now function."""
     naive_dt = dtnaive_now()
     assert is_naive(naive_dt)
     assert abs((datetime.now() - naive_dt).total_seconds()) < 1
-def test_dtnaive_now():
-    """Tests the dtnaive_now function."""
-# Test dtnaive2dtaware
+
 def test_dtnaive2dtaware():
+    """Tests the dtnaive2dtaware function."""
+
     naive_dt = datetime(2023, 1, 1, 12, 0, 0)
     aware_dt = dtnaive2dtaware(naive_dt, 'Europe/Madrid')
     assert is_aware(aware_dt)
     assert aware_dt.tzinfo == ZoneInfo('Europe/Madrid')
     assert aware_dt.hour == 12
-def test_dtnaive2dtaware():
-    """Tests the dtnaive2dtaware function."""
 # Test dtaware2dtnaive
 def test_dtaware2dtnaive():
     aware_dt = datetime(2023, 1, 1, 12, 0, 0, tzinfo=ZoneInfo('Europe/Madrid'))
@@ -241,12 +240,10 @@ def test_dtnaive():
     assert naive_dt.microsecond == 123456
     assert naive_dt.tzinfo is None
 
-# Test date_first_of_the_month
-def test_date_first_of_the_month():
-    assert date_first_of_the_month(2023, 5) == date(2023, 5, 1)
-
 def test_date_first_of_the_month():
     """Tests the date_first_of_the_month function."""
+    assert date_first_of_the_month(2023, 5) == date(2023, 5, 1)
+
 
 # Test date_last_of_the_month
 def test_date_last_of_the_month():
@@ -255,12 +252,9 @@ def test_date_last_of_the_month():
     assert date_last_of_the_month(2024, 2) == date(2024, 2, 29) # Leap year
     assert date_last_of_the_month(2023, 12) == date(2023, 12, 31)
 
-# Test date_first_of_the_year
-def test_date_first_of_the_year():
-    assert date_first_of_the_year(2023) == date(2023, 1, 1)
-
 def test_date_first_of_the_year():
     """Tests the date_first_of_the_year function."""
+    assert date_first_of_the_year(2023) == date(2023, 1, 1)
 
 # Test date_last_of_the_year
 def test_date_last_of_the_year():
@@ -274,8 +268,7 @@ def test_date_first_of_the_next_x_months():
     assert date_first_of_the_next_x_months(2023, 3, -1) == date(2023, 2, 1)
     assert date_first_of_the_next_x_months(2023, 1, -1) == date(2022, 12, 1)
     assert date_first_of_the_next_x_months(2023, 1, -12) == date(2022, 1, 1)
-def test_date_first_of_the_year():
-    """Tests the date_first_of_the_year function."""
+
 # Test date_last_of_the_next_x_months
 def test_date_last_of_the_next_x_months():
     assert date_last_of_the_next_x_months(2023, 1, 0) == date(2023, 1, 31)
@@ -536,8 +529,7 @@ def test_str2dtnaive_failure():
         str2dtnaive(123, format="%Y%m%d%H%M")
     with pytest.raises(exceptions.CastException):
         str2dtnaive("2023-01-15T10:30:00.123Z", format="JsIso") # Contains Z
-def test_str2dtnaive_failure():
-    """Tests failed string to naive datetime conversion and exception handling."""
+
 def test_str2dtnaive_ignore_exception():
     """Tests failed string to naive datetime conversion and exception handling."""
     assert str2dtnaive("invalid", format="%Y%m%d%H%M", ignore_exception=True, ignore_exception_value=None) is None
@@ -582,8 +574,7 @@ def test_str2dtaware_failure():
         str2dtaware(123, format="%Y-%m-%d %H:%M:%S%z")
     with pytest.raises(exceptions.CastException):
         str2dtaware("2023-01-15T10:30:00.123", format="JsUtcIso") # Missing Z
-def test_str2dtaware_failure():
-    """Tests failed string to aware datetime conversion and exception handling."""
+
 def test_str2dtaware_ignore_exception():
     """Tests failed string to aware datetime conversion and exception handling."""
     assert str2dtaware("invalid", format="%Y-%m-%d %H:%M:%S%z", ignore_exception=True, ignore_exception_value=None) is None
@@ -700,8 +691,7 @@ def test_months():
     assert months(2023, 11, 2024, 1) == [(2023, 11), (2023, 12), (2024, 1)]
     assert months(2023, 5, 2023, 5) == [(2023, 5)]
     assert months(2023, 5, 2023, 4) == [] # From after to
-def test_dtnaive2str_failure():
-    """Tests failed naive datetime to string conversion and exception handling."""
+
 # Test timedelta2str
 def test_timedelta2str_success():
     td = timedelta(days=1, hours=2, minutes=3, seconds=4, microseconds=500000)
@@ -744,6 +734,4 @@ def test_is_email():
     assert is_email("@example.com") is False
     assert is_email("test@example") is False
     assert is_email(None) is False
-def test_months():
-    """Tests the months function for generating a range of (year, month) tuples."""
     assert is_email(123) is False
