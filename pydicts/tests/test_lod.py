@@ -63,13 +63,13 @@ def test_lod_print(sample_lod):
 def test_lod_print_empty(empty_lod, capsys):
     lod.lod_print(empty_lod)
     captured = capsys.readouterr()
-    assert "Esta lista de diccionarios no tiene datos para imprimir" in captured.out # Assert against the Spanish translation
+    assert "This list of dictionaries hasn't data to print" in captured.out
 
 def test_lod_print_zero_rows(sample_lod, capsys):
     lod.lod_print(sample_lod, number=0)
     captured = capsys.readouterr()
-    # Assert against the Spanish translation, as the _() function is active
-    assert "No data was printed due to you selected 0 rows" in captured.out # Assert against the Spanish translation
+    # Assert against the English translation, as the _() function is active
+    assert "No data was printed due to you selected 0 rows" in captured.out
 def test_lod_sum(sample_lod):
     assert lod.lod_sum(sample_lod, "c")==0
     assert lod.lod_sum(sample_lod, "d")==16
