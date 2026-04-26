@@ -216,7 +216,7 @@ def dtaware_now(tzname=None):
     """
         If tzname is None: returns UTC dtaware
     """
-    utc_aware=dtnaive2dtaware(dtnaive_now(), 'UTC')
+    utc_aware = datetime.now(ZoneInfo('UTC'))
     if tzname is None:
         return utc_aware
     else:
