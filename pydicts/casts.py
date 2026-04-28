@@ -5,7 +5,7 @@
 """
 
 from decimal import Decimal
-import locale
+from locale import getlocale, LC_TIME
 from datetime import timedelta, date, datetime, time
 from gettext import translation
 from importlib.resources import files
@@ -14,6 +14,7 @@ from re import match
 from zoneinfo import ZoneInfo
 from base64 import b64encode, b64decode
 from isodate import parse_duration, duration_isoformat
+from time import tzset, tzname
 
 
 try:
@@ -29,9 +30,9 @@ dict_month_names={
 
 
 def get_locale():
-    current_locale = locale.getlocale(locale.LC_TIME)[0] 
+    current_locale = getlocale(LC_TIME)[0] 
     if current_locale is None:
-        current_locale = locale.getlocale()[0]
+        current_locale = getlocale()[0]
     return current_locale
 
     
@@ -610,6 +611,15 @@ def dtaware_month_start(year, month, tz_name):
     """
     return dtaware_day_start_from_date(date(year, month, 1), tz_name)
 
+
+def get_system_timezone():
+    """Returns the name of the system's current timezone.
+
+    Returns:
+        str: The name of the system's current timezone.
+    """
+    tzset()
+    return tzname[0]
 
 def str2time(value, format="JsIso", ignore_exception=False, ignore_exception_value=None):
     """Converts a string representation of time to a `datetime.time` object.
