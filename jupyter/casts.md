@@ -255,7 +255,11 @@ help(casts.time2str)
 from pydicts import casts
 help(casts.timedelta2str)
 ```
-
+```{code-cell}
+from pydicts import casts
+from datetime import timedelta
+print(casts.timedelta2str(timedelta(days=1,hours=2, minutes=3, seconds=4)))
+```
 ## Date and time utils
 
 ### date_first_of_the_month
@@ -293,6 +297,11 @@ help(casts.date_first_of_the_year)
 from pydicts import casts
 help(casts.date_last_of_the_month)
 ```
+```{code-cell}
+from pydicts import casts
+print(casts.date_last_of_the_month(2024,2))
+```
+
 
 ### date_last_of_the_next_x_months
 
@@ -357,6 +366,13 @@ from pydicts import casts
 help(casts.dtaware_day_start)
 ```
 
+```{code-cell}
+from pydicts import casts
+a=casts.dtaware_now()
+print(casts.dtaware_day_start(a, "Europe/Madrid"))
+```
+
+
 ### dtaware_day_start_from_date
 
 ```{code-cell}
@@ -374,6 +390,13 @@ help(casts.dtaware_day_start_from_date)
 from pydicts import casts
 help(casts.dtaware_month_end)
 ```
+
+```{code-cell}
+from pydicts import casts
+casts.dtaware_month_end(2024,2, "Europe/Madrid")
+```
+
+
 
 ### dtaware_month_start
 
@@ -448,6 +471,15 @@ from pydicts import casts
 help(casts.dtnaive_day_end_from_date)
 ```
 
+
+```{code-cell}
+from pydicts import casts
+from datetime import date
+a=date.today()
+print(a)
+print(casts.dtnaive_day_end_from_date(a))
+```
+
 ###  dtnaive_day_start
 
 ```{code-cell}
@@ -455,6 +487,13 @@ help(casts.dtnaive_day_end_from_date)
 
 from pydicts import casts
 help(casts.dtnaive_day_start)
+```
+
+```{code-cell}
+from pydicts import casts
+a=casts.dtnaive_now()
+print(a)
+print(casts.dtnaive_day_start(a))
 ```
 
 ### dtnaive_day_start_from_date
@@ -526,6 +565,34 @@ help(casts.months)
 
 ## Other utils
 
+### get_locale
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.get_locale)
+```
+```{code-cell}
+from pydicts import casts
+print(casts.get_locale())
+```
+
+### get_system_timezone
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import casts
+help(casts.get_system_timezone)
+```
+
+
+```{code-cell}
+from pydicts import casts
+print(casts.get_system_timezone())
+```
+
 ### is_email
 
 ```{code-cell}
@@ -567,4 +634,3 @@ print(casts.is_noe(1))
 from pydicts import casts
 help(casts.object_or_empty)
 ```
-
