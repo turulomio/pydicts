@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="http://localhost:3000/sitemap_style.xsl" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://localhost:3000</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/casts</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/dod</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/lod</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/lod-xyv</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/lod-ymv</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/lol</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/currency</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/percentage</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/myjsonencoder</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/pylatex</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/colors</loc>
+  </url>
+</urlset>
