@@ -30,6 +30,9 @@ dict_month_names={
 
 
 def get_locale():
+    """
+        Gets current locale
+    """
     current_locale = getlocale(LC_TIME)[0] 
     if current_locale is None:
         current_locale = getlocale()[0]

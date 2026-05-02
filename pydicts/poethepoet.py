@@ -30,12 +30,10 @@ def release():
 
 def jupyter():
     """
-    Builds the Jupyter Book documentation and moves it to the 'docs' directory
+    Starts the Jupyter Book documentation server. I's not needed to be build due to it will be build in Github
     for GitHub Pages publication.
     """
-    system("cd jupyter && jupyter book build --html")
-    system("rm -Rf docs")
-    system("mv jupyter/_build/html docs/")
+    system("cd jupyter && jupyter book start --execute")
     system("touch docs/.nojekyll")
     
 def coverage():
@@ -55,7 +53,6 @@ def translate():
     system("xgettext -L Python --no-wrap --no-location --from-code='UTF-8' -o pydicts/locale/pydicts.pot pydicts/*.py")
     system("msgmerge -N --no-wrap -U pydicts/locale/es.po pydicts/locale/pydicts.pot")
     system("msgfmt -cv -o pydicts/locale/es/LC_MESSAGES/pydicts.mo pydicts/locale/es.po")
-    system("msgfmt -cv -o pydicts/locale/en/LC_MESSAGES/pydicts.mo pydicts/locale/en.po")
     
     
 def currencies():
