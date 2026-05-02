@@ -79,7 +79,7 @@ def str2decimal(value, ignore_exception=False, ignore_exception_value=None):
     try:
         return Decimal(value)
     except:
-
+        # Catching generic Exception here as Decimal() can raise various errors
         if ignore_exception is False:
             raise exceptions.CastException(error)
         else:
@@ -113,7 +113,7 @@ def str2bool(value, ignore_exception=False, ignore_exception_value=None):
         return True
     else:
         if ignore_exception is False:
-            raise exceptions.CastException(error)
+            raise exceptions.CastException(error) # Specific error for invalid boolean string
         else:
             return ignore_exception_value
 
@@ -153,7 +153,7 @@ def bytes2str(value, code='UTF-8', ignore_exception=False, ignore_exception_valu
 
     try:
         return value.decode(code)
-    except:
+    except Exception:
 
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -184,7 +184,7 @@ def str2bytes(value, code='UTF8', ignore_exception=False, ignore_exception_value
 
     try:
         return value.encode(code)
-    except:
+    except Exception:
         if ignore_exception is False:
             raise exceptions.CastException(error)
         else:
@@ -214,7 +214,7 @@ def base64bytes2bytes(value, ignore_exception=False, ignore_exception_value=None
 
     try:
         return b64decode(value)
-    except:
+    except Exception:
         if ignore_exception is False:
             raise exceptions.CastException(error)
         else:
@@ -243,7 +243,7 @@ def bytes2base64bytes(value, ignore_exception=False, ignore_exception_value=None
 
     try:
         return b64encode(value)
-    except:
+    except Exception:
         if ignore_exception is False:
             raise exceptions.CastException(error)
         else:
@@ -677,7 +677,7 @@ def str2time(value, format="JsIso", ignore_exception=False, ignore_exception_val
             if not ":" in value:
                 raise exceptions.CastException(error)
             return time.fromisoformat(value)
-    except:
+    except Exception:
         if ignore_exception is False:
             raise exceptions.CastException(error)
         else:
@@ -715,7 +715,7 @@ def time2str(value, format="JsIso" , ignore_exception=False, ignore_exception_va
             return ("{}:{}:{}".format(str(value.hour).zfill(2), str(value.minute).zfill(2), str(value.second).zfill(2)))
         elif format=="JsIso":
             return(str(value))
-    except:
+    except Exception:
         if ignore_exception is False:
             raise exceptions.CastException(error)
         else:
@@ -757,7 +757,7 @@ def str2date(value, format="YYYY-MM-DD", ignore_exception=False, ignore_exceptio
         if format=="DD/MM": #DD/MM
             d=value.split("/")
             return date(date.today().year, int(d[1]),  int(d[0]))
-    except:
+    except Exception:
         if ignore_exception is False:
             raise exceptions.CastException(error)
         else:
@@ -805,7 +805,8 @@ def date2str(value, format="JsIso", ignore_exception=False, ignore_exception_val
                 return f"{value.day} de {dict_month_names["es"][value.month].lower()} de {value.year}"
             else:
                 # Default to English-like format
-                return value.strftime("%B %d, %Y")
+                month_name = dict_month_names["en"][value.month]
+                return f"{month_name} {value.day}, {value.year}"
     except Exception: # Catch any potential strftime errors
         if ignore_exception:
             return ignore_exception_value
@@ -895,7 +896,7 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
         datetime: The converted timezone-aware `datetime.datetime` object.
     """
     original=value
-    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso", "long string"]
+    allowed=["%Y-%m-%d %H:%M:%S%z","%Y-%m-%d %H:%M:%S.%z", "JsUtcIso"]
     error=f"Error in Pydicts.cast.str2dtaware method. Value: {original} Value class: {value.__class__.__name__} Format: {format} Allowed: {allowed}"
     if format not in  allowed or value.__class__!=str:
         if ignore_exception is False:
@@ -919,8 +920,8 @@ def str2dtaware(value, format="JsUtcIso", tz_name='UTC', ignore_exception=False,
             # datetime.fromisoformat handles 'Z' and fractional seconds correctly
             dt_utc_aware = datetime.fromisoformat(value.replace('Z', '+00:00'))
             return dtaware_changes_tz(dt_utc_aware, tz_name)
-
-    except:
+        # The "long string" format is for output, not parsing.
+    except Exception:
         if ignore_exception is False:
             raise exceptions.CastException(error)
         else:
@@ -1015,10 +1016,11 @@ def dtaware2str(value, format="JsUtcIso", ignore_exception=False, ignore_excepti
         elif format == "long string":
             current_locale = get_locale()
             if current_locale and current_locale.startswith("es"):
-                return date2str(value.date(), format="long string", ignore_exception=ignore_exception, ignore_exception_value=ignore_exception_value) + " a las " + time2str(value.time(), "HH:MM", ignore_exception=ignore_exception, ignore_exception_value=ignore_exception_value) + " (" + value.tzinfo.tzname(value) +")"
+                return date2str(value.date(), format="long string", ignore_exception=ignore_exception, ignore_exception_value=ignore_exception_value) + " a las " + value.strftime("%H:%M") + " (" + value.tzinfo.tzname(value) +")"
             else:
                 # Default to English-like format including timezone name
-                return value.strftime("%B %d, %Y at %H:%M %Z")
+                date_part = date2str(value.date(), format="long string", ignore_exception=ignore_exception, ignore_exception_value=ignore_exception_value)
+                return f"{date_part} at {value.strftime('%H:%M %Z')}"
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -1071,7 +1073,8 @@ def dtnaive2str(value, format="JsIso", ignore_exception=False, ignore_exception_
             if current_locale and current_locale.startswith("es"):
                 return date2str(value.date(), format="long string", ignore_exception=ignore_exception, ignore_exception_value=ignore_exception_value) + " a las " + time2str(value.time(), "HH:MM", ignore_exception=ignore_exception, ignore_exception_value=ignore_exception_value)
             else:
-                return value.strftime("%B %d, %Y at %H:%M")
+                date_part = date2str(value.date(), format="long string", ignore_exception=ignore_exception, ignore_exception_value=ignore_exception_value)
+                return f"{date_part} at {value.strftime('%H:%M')}"
     except:
         if ignore_exception is False:
             raise exceptions.CastException(error)
@@ -1153,7 +1156,7 @@ def timedelta2str(value, ignore_exception=False, ignore_exception_value=None):
     try:
         return duration_isoformat(value)
     except:
-        if ignore_exception is False:
+        if ignore_exception is False: # Catch specific exceptions for better debugging
             raise exceptions.CastException(error)
         else:
             return ignore_exception_value
@@ -1184,7 +1187,7 @@ def str2timedelta(value, ignore_exception=False, ignore_exception_value=None):
     try:
         return parse_duration(value)
     except:
-        if ignore_exception is False:
+        if ignore_exception is False: # Catch specific exceptions for better debugging
             raise exceptions.CastException(error)
         else:
             return ignore_exception_value
