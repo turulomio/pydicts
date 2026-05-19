@@ -592,7 +592,26 @@ def lod_calculate(lod_, key, lambda_function, clone=False):
         d[key]=lambda_function(d, index)
     return l_o_d
 
+def lod_reorder_keys(lod_, keys):
+    """
+    Reorders the keys of all dictionaries in a list according to a specified list of keys.
+    Keys not present in the `keys` list will be appended at the end of each dictionary.
 
+    Args:
+        lod_ (list): The list of dictionaries to modify.
+        keys (list): A list of strings representing the desired order of keys.
 
-    
-    
+    Returns:
+        list: A new list of dictionaries with reordered keys.
+    """
+    new_lod = []
+    for d in lod_:
+        new_d = {}
+        for key in keys:
+            if key in d:
+                new_d[key] = d[key]
+        for key in d:
+            if key not in new_d:
+                new_d[key] = d[key]
+        new_lod.append(new_d)
+    return new_lod

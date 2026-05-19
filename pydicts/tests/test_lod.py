@@ -338,3 +338,16 @@ def test_lod_count(sample_lod):
     assert lod.lod_count(sample_lod,lambda d, index: d["c"]>0)==1, "Error counting"
     assert lod.lod_count(sample_lod,lambda d, index: d["f"] is None)==2, "Error counting"
     assert lod.lod_count(sample_lod,lambda d, index: index>0)==1, "Error counting"
+
+def test_lod_reorder_keys():
+    """
+    Tests the lod_reorder_keys function to reorder dictionary keys.
+    """
+    test_lod = [{"c": 3, "a": 1, "b": 2}, {"c": 6, "a": 4, "b": 5}]
+    new_lod = lod.lod_reorder_keys(test_lod, ["a", "b"])
+    
+    assert list(new_lod[0].keys()) == ["a", "b", "c"]
+    assert list(new_lod[1].keys()) == ["a", "b", "c"]
+    assert new_lod[0]["a"] == 1
+    
+    assert lod.lod_reorder_keys([], ["a", "b"]) == []
