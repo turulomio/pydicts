@@ -307,6 +307,26 @@ lod_remove_key(lod,"b")
 lod_print(lod)
 ```
 
+
+## lod_reorder_keys
+
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod
+help(lod.lod_reorder_keys)
+```
+
+```{code-cell}
+from pydicts.lod import lod_print, lod_remove_key
+
+lod_ = [{"c": 3, "a": 1, "b": 2}, {"c": 6, "a": 4, "b": 5}]
+lod_print(lod_)
+new_lod = lod.lod_reorder_keys(lod_, ["a", "b"])
+lod_print(new_lod)
+```
+
 ## lod_sum
 
 Sums all values from a lod key. None values are ignored by default
@@ -334,4 +354,3 @@ help(lod.lod_sum_negatives)
 from pydicts import lod
 help(lod.lod_sum_positives)
 ```
-
