@@ -620,6 +620,7 @@ def lod_join(lod1, lod2, calc_key, operation="+"):
     """
     Joins two lists of dictionaries (lod) by all keys except the calc_key, performing an arithmetic operation on the selected calc_key.
     The list maintains the order of elements in lod1, followed by any new elements from lod2.
+    If the value of `calc_key` is None or missing in any dictionary, it is treated as 0 for the calculation.
 
     Args:
         lod1 (list): The first list of dictionaries.
