@@ -615,3 +615,61 @@ def lod_reorder_keys(lod_, keys):
                 new_d[key] = d[key]
         new_lod.append(new_d)
     return new_lod
+
+def lod_join(lod1, lod2, calc_key, operation="+"):
+    """
+    Joins two lists of dictionaries (lod) by all keys except the calc_key, performing an arithmetic operation on the selected calc_key.
+    The list maintains the order of elements in lod1, followed by any new elements from lod2.
+    If the value of `calc_key` is None or missing in any dictionary, it is treated as 0 for the calculation.
+
+    Args:
+        lod1 (list): The first list of dictionaries.
+        lod2 (list): The second list of dictionaries.
+        calc_key (str): The key on which to perform the calculation.
+        operation (str, optional): The operation to perform ("+" or "-"). Defaults to "+".
+
+    Returns:
+        list: A new list of dictionaries with the combined results.
+    """
+    def get_join_tuple(d):
+        return tuple((k, d[k]) for k in sorted(k for k in d.keys() if k != calc_key))
+
+    d2 = {get_join_tuple(d): d for d in lod2}
+
+    new_lod = []
+    seen = set()
+
+    for d in lod1:
+        join_val = get_join_tuple(d)
+        seen.add(join_val)
+        
+        new_entry = d.copy()
+        val1 = new_entry.get(calc_key, 0)
+        val2 = d2.get(join_val, {}).get(calc_key, 0)
+        
+        val1 = 0 if val1 is None else val1
+        val2 = 0 if val2 is None else val2
+        
+        if operation in ("+", "sum"):
+            new_entry[calc_key] = val1 + val2
+        elif operation in ("-", "rest", "sub", "subtract"):
+            new_entry[calc_key] = val1 - val2
+            
+        new_lod.append(new_entry)
+
+    for d in lod2:
+        join_val = get_join_tuple(d)
+        if join_val not in seen:
+            new_entry = d.copy()
+            val1 = 0
+            val2 = new_entry.get(calc_key, 0)
+            val2 = 0 if val2 is None else val2
+            
+            if operation in ("+", "sum"):
+                new_entry[calc_key] = val1 + val2
+            elif operation in ("-", "rest", "sub", "subtract"):
+                new_entry[calc_key] = val1 - val2
+                
+            new_lod.append(new_entry)
+
+    return new_lod
