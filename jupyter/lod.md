@@ -192,6 +192,35 @@ print(lod_has_key(lod,"d"))
 print(lod_has_key([ ],"d"))
 ```
 
+## lod_join
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod 
+help(lod.lod_join) 
+```
+```{code-cell}
+from pydicts import lod
+
+lod1 = [
+  {"id": 1, "value": 10, "name": "A"},
+  {"id": 2, "value": 20, "name": "B"} 
+]
+
+lod2 = [
+  {"id": 1, "value": 5, "name": "A"},
+  {"id": 3, "value": 15, "name": "C"} 
+]
+
+print("Sum:") 
+lod.lod_print(lod.lod_join(lod1, lod2, calc_key="value", operation="+"))
+
+print("\nSubtraction:")
+lod.lod_print(lod.lod_join(lod1, lod2, calc_key="value", operation="-")) 
+```
+
+
+
 ## lod_keys
 
 Returns a list with the keys of the first dictionary in the list

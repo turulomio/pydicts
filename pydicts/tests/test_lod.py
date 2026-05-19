@@ -351,3 +351,35 @@ def test_lod_reorder_keys():
     assert new_lod[0]["a"] == 1
     
     assert lod.lod_reorder_keys([], ["a", "b"]) == []
+
+def test_lod_join():
+    """
+    Tests the lod_join function to join two lists of dictionaries and perform calculations.
+    """
+    lod1 = [
+        {"id": 1, "value": 10, "name": "A"},
+        {"id": 2, "value": 20, "name": "B"}
+    ]
+    lod2 = [
+        {"id": 1, "value": 5, "name": "A"},
+        {"id": 3, "value": 15, "name": "C"}
+    ]
+    
+    # Test addition
+    result_sum = lod.lod_join(lod1, lod2, calc_key="value", operation="+")
+    assert len(result_sum) == 3
+    assert result_sum[0] == {"id": 1, "value": 15, "name": "A"}
+    assert result_sum[1] == {"id": 2, "value": 20, "name": "B"}
+    assert result_sum[2] == {"id": 3, "value": 15, "name": "C"}
+    
+    # Test subtraction
+    result_sub = lod.lod_join(lod1, lod2, calc_key="value", operation="-")
+    assert len(result_sub) == 3
+    assert result_sub[0] == {"id": 1, "value": 5, "name": "A"}
+    assert result_sub[1] == {"id": 2, "value": 20, "name": "B"}
+    assert result_sub[2] == {"id": 3, "value": -15, "name": "C"}
+    
+    # Test with None values
+    lod3 = [{"id": 1, "value": None, "name": "A"}]
+    result_none = lod.lod_join(lod1, lod3, calc_key="value", operation="+")
+    assert result_none[0] == {"id": 1, "value": 10, "name": "A"}
