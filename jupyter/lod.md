@@ -117,7 +117,11 @@ Groups a List of Dictionaries (LOD) by all keys except one, summing the values o
 ```{code-cell}
 from pydicts import lod
 lod_ = [{'id': 1, 'v': 10}, {'id': 1, 'v': 5}, {'id': 2, 'v': 20}]
-lod.lod_aggregate_sum(lod_, 'v')
+print("Before")
+lod.lod_print(lod_)
+lod_ = lod.lod_aggregate_sum(lod_, 'v')
+print("After")
+lod.lod_print(lod_)
 ```
 
 ## lod_average
