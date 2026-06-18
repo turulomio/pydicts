@@ -110,6 +110,16 @@ from pydicts import lod
 help(lod.lod2lood)
 ```
 
+## lod_aggregate_sum
+
+Groups a List of Dictionaries (LOD) by all keys except one, summing the values of that key for duplicate records.
+
+```{code-cell}
+from pydicts import lod
+lod_ = [{'id': 1, 'v': 10}, {'id': 1, 'v': 5}, {'id': 2, 'v': 20}]
+lod.lod_aggregate_sum(lod_, 'v')
+```
+
 ## lod_average
 
 Calculates average from all values is the list of dictionaries with the key passed as parameter.
