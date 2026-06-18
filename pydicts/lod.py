@@ -8,6 +8,45 @@ try:
     _=t.gettext
 except:
     _=str
+def lod_aggregate_sum(lod_, key_to_sum):
+    """
+    Agrupa un List of Dictionaries (LOD) por todas las claves excepto una,
+    sumando los valores de esa clave para los registros duplicados.
+
+    Esta función es útil cuando se tienen datos desglosados que necesitan ser 
+    consolidados sumando una métrica (como un contador o importe) mientras 
+    se mantienen el resto de dimensiones.
+
+    Args:
+        lod_ (list[dict]): Lista de diccionarios a procesar.
+        key_to_sum (str): El nombre de la clave cuyo valor se desea sumar.
+
+    Returns:
+        list[dict]: Una nueva lista de diccionarios donde no existen duplicados 
+                    para la combinación de todas las claves excepto 'key_to_sum'.
+
+    Ejemplo:
+        >>> lod = [{'id': 1, 'v': 10}, {'id': 1, 'v': 5}, {'id': 2, 'v': 20}]
+        >>> lod_aggregate_sum(lod, 'v')
+        [{'id': 1, 'v': 15}, {'id': 2, 'v': 20}]
+    """
+    if not lod_:
+        return []
+
+    r = {}
+    for d in lod_:
+        # Creamos una clave basada en todos los campos excepto el que vamos a sumar
+        group_keys = {k: v for k, v in d.items() if k != key_to_sum}
+        k_tuple = tuple(sorted(group_keys.items(), key=lambda x: x[0]))
+        
+        if k_tuple in r:
+            r[k_tuple][key_to_sum] += d.get(key_to_sum, 0)
+        else:
+            r[k_tuple] = d.copy()
+            if key_to_sum not in r[k_tuple]:
+                r[k_tuple][key_to_sum] = 0
+
+    return list(r.values())
 
 def lod_has_key(lod_, key):
     """

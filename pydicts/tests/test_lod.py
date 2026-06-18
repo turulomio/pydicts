@@ -383,3 +383,39 @@ def test_lod_join():
     lod3 = [{"id": 1, "value": None, "name": "A"}]
     result_none = lod.lod_join(lod1, lod3, calc_key="value", operation="+")
     assert result_none[0] == {"id": 1, "value": 10, "name": "A"}
+
+def test_lod_aggregate_sum():
+    """
+    Tests the lod_aggregate_sum function with 1 and 3 keys for grouping.
+    """
+    # 1 key for grouping (plus 1 for sum)
+    lod_1 = [
+        {'id': 1, 'v': 10},
+        {'id': 1, 'v': 5},
+        {'id': 2, 'v': 20}
+    ]
+    result_1 = lod.lod_aggregate_sum(lod_1, 'v')
+    assert len(result_1) == 2
+    # Find results to check (order might not be guaranteed by the implementation which uses a dict)
+    res_id1 = next(d for d in result_1 if d['id'] == 1)
+    res_id2 = next(d for d in result_1 if d['id'] == 2)
+    assert res_id1['v'] == 15
+    assert res_id2['v'] == 20
+
+    # 3 keys for grouping (plus 1 for sum)
+    lod_3 = [
+        {'a': 1, 'b': 2, 'c': 3, 'v': 10},
+        {'a': 1, 'b': 2, 'c': 3, 'v': 5},
+        {'a': 1, 'b': 2, 'c': 4, 'v': 7},
+        {'a': 2, 'b': 2, 'c': 3, 'v': 100}
+    ]
+    result_3 = lod.lod_aggregate_sum(lod_3, 'v')
+    assert len(result_3) == 3
+    
+    res_abc3 = next(d for d in result_3 if d['a'] == 1 and d['b'] == 2 and d['c'] == 3)
+    res_abc4 = next(d for d in result_3 if d['a'] == 1 and d['b'] == 2 and d['c'] == 4)
+    res_a2 = next(d for d in result_3 if d['a'] == 2)
+    
+    assert res_abc3['v'] == 15
+    assert res_abc4['v'] == 7
+    assert res_a2['v'] == 100
