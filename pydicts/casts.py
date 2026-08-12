@@ -805,7 +805,7 @@ def date2str(value, format="JsIso", ignore_exception=False, ignore_exception_val
         elif format == "long string":
             current_locale = get_locale()
             if current_locale and current_locale.startswith("es"):# Spanish format
-                return f"{value.day} de {dict_month_names["es"][value.month].lower()} de {value.year}"
+                return f"{value.day} de {dict_month_names['es'][value.month].lower()} de {value.year}"
             else:
                 # Default to English-like format
                 month_name = dict_month_names["en"][value.month]
