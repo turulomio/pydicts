@@ -20,10 +20,10 @@ latex = [  "pylatex >=1.4.2,<2.0.0" ]
 [tool.poetry]
 
 [tool.poetry.group.dev.dependencies]
-pytest = ">=9.1.0"
-poethepoet = ">=0.46.0"
-coverage = ">=7.14.1"
-jupyter-book = ">=2.1.5"
+pytest = ">=9.1.1"
+poethepoet = ">=0.48.0"
+coverage = ">=7.16.1"
+jupyter-book = ">=2.1.6"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
