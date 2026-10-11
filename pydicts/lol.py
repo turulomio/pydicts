@@ -232,9 +232,48 @@ def lol_sum_column(lol, column, from_index, to_index, zerovalue=0):
                 s=s + row[column]
     return s
 
-def lol_print(lol_, number=None, align=None):
+from pydicts.lod import _fit_maxcolwidths
+
+def lol_string(lol_, number=None, align=None, maxcolwidths=None, tablefmt="psql"):
+    """
+    Returns a string representation of a list of lists (LoL) using the `tabulate` module.
+    Automatically adapts column widths to the current console size (e.g. Konsole)
+    so table borders and rows do not break when resized or when columns contain long text.
+
+    Args:
+        lol_ (list): The list of lists to format.
+        number (int, optional): The maximum number of rows to print. If None, all rows are printed.
+                                Defaults to None.
+        align (list, optional): A list of strings specifying column alignment. Possible values are
+                                "right", "center", "left", "decimal", or None. Defaults to None.
+        maxcolwidths: Maximum column widths (int, list, or None). If None, column widths are automatically
+                      calculated to fit the terminal width when the table would otherwise overflow.
+        tablefmt (str, optional): Tabulate table format. Defaults to "psql".
+
+    Returns:
+        str: Formatted table string or informative message if empty/zero rows.
+    """
+    number=len(lol_) if number is None else number
+
+    if len(lol_)==0:
+        return _("lol_print: This list of lists hasn't data to print")
+    if number==0:
+        return _("lol_print: No data was printed due to you selected 0 rows")
+
+    data_slice = lol_[0:number]
+    cw, hw = _fit_maxcolwidths(data_slice, headers=None, align=align, tablefmt=tablefmt, maxcolwidths=maxcolwidths)
+    kwargs = {"tablefmt": tablefmt, "colalign": align}
+    if cw is not None:
+        kwargs["maxcolwidths"] = cw
+    if hw is not None:
+        kwargs["maxheadercolwidths"] = hw
+
+    return tabulate(data_slice, **kwargs)
+
+def lol_print(lol_, number=None, align=None, maxcolwidths=None, tablefmt="psql"):
     """
     Prints a list of lists (LoL) in a tabular format using the `tabulate` module.
+    Uses `lol_string` internally.
 
     Args:
         lol_ (list): The list of lists to print.
@@ -242,13 +281,8 @@ def lol_print(lol_, number=None, align=None):
                                 Defaults to None.
         align (list, optional): A list of strings specifying column alignment. Possible values are
                                 "right", "center", "left", "decimal", or None. Defaults to None.
+        maxcolwidths: Maximum column widths (int, list, or None). If None, column widths are automatically
+                      calculated to fit the terminal width when the table would otherwise overflow.
+        tablefmt (str, optional): Tabulate table format. Defaults to "psql".
     """
-    number=len(lol_) if number is None else number
-
-    if len(lol_)==0:
-        print(_("lol_print: This list of lists hasn't data to print"))
-        return
-    if number==0:
-        print(_("lol_print: No data was printed due to you selected 0 rows"))
-        return
-    print(tabulate(lol_[0:number], tablefmt="psql", colalign=align))
+    print(lol_string(lol_, number=number, align=align, maxcolwidths=maxcolwidths, tablefmt=tablefmt))

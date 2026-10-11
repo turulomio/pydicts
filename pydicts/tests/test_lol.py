@@ -55,8 +55,10 @@ def test_lol_transposed():
     with raises(exceptions.LolException):
         lol.lol_transposed(None)
 
-def test_lol_print(): # Duplicate function name, keeping the first one.
+def test_lol_print_align():
     """
-    Tests the lol_print function with alignment options.
+    Tests the lol_print function with alignment, maxcolwidths and tablefmt options.
     """
     lol.lol_print(lol_, align=["left","center","right"])
+    lol.lol_print(lol_, maxcolwidths=[10, 10, 10])
+    lol.lol_print(lol_, tablefmt="grid")

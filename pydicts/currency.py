@@ -46,6 +46,8 @@ class Currency:
         Compares two Currency objects for equality.
         They are equal if both amount and currency are the same.
         """
+        if not isinstance(other, Currency):
+            return False
         if self.amount==other.amount and self.currency==other.currency:
             return True
         return False
