@@ -301,7 +301,6 @@ lod.lod_order_by(lod_,"b",reverse=True, none_at_top=False)
 
 ## lod_print
 
-
 ```{code-cell}
 :tags: [remove-input]
 
@@ -309,12 +308,42 @@ from pydicts import lod
 help(lod.lod_print)
 ```
 
-
 ```{code-cell}
 from pydicts.lod import lod_print
 lod_=[{"a":1, "b":4},{"a":2, "b":None}]
 lod_print(lod_, align=['center', 'right'])
 ```
+
+Using `tablefmt="simple_grid"` (default), `wordwrap` or `stretch`:
+
+```{code-cell}
+lod_print(lod_, tablefmt="simple_grid")
+```
+
+```{code-cell}
+lod_print(lod_, wordwrap=True, stretch=True)
+```
+
+## lod_string
+
+Returns a formatted string representing the list of dictionaries instead of printing directly to standard output.
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lod
+help(lod.lod_string)
+```
+
+```{code-cell}
+from pydicts.lod import lod_string
+lod_=[{"a":1, "b":4},{"a":2, "b":None}]
+s = lod_string(lod_, align=['center', 'right'], tablefmt="simple_grid")
+print(f"Generated string length: {len(s)}")
+print(s)
+```
+
+
 
 ## lod_rename_key
 

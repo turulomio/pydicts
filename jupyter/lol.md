@@ -65,8 +65,38 @@ help(lol.lol_print)
 from pydicts import lol
 lol_=[[1, 22, 3], [41, 5, 6000]]
 lol.lol_print(lol_, align=['left', 'right', 'center'])
-
 ```
+
+Using `tablefmt="simple_grid"` (default), `wordwrap` or `stretch`:
+
+```{code-cell}
+lol.lol_print(lol_, tablefmt="simple_grid")
+```
+
+```{code-cell}
+lol.lol_print(lol_, wordwrap=True, stretch=True)
+```
+
+## lol_string
+
+Returns a formatted string representing the list of lists instead of printing directly to standard output.
+
+```{code-cell}
+:tags: [remove-input]
+
+from pydicts import lol
+help(lol.lol_string)
+```
+
+```{code-cell}
+from pydicts import lol
+lol_=[[1, 22, 3], [41, 5, 6000]]
+s = lol.lol_string(lol_, align=['left', 'right', 'center'], tablefmt="simple_grid")
+print(f"Generated string length: {len(s)}")
+print(s)
+```
+
+
 
 ## list_remove_positions
 
