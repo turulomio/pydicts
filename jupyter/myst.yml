@@ -18,6 +18,7 @@ project:
     - file: lod_xyv.md
     - file: lod_ymv.md
     - file: lol.md
+    - file: classes.md
     - file: currency.md
     - file: percentage.md
     - file: myjsonencoder.md
