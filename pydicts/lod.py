@@ -134,12 +134,30 @@ def _stretch_table_to_terminal(table_str, target_width=None):
         return table_str
 
     diff = target_width - len(lines[0])
-    first_line = lines[0]
-    pluses = [i for i, ch in enumerate(first_line) if ch == '+']
-    if len(pluses) < 2:
+
+    # Find column boundary indices (supports grid, simple_grid, fancy_grid, etc.)
+    boundaries = None
+    for line in lines:
+        if not line:
+            continue
+        first_char = line[0]
+        if first_char in ('|', '│', ':') and line[-1] == first_char:
+            indices = [i for i, ch in enumerate(line) if ch == first_char]
+            if len(indices) >= 2:
+                boundaries = indices
+                break
+
+    if not boundaries:
+        first_line = lines[0]
+        fill_types = {'-', '=', '─', '═', '━'}
+        indices = [i for i, c in enumerate(first_line) if c not in fill_types]
+        if len(indices) >= 2:
+            boundaries = indices
+
+    if not boundaries or len(boundaries) < 2:
         return table_str
 
-    col_widths = [pluses[i+1] - pluses[i] - 1 for i in range(len(pluses)-1)]
+    col_widths = [boundaries[i+1] - boundaries[i] - 1 for i in range(len(boundaries)-1)]
     num_cols = len(col_widths)
     total_w = sum(col_widths)
     if total_w == 0:
@@ -151,15 +169,16 @@ def _stretch_table_to_terminal(table_str, target_width=None):
         largest_idx = max(range(num_cols), key=lambda i: (col_widths[i] + extra[i]))
         extra[largest_idx] += 1
 
+    first_len = len(lines[0])
     new_lines = []
     for line in lines:
-        if not line or len(line) != len(first_line):
+        if not line or len(line) != first_len:
             new_lines.append(line)
             continue
         new_parts = []
         for col_idx in range(num_cols):
-            start = pluses[col_idx]
-            end = pluses[col_idx+1]
+            start = boundaries[col_idx]
+            end = boundaries[col_idx+1]
             segment = line[start:end]
             border_char = segment[0]
             content = segment[1:]
