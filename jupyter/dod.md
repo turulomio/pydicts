@@ -14,7 +14,24 @@ kernelspec:
 
 # DOD
 
+## dod_string
+
+Returns a pretty-printed string representation of a dictionary of dictionaries.
+
+```{code-cell}
+from pydicts import dod
+
+sample_dod = {
+    "emp_1": {"name": "Alice", "role": "admin"},
+    "emp_2": {"name": "Bob", "role": "developer"},
+}
+formatted_str = dod.dod_string(sample_dod, indent=2)
+print(formatted_str)
+```
+
 ## dod_print
+
+Prints a dictionary of dictionaries (DoD) in a human-readable, pretty-printed format.
 
 ```{code-cell}
 :tags: [remove-input]
@@ -33,3 +50,24 @@ dod_["first"]=d
 dod_["second"]=d
 dod.dod_print(dod_)
 ```
+
+## dod_string_tables and dod_print_tables
+
+Formats and prints the DoD as a table, placing dictionary keys as the first column:
+
+```{code-cell}
+from pydicts import dod
+
+sample_dod = {
+    "emp_1": {"name": "Alice", "role": "admin", "active": True},
+    "emp_2": {"name": "Bob", "role": "developer", "active": True},
+}
+# Print directly as a table
+dod.dod_print_tables(sample_dod, key_name="ID")
+
+# Or obtain the table string representation
+table_str = dod.dod_string_tables(sample_dod, key_name="ID")
+```
+
+
+

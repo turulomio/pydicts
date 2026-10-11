@@ -20,10 +20,12 @@ def test_currency_color():
     and handling of non-numeric inputs.
     """
     assert colors.currency_color(12, "EUR", 0)== colors.green("12 €")
+    assert colors.currency_color(-12, "EUR", 0)== colors.red("-12 €")
     assert colors.currency_color("string", "EUR") == colors.blue("-")
     # Test with None value
     assert colors.currency_color(None, "EUR") == colors.blue("-")
     assert colors.currency_color(0.12345, "EUR", decimals=1)==colors.green("0.1 €")
+    assert colors.currency_color(-0.12345, "EUR", decimals=1)==colors.red("-0.1 €")
     
 def test_percentage_color():
     """
@@ -31,9 +33,11 @@ def test_percentage_color():
     and handling of non-numeric inputs.
     """
     assert colors.percentage_color(12, decimals=0) == colors.green("1200 %")
+    assert colors.percentage_color(-12, decimals=0) == colors.red("-1200 %")
     assert colors.percentage_color("string") == colors.blue("- %")
     assert colors.percentage_color(None) == colors.blue("- %")
     assert colors.percentage_color(0.12345, decimals=1)==colors.green("12.3 %")
+    assert colors.percentage_color(-0.12345, decimals=1)==colors.red("-12.3 %")
 
     
 def test_value_color():

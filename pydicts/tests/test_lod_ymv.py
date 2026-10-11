@@ -11,6 +11,10 @@ def _create_full_year_dict(year, values_by_month=None, total=0):
     d["total"] = total
     return d
 def test_lod_ymv_transposition():
+    """
+    Tests lod_ymv_transposition for pivoting monthly chronological series into
+    yearly rows with m1-m12 month columns and totals, aggregating duplicate month entries.
+    """
     o=[
         {"year": 2022, "month": 1, "my_sum": 12},
         {"year": 2021, "month": 2, "my_sum": 123},
@@ -68,6 +72,9 @@ def test_lod_ymv_transposition():
     assert lod_ymv.lod_ymv_transposition(o_bad_key, key_value="my_sum") is None
 
 def test_is_noz():
+    """
+    Tests is_noz predicate identifying None, numeric zero, or Decimal zero.
+    """
     assert lod_ymv.is_noz(None) is True
     assert lod_ymv.is_noz(0) is True
     assert lod_ymv.is_noz(Decimal('0')) is True
@@ -78,6 +85,9 @@ def test_is_noz():
     assert lod_ymv.is_noz([]) is False
 
 def test_ymv_transposition_first_value_not_noz():
+    """
+    Tests ymv_transposition_first_value_not_noz finding the chronologically earliest non-zero/non-none monthly value.
+    """
     # Use the helper to create complete dictionaries
     lod_data = [
         _create_full_year_dict(2020, {3: 10, 4: 20}),
@@ -102,6 +112,9 @@ def test_ymv_transposition_first_value_not_noz():
     result_first_month = lod_ymv.ymv_transposition_first_value_not_noz(lod_data_first_month)
     assert result_first_month == {"year": 2020, "month": 1, "value": 5}
 def test_d_ymv_transposition_first_key_not_noz():
+    """
+    Tests d_ymv_transposition_first_key_not_noz identifying the first month key (m1..m12) with a non-zero value.
+    """
     d1 = _create_full_year_dict(0, {2: 10, 3: 20, 6: 30}, total=60)
     assert lod_ymv.d_ymv_transposition_first_key_not_noz(d1) == "m2"
     d2 = _create_full_year_dict(0, {1: 5, 2: 10, 3: 20}, total=35)
@@ -112,7 +125,11 @@ def test_d_ymv_transposition_first_key_not_noz():
     d4["m1"] = None # Explicitly set None
     d4["m2"] = None # Explicitly set None
     assert lod_ymv.d_ymv_transposition_first_key_not_noz(d4) == "m3"
+
 def test_d_ymv_transposition_last_key_not_noz():
+    """
+    Tests d_ymv_transposition_last_key_not_noz identifying the latest month key (m1..m12) with a non-zero value.
+    """
     d1 = _create_full_year_dict(0, {2: 10, 3: 20, 6: 30}, total=60)
     assert lod_ymv.d_ymv_transposition_last_key_not_noz(d1) == "m6"
     d2 = _create_full_year_dict(0, {1: 5, 2: 10, 3: 0}, total=15)
@@ -124,6 +141,9 @@ def test_d_ymv_transposition_last_key_not_noz():
     d4["m3"] = None
     assert lod_ymv.d_ymv_transposition_last_key_not_noz(d4) == "m1"
 def test_lod_ymv_transposition_with_percentages():
+    """
+    Tests lod_ymv_transposition_with_percentages calculating month-over-month percentage changes across years.
+    """
     # Smaller, more controlled dataset for testing percentages
     o = [
         {'year': 2020, 'm1': Decimal('100'), 'm2': Decimal('110'), 'm3': Decimal('100'), 'm4': Decimal('120'), 'm5': Decimal('0'), 'm6': Decimal('0'), 'm7': Decimal('0'), 'm8': Decimal('0'), 'm9': Decimal('0'), 'm10': Decimal('0'), 'm11': Decimal('0'), 'm12': Decimal('130'), 'total': Decimal('460')},
@@ -185,6 +205,9 @@ def test_lod_ymv_transposition_with_percentages():
     assert all(v is None for k, v in r_all_none_zero[1].items() if k != 'year')
 
 def test_lod_ymv_transposition_sum():
+    """
+    Tests lod_ymv_transposition_sum merging two year-month-value tables by summing corresponding cells.
+    """
     lymv_a = [ # Using helper for consistency
         _create_full_year_dict(2020, {1: 10, 2: 20}, total=30),
         _create_full_year_dict(2021, {1: 100, 2: 200}, total=300),
@@ -240,6 +263,9 @@ def test_lod_ymv_transposition_sum():
     assert result_overlap[2]["m1"] == 3
 
 def test_lod_ymv_filling():
+    """
+    Tests lod_ymv_filling to backfill missing month entries with default values across year ranges.
+    """
     initial_lod = [
         {"year": 2020, "month": 1, "value": 10, "other_data": "A"},
         {"year": 2020, "month": 3, "value": 30, "other_data": "C"},

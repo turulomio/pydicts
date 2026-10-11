@@ -148,16 +148,17 @@ def test_str2bytes_failure():
         casts.str2bytes("á", code='ascii') # Encoding error
 
 def test_str2bytes_ignore_exception():
-    """Tests successful string to bytes conversion."""
+    """Tests string to bytes conversion with ignore_exception=True returning fallback value."""
     assert casts.str2bytes(b"hello", ignore_exception=True, ignore_exception_value=b"fail") == b"fail"
     assert casts.str2bytes("á", code='ascii', ignore_exception=True, ignore_exception_value=b"fail") == b"fail"
 
 # Test base64bytes2bytes
 def test_base64bytes2bytes_success():
+    """Tests successful base64 bytes to raw bytes decoding."""
     assert casts.base64bytes2bytes(b"aGVsbG8=") == b"hello"
 
 def test_base64bytes2bytes_failure():
-    """Tests successful base64 bytes to bytes decoding."""
+    """Tests that invalid base64, non-bytes, or None inputs raise CastException."""
     with pytest.raises(exceptions.CastException):
         casts.base64bytes2bytes(b"not-base64")
     with pytest.raises(exceptions.CastException):
@@ -166,22 +167,23 @@ def test_base64bytes2bytes_failure():
         casts.base64bytes2bytes(None)
 
 def test_base64bytes2bytes_ignore_exception():
-    """Tests failed base64 bytes to bytes decoding and exception handling."""
+    """Tests failed base64 decoding with ignore_exception=True returning fallback value."""
     assert casts.base64bytes2bytes(b"not-base64", ignore_exception=True, ignore_exception_value=b"fail") == b"fail"
 
 # Test bytes2base64bytes
 def test_bytes2base64bytes_success():
+    """Tests successful raw bytes to base64 bytes encoding."""
     assert casts.bytes2base64bytes(b"hello") == b"aGVsbG8="
 
 def test_bytes2base64bytes_failure():
-    """Tests successful bytes to base64 bytes encoding."""
+    """Tests that non-bytes or None inputs to bytes2base64bytes raise CastException."""
     with pytest.raises(exceptions.CastException):
         casts.bytes2base64bytes("hello") # Not bytes
     with pytest.raises(exceptions.CastException):
         casts.bytes2base64bytes(None)
 
 def test_bytes2base64bytes_ignore_exception():
-    """Tests failed bytes to base64 bytes encoding and exception handling."""
+    """Tests failed bytes to base64 encoding with ignore_exception=True returning fallback value."""
     assert casts.bytes2base64bytes("hello", ignore_exception=True, ignore_exception_value=b"fail") == b"fail"
 
 
@@ -979,3 +981,34 @@ def test_dtaware2str_long_string_naive_datetime():
 def test_dtaware2str_long_string_ignore_exception_naive():
     dt_naive = datetime(2023, 1, 15, 10, 30, 0)
     assert casts.dtaware2str(dt_naive, format="long string", ignore_exception=True, ignore_exception_value="N/A") == "N/A"
+
+def test_casts_get_system_timezone():
+    tz = casts.get_system_timezone()
+    assert isinstance(tz, str)
+
+def test_casts_str2time_hhmmxx_variations():
+    # Test 12 AM (midnight)
+    t_12am = casts.str2time("12:00am", format="HH:MMxx")
+    assert t_12am.hour == 0 and t_12am.minute == 0
+    # Test missing am/pm raises
+    with pytest.raises(exceptions.CastException):
+        casts.str2time("12:00", format="HH:MMxx")
+    assert casts.str2time("12:00", format="HH:MMxx", ignore_exception=True, ignore_exception_value="err") == "err"
+
+def test_casts_months_default():
+    m = casts.months(2025, 11)
+    assert len(m) >= 1
+    assert isinstance(m[0], tuple)
+
+def test_casts_timedelta2str_and_ignore_exception():
+    # ignore_exception with invalid type
+    assert casts.timedelta2str("not-a-delta", ignore_exception=True, ignore_exception_value="fallback") == "fallback"
+    # Exception on invalid type
+    with pytest.raises(exceptions.CastException):
+        casts.timedelta2str("not-a-delta")
+
+def test_casts_str2dtnaive_long_string_invalid():
+    with pytest.raises(exceptions.CastException):
+        casts.str2dtnaive("2023-01-01", format="long string")
+    assert casts.str2dtnaive("2023-01-01", format="long string", ignore_exception=True, ignore_exception_value="err") == "err"
+

@@ -55,6 +55,21 @@ def test_lol_transposed():
     with raises(exceptions.LolException):
         lol.lol_transposed(None)
 
+def test_lol_add_row_exception():
+    """
+    Tests that lol_add_row raises LolException when inserting a row with different column length.
+    """
+    with raises(exceptions.LolException):
+        lol.lol_add_row([[1, 2]], 0, [1, 2, 3])
+
+def test_list_remove_positions():
+    """
+    Tests list_remove_positions for removing items by index and raising LolException when list is None.
+    """
+    assert lol.list_remove_positions([10, 20, 30], [1]) == [10, 30]
+    with raises(exceptions.LolException):
+        lol.list_remove_positions(None, [0])
+
 def test_lol_print_align():
     """
     Tests the lol_print function with alignment, maxcolwidths and tablefmt options.
@@ -68,3 +83,7 @@ def test_lol_print_align():
     assert isinstance(s, str)
     s_raw = lol.lol_string(lol_, wordwrap=False, stretch=False)
     assert isinstance(s_raw, str)
+    assert "hasn't data" in lol.lol_string([])
+    assert "No data was printed" in lol.lol_string(lol_, number=0)
+    s_stretched = lol.lol_string(lol_, stretch=True)
+    assert isinstance(s_stretched, str)

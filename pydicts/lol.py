@@ -203,7 +203,7 @@ def lol_sum_row(row, from_index=0, to_index=None, zerovalue=0):
     """
     s=zerovalue
     for i, column in enumerate(row):
-        if i>=from_index and i<=to_index:
+        if i>=from_index and (to_index is None or i<=to_index):
             if column is not None:
                 s=s + column
     return s

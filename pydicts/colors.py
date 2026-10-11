@@ -116,7 +116,7 @@ def percentage_color(value, decimals=2):
     if value>=0:
         return green(Percentage(value,1).string(decimals))
     else:
-        return red(Currency(value,1).string(decimals))
+        return red(Percentage(value,1).string(decimals))
 
 def value_color(value, decimals=2):
     """Returns a numeric value formatted in green (for non-negative values) or red (for negative values).
