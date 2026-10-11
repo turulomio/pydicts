@@ -40,7 +40,7 @@ def coverage():
     """
     Runs pytest with coverage, generates a coverage report, and creates an HTML report.
     """
-    system("coverage run --omit='*uno.py' -m pytest && coverage report && coverage html")
+    system("coverage run -m pytest && coverage report && coverage html")
 
 
 def translate():

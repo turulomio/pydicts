@@ -559,32 +559,6 @@ def lod2list(lod_, key, sorted=False, cast=None):
         r.sort()
     return r
 
-def lod2list_distinct(lod_, key, sorted=False, cast=None):
-    """
-    Extracts distinct values for a specified key from a list of dictionaries into a new list.
-
-    Args:
-        lod_ (list): The list of dictionaries.
-        key (str): The key whose distinct values are to be extracted.
-        sorted (bool, optional): If True, the resulting list will be sorted. Defaults to False.
-        cast (str, optional): If specified ("str", "float"), attempts to cast the extracted values.
-                              Defaults to None.
-
-    Returns:
-        list: A list containing the distinct extracted values.
-    """
-    set_=set()
-    for ld in lod_:
-        if cast is None:
-            set_.add(ld[key])
-        elif cast == "str":
-            set_.add(str(ld[key]))
-        elif cast == "float":
-            set_.add(float(ld[key]))
-    r=list(set_)
-    if sorted is True:
-        r.sort()
-    return r
 
 def lod2lol(lod_,  keys=None):
     """

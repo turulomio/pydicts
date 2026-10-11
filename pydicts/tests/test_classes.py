@@ -246,3 +246,135 @@ def test_dod_class(capsys):
     dod_obj.print()
     captured = capsys.readouterr()
     assert "Alice" in captured.out
+
+    # string, string_tables, print_tables
+    s = dod_obj.string(indent=2)
+    assert "Alice" in s
+    tbl = dod_obj.string_tables(key_name="UserID")
+    assert "UserID" in tbl
+    assert "user1" in tbl
+    dod_obj.print_tables(key_name="UserID")
+    captured = capsys.readouterr()
+    assert "UserID" in captured.out
+
+    # values, items, set, init empty, init DOD, __eq__
+    assert len(list(dod_obj.values())) == 2
+    assert len(list(dod_obj.items())) == 2
+    empty_dod = DOD()
+    assert len(empty_dod) == 0
+    assert not bool(empty_dod)
+    cloned_dod = DOD(dod_obj)
+    assert cloned_dod == dod_obj
+    assert cloned_dod == dod_obj.dod
+    assert dod_obj != [1, 2, 3]
+
+    dod_obj.set({"k1": {"a": 10}})
+    assert len(dod_obj) == 1
+
+
+def test_classes_extended_coverage(sample_data, capsys):
+    # LOD conversions and aggregations
+    lod = LOD(sample_data, name="Team")
+    assert lod.sum_positives("salary") == Decimal("6001.00")
+    assert lod.sum_negatives("salary") == 0
+    assert lod.has_key("salary") is True
+    assert lod.has_key("nonexistent") is False
+
+    # LOD print_first
+    lod.print_first()
+    captured = capsys.readouterr()
+    assert "Alice" in captured.out
+
+    # LOD aggregations / join / reorder
+    reordered = lod.clone().reorder_keys(["name", "id", "age", "salary"])
+    assert list(reordered[0].keys())[:2] == ["name", "id"]
+
+    # remove_duplicates
+    lod_dup = LOD([{"id": 1, "val": 10}, {"id": 1, "val": 10}, {"id": 2, "val": 20}])
+    lod_dup.remove_duplicates()
+    assert len(lod_dup) == 2
+
+    # aggregate_sum
+    lod_agg = LOD([{"grp": "A", "val": 10}, {"grp": "A", "val": 20}, {"grp": "B", "val": 5}])
+    aggregated = lod_agg.aggregate_sum("val")
+    assert len(aggregated) == 2
+
+    # join
+    l1 = LOD([{"id": 1, "score": 10}, {"id": 2, "score": 20}])
+    l2 = LOD([{"id": 1, "score": 5}, {"id": 2, "score": 15}])
+    joined = l1.join(l2, calc_key="score", operation="+")
+    assert joined[0]["score"] == 15
+
+    # to_odod, to_dod_tuple, to_lood
+    odod = lod.to_odod("id")
+    assert isinstance(odod, DOD)
+    dod_tup = lod.to_dod_tuple("id", "name")
+    assert isinstance(dod_tup, DOD)
+    lood = lod.to_lood(["id", "name"])
+    assert isinstance(lood, list)
+    assert len(lood) == len(lod)
+
+    # is_set check
+    lod_empty = LOD()
+    assert lod_empty.is_set() is True
+    del lod_empty.ld
+    assert lod_empty.is_set() is False
+
+    # Init from iterable / another LOD
+    lod_copy = LOD(lod)
+    assert lod_copy == lod
+    lod_from_iter = LOD((d for d in sample_data[:2]))
+    assert len(lod_from_iter) == 2
+    assert lod != "not_a_lod"
+
+    # LOL extended methods
+    lol = LOL([[1, 2], [3, 4]], name="Matrix")
+    assert 1 not in lol
+    assert [1, 2] in lol
+    assert lol == [[1, 2], [3, 4]]
+    assert lol == LOL([[1, 2], [3, 4]])
+    assert lol != "invalid"
+
+    lol.set([[10, 20], [30, 40]])
+    assert lol[0][0] == 10
+    lol.append([50, 60])
+    lol.extend(LOL([[70, 80]]))
+    lol.extend([[90, 100]])
+    assert len(lol) == 5
+
+    # add_column / remove_columns
+    lol.add_column(1, [1, 2, 3, 4, 5])
+    assert lol.get_column(1) == [1, 2, 3, 4, 5]
+    lol.remove_columns([1])
+    assert len(lol[0]) == 2
+
+    # lol print
+    lol.print()
+    captured = capsys.readouterr()
+    assert "10" in captured.out
+
+    # lol __iter__ and repr
+    rows = [r for r in lol]
+    assert len(rows) == 5
+    assert "rows=5" in repr(lol)
+
+    # LOD extend with another LOD
+    lod1 = LOD([{"a": 1}])
+    lod2 = LOD([{"b": 2}])
+    lod1.extend(lod2)
+    assert len(lod1) == 2
+
+    # LOD average_ponderated
+    weights_data = LOD([{"weight": 2, "grade": 10}, {"weight": 3, "grade": 15}])
+    # (2*10 + 3*15) / (2+3) = (20 + 45) / 5 = 13.0
+    assert weights_data.average_ponderated("weight", "grade") == 13.0
+
+    # DOD __iter__, __repr__, __str__
+    d_obj = DOD({"x": {"n": 1}}, name="Single")
+    keys_iter = [k for k in d_obj]
+    assert keys_iter == ["x"]
+    assert "entries=1" in repr(d_obj)
+    assert "Single" in repr(d_obj)
+    assert "x" in str(d_obj)
+
+

@@ -438,3 +438,35 @@ def test_lod_aggregate_sum():
     assert res_abc3['v'] == 15
     assert res_abc4['v'] == 7
     assert res_a2['v'] == 100
+
+
+def test_lod_stretch_and_formats():
+    """
+    Tests stretching and width handling in lod_string.
+    """
+    sample = [{"colA": "Short", "colB": "Longer text here", "colC": 12345}]
+    s_stretched = lod.lod_string(sample, stretch=True)
+    assert isinstance(s_stretched, str)
+    assert "Short" in s_stretched
+
+    # Test stretch with no data or target width
+    assert lod._stretch_table_to_terminal("") == ""
+    assert lod._stretch_table_to_terminal("short", target_width=3) == "short"
+
+
+def test_lod_casts_and_empty():
+    """
+    Tests cast options in lod2list and lod2list_distinct, plus empty conversions.
+    """
+    data = [{"val": 10}, {"val": 20}, {"val": 10}]
+    assert lod.lod2list(data, "val", cast="str") == ["10", "20", "10"]
+    assert lod.lod2list(data, "val", cast="float") == [10.0, 20.0, 10.0]
+    assert lod.lod2list_distinct(data, "val", sorted=True, cast="str") == ["10", "20"]
+    assert lod.lod2list_distinct(data, "val", sorted=True, cast="float") == [10.0, 20.0]
+
+    # lod2lol with keys=None and empty
+    assert lod.lod2lol([]) == []
+    assert lod.lod2lol([{"a": 1, "b": 2}]) == [[1, 2]]
+
+    # lod2lood with empty
+    assert lod.lod2lood([], ["a"]) == []
