@@ -719,9 +719,15 @@ class DOD(Mapping[Any, dict]):
         sort_dicts: bool = True,
     ) -> str:
         """
-        Returns the pretty-printed string using `dod.dod_string`.
+        Returns the pretty-printed string representation using `dod.dod_string`.
         """
-        return dod.dod_string(self.dod, indent=indent, depth=depth, width=width, sort_dicts=sort_dicts)
+        return dod.dod_string(
+            self.dod,
+            indent=indent,
+            depth=depth,
+            width=width,
+            sort_dicts=sort_dicts,
+        )
 
     def print(
         self,
@@ -731,9 +737,63 @@ class DOD(Mapping[Any, dict]):
         sort_dicts: bool = True,
     ) -> None:
         """
-        Pretty-prints the dictionary of dictionaries using `dod.dod_print`.
+        Prints the dictionary of dictionaries in pretty-printed format using `dod.dod_print`.
         """
-        dod.dod_print(self.dod, indent=indent, depth=depth, width=width, sort_dicts=sort_dicts)
+        dod.dod_print(
+            self.dod,
+            indent=indent,
+            depth=depth,
+            width=width,
+            sort_dicts=sort_dicts,
+        )
+
+    def string_tables(
+        self,
+        key_name: str = "Key",
+        tablefmt: str = "simple_grid",
+        wordwrap: bool = True,
+        stretch: bool = False,
+        number: Optional[int] = None,
+        align: Optional[list] = None,
+        maxcolwidths: Optional[list] = None,
+    ) -> str:
+        """
+        Returns the tabular string representation using `dod.dod_string_tables`.
+        """
+        return dod.dod_string_tables(
+            self.dod,
+            key_name=key_name,
+            tablefmt=tablefmt,
+            wordwrap=wordwrap,
+            stretch=stretch,
+            number=number,
+            align=align,
+            maxcolwidths=maxcolwidths,
+        )
+
+    def print_tables(
+        self,
+        key_name: str = "Key",
+        tablefmt: str = "simple_grid",
+        wordwrap: bool = True,
+        stretch: bool = False,
+        number: Optional[int] = None,
+        align: Optional[list] = None,
+        maxcolwidths: Optional[list] = None,
+    ) -> None:
+        """
+        Prints the dictionary of dictionaries as a formatted table using `dod.dod_print_tables`.
+        """
+        dod.dod_print_tables(
+            self.dod,
+            key_name=key_name,
+            tablefmt=tablefmt,
+            wordwrap=wordwrap,
+            stretch=stretch,
+            number=number,
+            align=align,
+            maxcolwidths=maxcolwidths,
+        )
 
     def to_lod(self) -> LOD:
         """

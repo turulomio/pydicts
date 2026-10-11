@@ -51,3 +51,23 @@ dod_["second"]=d
 dod.dod_print(dod_)
 ```
 
+## dod_string_tables and dod_print_tables
+
+Formats and prints the DoD as a table, placing dictionary keys as the first column:
+
+```{code-cell}
+from pydicts import dod
+
+sample_dod = {
+    "emp_1": {"name": "Alice", "role": "admin", "active": True},
+    "emp_2": {"name": "Bob", "role": "developer", "active": True},
+}
+# Print directly as a table
+dod.dod_print_tables(sample_dod, key_name="ID")
+
+# Or obtain the table string representation
+table_str = dod.dod_string_tables(sample_dod, key_name="ID")
+```
+
+
+

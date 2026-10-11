@@ -42,3 +42,20 @@ def test_dod_print(capsys):
     captured = capsys.readouterr()
     assert "first" in captured.out
     assert "second" in captured.out
+
+
+def test_dod_tables(capsys):
+    """
+    Tests dod_string_tables and dod_print_tables.
+    """
+    tbl = dod.dod_string_tables(dod_, key_name="ID")
+    assert "ID" in tbl
+    assert "first" in tbl
+    assert "second" in tbl
+
+    dod.dod_print_tables(dod_, key_name="ID")
+    captured = capsys.readouterr()
+    assert "ID" in captured.out
+    assert "first" in captured.out
+
+
