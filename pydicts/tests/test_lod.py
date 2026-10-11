@@ -108,6 +108,11 @@ def test_lod_string(sample_lod):
     assert lod.lod_string(sample_lod, number=0) == "No data was printed due to you selected 0 rows"
     s_grid = lod.lod_string(sample_lod, tablefmt="grid", maxcolwidths=[10]*len(sample_lod[0]))
     assert isinstance(s_grid, str)
+    s_no_stretch = lod.lod_string(sample_lod, stretch=False)
+    assert isinstance(s_no_stretch, str)
+    s_raw = lod.lod_string(sample_lod, wordwrap=False, stretch=False)
+    assert isinstance(s_raw, str)
+    lod.lod_print(sample_lod, wordwrap=False, stretch=False)
 def test_lod_sum(sample_lod):
     """
     Tests the lod_sum function for summing values in a specific key.

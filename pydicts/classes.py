@@ -43,17 +43,17 @@ class LOD:
         """
         return lod_has_key(self.ld,key)
 
-    def string(self, number=None, align=None, maxcolwidths=None, tablefmt="psql"):
+    def string(self, number=None, align=None, maxcolwidths=None, tablefmt="simple_grid", wordwrap=True, stretch=False):
         """
         Returns the formatted table string of the list of dictionaries using `lod_string`.
         """
-        return lod_string(self.ld, number=number, align=align, maxcolwidths=maxcolwidths, tablefmt=tablefmt)
+        return lod_string(self.ld, number=number, align=align, maxcolwidths=maxcolwidths, tablefmt=tablefmt, wordwrap=wordwrap, stretch=stretch)
 
-    def print(self, number=None, align=None, maxcolwidths=None, tablefmt="psql"):
+    def print(self, number=None, align=None, maxcolwidths=None, tablefmt="simple_grid", wordwrap=True, stretch=False):
         """
         Prints the entire list of dictionaries using `lod_print`.
         """
-        lod_print(self.ld, number=number, align=align, maxcolwidths=maxcolwidths, tablefmt=tablefmt)
+        lod_print(self.ld, number=number, align=align, maxcolwidths=maxcolwidths, tablefmt=tablefmt, wordwrap=wordwrap, stretch=stretch)
 
     def print_first(self):
         """

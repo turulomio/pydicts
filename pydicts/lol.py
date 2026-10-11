@@ -232,13 +232,13 @@ def lol_sum_column(lol, column, from_index, to_index, zerovalue=0):
                 s=s + row[column]
     return s
 
-from pydicts.lod import _fit_maxcolwidths
+from pydicts.lod import _fit_maxcolwidths, _stretch_table_to_terminal
 
-def lol_string(lol_, number=None, align=None, maxcolwidths=None, tablefmt="psql"):
+def lol_string(lol_, number=None, align=None, maxcolwidths=None, tablefmt="simple_grid", wordwrap=True, stretch=False):
     """
     Returns a string representation of a list of lists (LoL) using the `tabulate` module.
-    Automatically adapts column widths to the current console size (e.g. Konsole)
-    so table borders and rows do not break when resized or when columns contain long text.
+    Optionally adapts column widths to the current console size (wordwrap)
+    and stretches the table horizontally to fill the full terminal width (stretch).
 
     Args:
         lol_ (list): The list of lists to format.
@@ -246,9 +246,10 @@ def lol_string(lol_, number=None, align=None, maxcolwidths=None, tablefmt="psql"
                                 Defaults to None.
         align (list, optional): A list of strings specifying column alignment. Possible values are
                                 "right", "center", "left", "decimal", or None. Defaults to None.
-        maxcolwidths: Maximum column widths (int, list, or None). If None, column widths are automatically
-                      calculated to fit the terminal width when the table would otherwise overflow.
-        tablefmt (str, optional): Tabulate table format. Defaults to "psql".
+        maxcolwidths: Maximum column widths (int, list, or None).
+        tablefmt (str, optional): Tabulate table format. Defaults to "simple_grid".
+        wordwrap (bool, optional): If True and maxcolwidths is None, calculates maxcolwidths automatically. Defaults to True.
+        stretch (bool, optional): If True and maxcolwidths is None, expands table columns to fill terminal width. Defaults to False.
 
     Returns:
         str: Formatted table string or informative message if empty/zero rows.
@@ -261,16 +262,23 @@ def lol_string(lol_, number=None, align=None, maxcolwidths=None, tablefmt="psql"
         return _("lol_print: No data was printed due to you selected 0 rows")
 
     data_slice = lol_[0:number]
-    cw, hw = _fit_maxcolwidths(data_slice, headers=None, align=align, tablefmt=tablefmt, maxcolwidths=maxcolwidths)
+    if wordwrap and maxcolwidths is None:
+        cw, hw = _fit_maxcolwidths(data_slice, headers=None, align=align, tablefmt=tablefmt, maxcolwidths=None)
+    else:
+        cw, hw = maxcolwidths, None
+
     kwargs = {"tablefmt": tablefmt, "colalign": align}
     if cw is not None:
         kwargs["maxcolwidths"] = cw
     if hw is not None:
         kwargs["maxheadercolwidths"] = hw
 
-    return tabulate(data_slice, **kwargs)
+    rendered = tabulate(data_slice, **kwargs)
+    if stretch and maxcolwidths is None:
+        rendered = _stretch_table_to_terminal(rendered)
+    return rendered
 
-def lol_print(lol_, number=None, align=None, maxcolwidths=None, tablefmt="psql"):
+def lol_print(lol_, number=None, align=None, maxcolwidths=None, tablefmt="simple_grid", wordwrap=True, stretch=False):
     """
     Prints a list of lists (LoL) in a tabular format using the `tabulate` module.
     Uses `lol_string` internally.
@@ -281,8 +289,9 @@ def lol_print(lol_, number=None, align=None, maxcolwidths=None, tablefmt="psql")
                                 Defaults to None.
         align (list, optional): A list of strings specifying column alignment. Possible values are
                                 "right", "center", "left", "decimal", or None. Defaults to None.
-        maxcolwidths: Maximum column widths (int, list, or None). If None, column widths are automatically
-                      calculated to fit the terminal width when the table would otherwise overflow.
-        tablefmt (str, optional): Tabulate table format. Defaults to "psql".
+        maxcolwidths: Maximum column widths (int, list, or None).
+        tablefmt (str, optional): Tabulate table format. Defaults to "simple_grid".
+        wordwrap (bool, optional): If True and maxcolwidths is None, calculates maxcolwidths automatically. Defaults to True.
+        stretch (bool, optional): If True and maxcolwidths is None, expands table columns to fill terminal width. Defaults to False.
     """
-    print(lol_string(lol_, number=number, align=align, maxcolwidths=maxcolwidths, tablefmt=tablefmt))
+    print(lol_string(lol_, number=number, align=align, maxcolwidths=maxcolwidths, tablefmt=tablefmt, wordwrap=wordwrap, stretch=stretch))

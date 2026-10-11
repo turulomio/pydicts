@@ -90,7 +90,85 @@ def _fit_maxcolwidths(data, headers, align, tablefmt, maxcolwidths=None, maxhead
         for c in candidates:
             current_widths[c] = max(min_header_lens[c], current_widths[c] - step)
 
+    # After shrinking, expand any column whose content was restricted so it fills
+    # up to the full terminal width without exceeding it.
+    for _ in range(50):
+        kw = dict(kwargs)
+        kw['maxcolwidths'] = current_widths
+        if computed_maxheadercolwidths is not None:
+            kw['maxheadercolwidths'] = computed_maxheadercolwidths
+        t = tabulate(data, **kw)
+        cur_w = len(t.split("\n", 1)[0])
+        deficit = term_width - cur_w
+        if deficit <= 0:
+            break
+        expandable = [i for i in range(num_cols) if current_widths[i] < natural_widths[i]]
+        if not expandable:
+            break
+        added = False
+        for idx in expandable:
+            current_widths[idx] += 1
+            kw['maxcolwidths'] = current_widths
+            t = tabulate(data, **kw)
+            cur_w = len(t.split("\n", 1)[0])
+            if cur_w > term_width:
+                current_widths[idx] -= 1
+            else:
+                added = True
+        if not added:
+            break
+
     return current_widths, computed_maxheadercolwidths
+
+def _stretch_table_to_terminal(table_str, target_width=None):
+    """
+    Expands table horizontal lines and columns proportionally to fill the full width
+    of the terminal (e.g. Konsole in full screen or wide windows), preventing the table
+    from falling short of the right side of the screen.
+    """
+    if target_width is None:
+        target_width = shutil.get_terminal_size(fallback=(80, 24)).columns
+
+    lines = table_str.splitlines()
+    if not lines or len(lines[0]) >= target_width:
+        return table_str
+
+    diff = target_width - len(lines[0])
+    first_line = lines[0]
+    pluses = [i for i, ch in enumerate(first_line) if ch == '+']
+    if len(pluses) < 2:
+        return table_str
+
+    col_widths = [pluses[i+1] - pluses[i] - 1 for i in range(len(pluses)-1)]
+    num_cols = len(col_widths)
+    total_w = sum(col_widths)
+    if total_w == 0:
+        return table_str
+
+    extra = [int(diff * (w / total_w)) for w in col_widths]
+    remainder = diff - sum(extra)
+    for _ in range(remainder):
+        largest_idx = max(range(num_cols), key=lambda i: (col_widths[i] + extra[i]))
+        extra[largest_idx] += 1
+
+    new_lines = []
+    for line in lines:
+        if not line or len(line) != len(first_line):
+            new_lines.append(line)
+            continue
+        new_parts = []
+        for col_idx in range(num_cols):
+            start = pluses[col_idx]
+            end = pluses[col_idx+1]
+            segment = line[start:end]
+            border_char = segment[0]
+            content = segment[1:]
+            fill_char = content[-1] if content else ' '
+            new_segment = border_char + content + (fill_char * extra[col_idx])
+            new_parts.append(new_segment)
+        new_parts.append(line[-1])
+        new_lines.append(''.join(new_parts))
+    return '\n'.join(new_lines)
 def lod_aggregate_sum(lod_, key_to_sum):
     """
     Agrupa un List of Dictionaries (LOD) por todas las claves excepto una,
@@ -174,20 +252,23 @@ def lod_order_by(ld, key, reverse=False, none_at_top=True):
     else:
         return nonull+null
 
-def lod_string(lod_, number=None, align=None, maxcolwidths=None, tablefmt="psql"):
+def lod_string(lod_, number=None, align=None, maxcolwidths=None, tablefmt="simple_grid", wordwrap=True, stretch=False):
     """
     Returns a string representation of a list of dictionaries with tabulate module.
-    Automatically adapts column widths to the current console size (e.g. Konsole)
-    so table borders and rows do not break when resized or when columns contain long text.
+    Optionally adapts column widths to the current console size (wordwrap)
+    and stretches the table horizontally to fill the full terminal width (stretch).
 
         - lod_: List of dictionaries
         - number: Number of dictionaries in the list to print. If None uses all lod_. (defaults to None)
         - align: Cells alignment with tabulate syntax. (defaults to None). Possible column alignments are: 
                  right, center, left, decimal (only for numbers), and None (to disable alignment). Omitting an 
                  alignment uses the default.
-        - maxcolwidths: Maximum column widths (int, list, or None). If None, column widths are automatically
-                        calculated to fit the terminal width when the table would otherwise overflow.
-        - tablefmt: Tabulate table format (defaults to "psql").
+        - maxcolwidths: Maximum column widths (int, list, or None).
+        - tablefmt: Tabulate table format (defaults to "simple_grid").
+        - wordwrap (bool): If True and maxcolwidths is None, calculates maxcolwidths automatically to prevent
+                           lines from breaking across the console. Defaults to True.
+        - stretch (bool): If True and maxcolwidths is None, expands table columns and horizontal lines
+                          to fill the full terminal width. Defaults to False.
 
     Returns:
         str: Formatted table string or informative message if empty/zero rows.
@@ -199,16 +280,23 @@ def lod_string(lod_, number=None, align=None, maxcolwidths=None, tablefmt="psql"
         return _("No data was printed due to you selected 0 rows")
 
     data_slice = lod_[0:number]
-    cw, hw = _fit_maxcolwidths(data_slice, headers="keys", align=align, tablefmt=tablefmt, maxcolwidths=maxcolwidths)
+    if wordwrap and maxcolwidths is None:
+        cw, hw = _fit_maxcolwidths(data_slice, headers="keys", align=align, tablefmt=tablefmt, maxcolwidths=None)
+    else:
+        cw, hw = maxcolwidths, None
+
     kwargs = {"headers": "keys", "tablefmt": tablefmt, "colalign": align}
     if cw is not None:
         kwargs["maxcolwidths"] = cw
     if hw is not None:
         kwargs["maxheadercolwidths"] = hw
 
-    return tabulate(data_slice, **kwargs)
+    rendered = tabulate(data_slice, **kwargs)
+    if stretch and maxcolwidths is None:
+        rendered = _stretch_table_to_terminal(rendered)
+    return rendered
 
-def lod_print(lod_, number=None, align=None, maxcolwidths=None, tablefmt="psql"):
+def lod_print(lod_, number=None, align=None, maxcolwidths=None, tablefmt="simple_grid", wordwrap=True, stretch=False):
     """
     Prints a list of dictionaries with tabulate module.
     Uses `lod_string` internally.
@@ -218,11 +306,12 @@ def lod_print(lod_, number=None, align=None, maxcolwidths=None, tablefmt="psql")
         - align: Cells alignment with tabulate syntax. (defaults to None). Possible column alignments are: 
                  right, center, left, decimal (only for numbers), and None (to disable alignment). Omitting an 
                  alignment uses the default.
-        - maxcolwidths: Maximum column widths (int, list, or None). If None, column widths are automatically
-                        calculated to fit the terminal width when the table would otherwise overflow.
-        - tablefmt: Tabulate table format (defaults to "psql").
+        - maxcolwidths: Maximum column widths (int, list, or None).
+        - tablefmt: Tabulate table format (defaults to "simple_grid").
+        - wordwrap (bool): If True and maxcolwidths is None, calculates maxcolwidths automatically. Defaults to True.
+        - stretch (bool): If True and maxcolwidths is None, expands table columns to fill terminal width. Defaults to False.
     """
-    print(lod_string(lod_, number=number, align=align, maxcolwidths=maxcolwidths, tablefmt=tablefmt))
+    print(lod_string(lod_, number=number, align=align, maxcolwidths=maxcolwidths, tablefmt=tablefmt, wordwrap=wordwrap, stretch=stretch))
 
 def lod_sum(lod_, key, ignore_nones=True):
     """
