@@ -377,4 +377,42 @@ def test_classes_extended_coverage(sample_data, capsys):
     assert "Single" in repr(d_obj)
     assert "x" in str(d_obj)
 
+    # LOL initialization edge cases:
+    # 1. LOL(None)
+    empty_lol = LOL(None)
+    assert len(empty_lol) == 0
+
+    # 2. LOL(existing_lol)
+    copied_lol = LOL(lol)
+    assert len(copied_lol) == len(lol)
+
+    # 3. LOL with non-list items
+    lol_non_lists = LOL([(1, 2), (3, 4)])
+    assert lol_non_lists.lol == [(1, 2), (3, 4)]
+
+    # 4. LOL with a generator (not a list)
+    lol_gen = LOL(x for x in [[1, 2], [3, 4]])
+    assert len(lol_gen) == 2
+
+    # DOD initialization with iterable of pairs (not a dict or DOD)
+    pairs = [("k1", {"val": 10}), ("k2", {"val": 20})]
+    dod_from_pairs = DOD(pairs)
+    assert len(dod_from_pairs) == 2
+    assert dod_from_pairs["k1"]["val"] == 10
+
+    # Callables without inspectable signature (like min or custom callable without signature)
+    sample_lod = LOD([{"a": 1}, {"a": 0}])
+    class CallableTruthy:
+        def __call__(self, *args):
+            return True
+        @property
+        def __signature__(self):
+            raise TypeError("No signature")
+
+    assert sample_lod.count(CallableTruthy()) == 2
+    assert len(sample_lod.filter(CallableTruthy())) == 2
+    sample_lod.calculate("is_valid", min)
+    assert sample_lod[0]["is_valid"] == "a"
+
+
 

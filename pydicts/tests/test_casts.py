@@ -979,3 +979,34 @@ def test_dtaware2str_long_string_naive_datetime():
 def test_dtaware2str_long_string_ignore_exception_naive():
     dt_naive = datetime(2023, 1, 15, 10, 30, 0)
     assert casts.dtaware2str(dt_naive, format="long string", ignore_exception=True, ignore_exception_value="N/A") == "N/A"
+
+def test_casts_get_system_timezone():
+    tz = casts.get_system_timezone()
+    assert isinstance(tz, str)
+
+def test_casts_str2time_hhmmxx_variations():
+    # Test 12 AM (midnight)
+    t_12am = casts.str2time("12:00am", format="HH:MMxx")
+    assert t_12am.hour == 0 and t_12am.minute == 0
+    # Test missing am/pm raises
+    with pytest.raises(exceptions.CastException):
+        casts.str2time("12:00", format="HH:MMxx")
+    assert casts.str2time("12:00", format="HH:MMxx", ignore_exception=True, ignore_exception_value="err") == "err"
+
+def test_casts_months_default():
+    m = casts.months(2025, 11)
+    assert len(m) >= 1
+    assert isinstance(m[0], tuple)
+
+def test_casts_timedelta2str_and_ignore_exception():
+    # ignore_exception with invalid type
+    assert casts.timedelta2str("not-a-delta", ignore_exception=True, ignore_exception_value="fallback") == "fallback"
+    # Exception on invalid type
+    with pytest.raises(exceptions.CastException):
+        casts.timedelta2str("not-a-delta")
+
+def test_casts_str2dtnaive_long_string_invalid():
+    with pytest.raises(exceptions.CastException):
+        casts.str2dtnaive("2023-01-01", format="long string")
+    assert casts.str2dtnaive("2023-01-01", format="long string", ignore_exception=True, ignore_exception_value="err") == "err"
+

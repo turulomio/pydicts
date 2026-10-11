@@ -58,4 +58,11 @@ def test_dod_tables(capsys):
     assert "ID" in captured.out
     assert "first" in captured.out
 
+    # Test dod_string_tables with scalar values
+    scalar_dod = {"alpha": 100, "beta": 200}
+    tbl_scalar = dod.dod_string_tables(scalar_dod, key_name="Metric")
+    assert "Metric" in tbl_scalar
+    assert "Value" in tbl_scalar
+    assert "alpha" in tbl_scalar
+
 

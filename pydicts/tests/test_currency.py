@@ -87,11 +87,15 @@ def test_currency_lte():
     Tests the less than or equal to (<=) comparison of Currency objects.
     """
     a=Currency(12.12, "EUR")
-    b=Currency(0.88, "USD")
+def test_currency_lte():
+    a = Currency(12.12, "EUR")
+    b = Currency(0.88, "USD")
+    c = Currency(20.00, "EUR")
     with raises(exceptions.CurrencyOperationsException):
-        a<=b
-    assert a<=a
-    assert a<= a+a
+        a <= b
+    assert a <= a
+    assert a <= c
+    assert not (c <= a)
 
 def test_currency_gt():
     """
@@ -103,6 +107,7 @@ def test_currency_gt():
         a>b
     assert not a>a
     assert a+a> a
+    assert not (a > a+a)
     
 def test_currency_gte():
     """
@@ -110,9 +115,21 @@ def test_currency_gte():
     """
     a=Currency(12.12, "EUR")
     b=Currency(0.88, "USD")
+    c=Currency(5.00, "EUR")
     with raises(exceptions.CurrencyOperationsException):
         a>=b
     assert a>=a
+    assert a>=c
+    assert not (c>=a)
+
+def test_currency_neg():
+    """
+    Tests unary minus __neg__ on Currency.
+    """
+    a = Currency(10, "EUR")
+    neg_a = -a
+    assert neg_a.amount == -10
+    assert neg_a.currency == "EUR"
 
 def test_currency_truediv():
     """
@@ -149,9 +166,6 @@ def test_currency_isGTZero():
     assert Currency(10, "EUR").isGTZero() is True
     assert Currency(0, "EUR").isGTZero() is False
     assert Currency(-5, "EUR").isGTZero() is False
-
-def test_currency_isGTZero():
-    """Tests the isGTZero method of the Currency class."""
 
 def test_currency_isLTZero():
     assert Currency(-10, "EUR").isLTZero() is True

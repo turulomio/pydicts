@@ -470,3 +470,15 @@ def test_lod_casts_and_empty():
 
     # lod2lood with empty
     assert lod.lod2lood([], ["a"]) == []
+
+    # lod_aggregate_sum empty
+    assert lod.lod_aggregate_sum([], "col") == []
+
+    # _fit_maxcolwidths with empty data or headers
+    cw, hw = lod._fit_maxcolwidths([], headers=[], align=None, tablefmt="simple_grid")
+    assert cw is None and hw is None
+
+    # _stretch_table_to_terminal with custom boundaries
+    table_sample = "| col1 | col2 |\n|------|------|\n| a    | b    |"
+    stretched = lod._stretch_table_to_terminal(table_sample, target_width=40)
+    assert len(stretched.splitlines()[0]) >= 20

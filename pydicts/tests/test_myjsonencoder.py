@@ -73,3 +73,34 @@ def test_myjsonencoder_decimals_as_string():
     assert json_["Decimal"]==str(d["Decimal"])
     assert json_["Time"]==d["Time"]
     assert json_["Timedelta"]==d["Timedelta"] 
+
+def test_myjsonencoder_percentage_and_currency():
+    from pydicts.currency import Currency
+    from pydicts.percentage import Percentage
+    import pytest
+
+    data = {
+        "cur": Currency(50, "EUR"),
+        "pct": Percentage(0.25, 1),
+        "nested": {
+            "inner_cur": Currency(10, "EUR"),
+            "items": ["a", "b"]
+        },
+        "list_of_items": [{"x": 1}, {"y": 2}]
+    }
+    encoded = myjsonencoder.MyJSONEncoder_dumps(data)
+    decoded = myjsonencoder.MyJSONEncoder_loads(encoded)
+    assert decoded["nested"]["inner_cur"] == Decimal("10")
+    assert decoded["pct"] == Decimal("0.25")
+
+    # Test timezone-aware time raises ValueError
+    aware_time = time(12, 0, 0, tzinfo=ZoneInfo("UTC"))
+    with pytest.raises(ValueError):
+        myjsonencoder.MyJSONEncoder_dumps({"t": aware_time})
+
+    # Test unknown object falls back to super().default()
+    class CustomObj:
+        pass
+    with pytest.raises(TypeError):
+        myjsonencoder.MyJSONEncoder_dumps({"c": CustomObj()})
+
