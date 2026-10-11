@@ -681,6 +681,9 @@ class DOD(Mapping[Any, dict]):
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}(name={self.name!r}, entries={len(self)})"
 
+    def __str__(self) -> str:
+        return self.string()
+
     # ---------------------------------------------------------
     # Dict helpers
     # ---------------------------------------------------------
@@ -708,7 +711,25 @@ class DOD(Mapping[Any, dict]):
     # Display & Conversion
     # ---------------------------------------------------------
 
-    def print(self, indent: int = 4, depth: Optional[int] = None, width: int = 80, sort_dicts: bool = True) -> None:
+    def string(
+        self,
+        indent: int = 4,
+        depth: Optional[int] = None,
+        width: Optional[int] = None,
+        sort_dicts: bool = True,
+    ) -> str:
+        """
+        Returns the pretty-printed string using `dod.dod_string`.
+        """
+        return dod.dod_string(self.dod, indent=indent, depth=depth, width=width, sort_dicts=sort_dicts)
+
+    def print(
+        self,
+        indent: int = 4,
+        depth: Optional[int] = None,
+        width: Optional[int] = None,
+        sort_dicts: bool = True,
+    ) -> None:
         """
         Pretty-prints the dictionary of dictionaries using `dod.dod_print`.
         """
