@@ -75,6 +75,10 @@ def test_myjsonencoder_decimals_as_string():
     assert json_["Timedelta"]==d["Timedelta"] 
 
 def test_myjsonencoder_percentage_and_currency():
+    """
+    Tests serialization and deserialization of Currency and Percentage objects,
+    nested structures, timezone-aware time validation, and unhandled custom classes.
+    """
     from pydicts.currency import Currency
     from pydicts.percentage import Percentage
     import pytest

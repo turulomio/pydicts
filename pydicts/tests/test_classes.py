@@ -5,6 +5,7 @@ from pydicts.classes import DOD, LOD, LOL
 
 @pytest.fixture
 def sample_data():
+    """Provides a sample list of dictionaries for testing LOD features."""
     return [
         {"id": 1, "name": "Alice", "age": 30, "salary": Decimal("1000.50")},
         {"id": 2, "name": "Bob", "age": 25, "salary": Decimal("1500.00")},
@@ -15,6 +16,10 @@ def sample_data():
 
 
 def test_init_and_container_protocols(sample_data):
+    """
+    Tests LOD initialization, length, boolean evaluation, indexing, slicing,
+    iteration, containment, equality, and representation protocols.
+    """
     # Empty init
     lod_empty = LOD()
     assert len(lod_empty) == 0
@@ -52,6 +57,9 @@ def test_init_and_container_protocols(sample_data):
 
 
 def test_first_and_keys(sample_data):
+    """
+    Tests LOD first(), first_keys(), and keys() methods on both populated and empty LOD instances.
+    """
     lod = LOD(sample_data)
     assert lod.first() == sample_data[0]
     assert "name" in lod.first_keys()
@@ -64,6 +72,9 @@ def test_first_and_keys(sample_data):
 
 
 def test_set_append_extend(sample_data):
+    """
+    Tests mutating LOD via set(), append(), and extend() methods.
+    """
     lod = LOD()
     lod.set(sample_data[:2])
     assert len(lod) == 2
@@ -79,6 +90,9 @@ def test_set_append_extend(sample_data):
 
 
 def test_aggregations(sample_data):
+    """
+    Tests numerical and statistical aggregation methods on LOD (sum, average, median, min_value, max_value, count, list, list_distinct).
+    """
     lod = LOD(sample_data)
 
     assert lod.sum("salary") == Decimal("6001.00")
@@ -99,6 +113,9 @@ def test_aggregations(sample_data):
 
 
 def test_transformations(sample_data):
+    """
+    Tests transformation methods on LOD (order_by, filter, filter_keys, calculate, rename_key, remove_key, clone).
+    """
     lod = LOD(sample_data)
 
     # order_by
@@ -136,6 +153,9 @@ def test_transformations(sample_data):
 
 
 def test_string_and_print(sample_data, capsys):
+    """
+    Tests string formatting (__str__) and terminal printing (print()) on LOD.
+    """
     lod = LOD(sample_data)
     table_str = str(lod)
     assert "Alice" in table_str
@@ -147,6 +167,9 @@ def test_string_and_print(sample_data, capsys):
 
 
 def test_conversions(sample_data):
+    """
+    Tests structural conversions of LOD to DOD, LOL, and key-value dictionaries.
+    """
     lod = LOD(sample_data)
 
     # to_dod
@@ -172,6 +195,10 @@ def test_conversions(sample_data):
 
 
 def test_lol_class():
+    """
+    Tests LOL (List of Lists) class features including slicing, indexing, row/col access,
+    summing rows and columns, adding/removing rows, transposition, sorting, and string conversion.
+    """
     data = [
         [1, "Alice", 100],
         [2, "Bob", 200],
@@ -219,6 +246,10 @@ def test_lol_class():
 
 
 def test_dod_class(capsys):
+    """
+    Tests DOD (Dictionary of Dictionaries) wrapper methods: dictionary protocols, item mutation,
+    conversion to LOD, formatted string printing, table printing, values/items iteration, and cloning.
+    """
     data = {
         "user1": {"name": "Alice", "role": "admin"},
         "user2": {"name": "Bob", "role": "user"},
@@ -273,6 +304,11 @@ def test_dod_class(capsys):
 
 
 def test_classes_extended_coverage(sample_data, capsys):
+    """
+    Tests extended edge cases and operations across LOD, LOL, and DOD classes:
+    positive/negative sums, duplicate removal, aggregation, joins, tuple mappings,
+    list-of-tuples initialization, uninspectable callables, and column manipulation.
+    """
     # LOD conversions and aggregations
     lod = LOD(sample_data, name="Team")
     assert lod.sum_positives("salary") == Decimal("6001.00")

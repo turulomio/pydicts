@@ -125,21 +125,28 @@ def test_lod_sum(sample_lod):
     assert lod.lod_sum(sample_lod, "d", ignore_nones=True) == 16
     
 def test_lod_average(sample_lod):
-    """Tests the lod_average function."""
-    # lod.lod_print(sample_lod) # Remove debug print
+    """
+    Tests the lod_average function for calculating the arithmetic mean of numeric key values across dictionaries.
+    """
     assert lod.lod_average(sample_lod,"c")==0
     assert lod.lod_average(sample_lod,"d")==8
 
 def test_lod_average_ponderated(sample_lod):
-    """Tests the lod_average_ponderated function."""
+    """
+    Tests the lod_average_ponderated function for computing a weighted average using two specified keys.
+    """
     assert lod.lod_average_ponderated(sample_lod,"e", "c")==0
     
 def test_lod_median(sample_lod):
-    """Tests the lod_median function."""
+    """
+    Tests the lod_median function for computing the median value of a specified key across dictionaries.
+    """
     assert lod.lod_median(sample_lod,"c")==0
     
 def tests_lod_sum_positives(sample_lod):
-    """Tests the lod_sum_positives function."""
+    """
+    Tests the lod_sum_positives function for summing only positive numeric values for a specified key.
+    """
     assert lod.lod_sum_positives(sample_lod, "c")==Decimal("12.32")
     assert lod.lod_sum_positives(sample_lod, "d")==16
     
@@ -186,9 +193,10 @@ def test_lod_remove_key(sample_lod):
     assert lod.lod_has_key(cloned_lod, "a")
 
 def test_lod_keys(sample_lod, empty_lod):
-    """Tests the lod_keys function to retrieve all keys from the first dictionary."""
-
-def test_lod_keys(sample_lod, empty_lod):
+    """
+    Tests the lod_keys function to retrieve all keys from the first dictionary,
+    and returns None when the list is empty.
+    """
     keys = lod.lod_keys(sample_lod)
     assert isinstance(keys, list)
     assert "a" in keys
@@ -196,9 +204,9 @@ def test_lod_keys(sample_lod, empty_lod):
     assert lod.lod_keys(empty_lod) is None
 
 def test_lod_clone(sample_lod):
-    """Tests the lod_clone function for creating a deep copy of a list of dictionaries."""
-
-def test_lod_clone(sample_lod):
+    """
+    Tests the lod_clone function for creating a deep copy of a list of dictionaries.
+    """
     cloned_lod = lod.lod_clone(sample_lod)
     assert cloned_lod == sample_lod # Content is the same
     assert cloned_lod is not sample_lod # It's a new list object
@@ -207,9 +215,9 @@ def test_lod_clone(sample_lod):
     assert sample_lod[0]["c"] != Decimal("999") # Ensure deep copy for dicts
 
 def test_lod_filter_keys(sample_lod):
-    """Tests the lod_filter_keys function to create a new list of dictionaries with only specified keys."""
-
-def test_lod_filter_keys(sample_lod):
+    """
+    Tests the lod_filter_keys function to create a new list of dictionaries containing only specified keys.
+    """
     new_lod=lod.lod_filter_keys(sample_lod,  ["g", "h"])
     assert "a" not in lod.lod_keys(new_lod)
     assert "g" in lod.lod_keys(new_lod)

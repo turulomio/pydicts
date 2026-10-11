@@ -17,26 +17,28 @@ def test_currency_currencies_dictionary():
     
     
 def test_currency_init():
+    """
+    Tests default initialization of Currency with zero amount and EUR symbol.
+    """
     assert Currency().string()=="0.00 €"
     
 def test_currency_add():
     """
-    Tests the addition of Currency objects.
+    Tests the addition of Currency objects of the same currency,
+    and verifies that adding different currencies raises CurrencyOperationsException.
     """
-def test_currency_add():
     a=Currency(12.12, "EUR")
     b=Currency(0.88, "USD")
     assert a+a==Currency(24.24, "EUR")
-    # Test adding currencies of different types should raise an exception
     with raises(exceptions.CurrencyOperationsException):
         a+b
             
 def test_currency_eq():
+    """
+    Tests the equality comparison between Currency objects.
+    """
     a=Currency(12.12, "EUR")
     b=Currency(0.88, "USD")
-    """
-    Tests the equality comparison of Currency objects.
-    """
     assert not a==b
     
         
@@ -86,8 +88,6 @@ def test_currency_lte():
     """
     Tests the less than or equal to (<=) comparison of Currency objects.
     """
-    a=Currency(12.12, "EUR")
-def test_currency_lte():
     a = Currency(12.12, "EUR")
     b = Currency(0.88, "USD")
     c = Currency(20.00, "EUR")
@@ -155,31 +155,41 @@ def test_currency_isZero():
     assert Currency(-5, "EUR").isZero() is False
 
 def test_currency_isGETZero():
+    """
+    Tests the isGETZero (greater than or equal to zero) method of the Currency class.
+    """
     assert Currency(10, "EUR").isGETZero() is True
     assert Currency(0, "EUR").isGETZero() is True
-    """
-    Tests the isGETZero method of the Currency class.
-    """
     assert Currency(-5, "EUR").isGETZero() is False
 
 def test_currency_isGTZero():
+    """
+    Tests the isGTZero (strictly greater than zero) method of the Currency class.
+    """
     assert Currency(10, "EUR").isGTZero() is True
     assert Currency(0, "EUR").isGTZero() is False
     assert Currency(-5, "EUR").isGTZero() is False
 
 def test_currency_isLTZero():
+    """
+    Tests the isLTZero (strictly less than zero) method of the Currency class.
+    """
     assert Currency(-10, "EUR").isLTZero() is True
     assert Currency(0, "EUR").isLTZero() is False
     assert Currency(5, "EUR").isLTZero() is False
 
 def test_currency_isLETZero():
+    """
+    Tests the isLETZero (less than or equal to zero) method of the Currency class.
+    """
     assert Currency(-10, "EUR").isLETZero() is True
-    """Tests the isLETZero method of the Currency class."""
     assert Currency(0, "EUR").isLETZero() is True
     assert Currency(5, "EUR").isLETZero() is False
 
 def test_currency_round():
-    """Tests the round method of the Currency class."""
+    """
+    Tests the round method of the Currency class for various decimal precisions.
+    """
     a = Currency(Decimal("12.12345"), "EUR")
     assert a.round(2) == Decimal("12.12")
     assert a.round(3) == Decimal("12.123")

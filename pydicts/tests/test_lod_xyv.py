@@ -2,6 +2,10 @@ from pydicts.lod_xyv import lod_xyv_transformation
 
 
 def test_lod_xyv_transformation():
+    """
+    Tests lod_xyv_transformation for pivoting 2D sparse/coordinate records (X, Y, Value)
+    into structured tabular rows with column headers, handling empty lists and invalid keys.
+    """
     raw_data = [
         {"x": "Row1", "y": "ColA", "val": 10},
         {"x": "Row1", "y": "ColB", "val": 20},
