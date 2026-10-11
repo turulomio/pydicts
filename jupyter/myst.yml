@@ -6,7 +6,8 @@ project:
   # keywords: []
   authors:
     - id: Turulomio
-      name: Turulomio
+      name:
+        literal: Turulomio
       email: turulomio@yahoo.es
 
   github: https://github.com/turulomio/pydicts
