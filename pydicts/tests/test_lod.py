@@ -77,6 +77,8 @@ def test_lod_print(sample_lod):
     lod.lod_print(sample_lod)
     lod.lod_print(sample_lod, number=1)
     lod.lod_print(sample_lod, align=["left","center","right"]*3+["decimal"])
+    lod.lod_print(sample_lod, maxcolwidths=[10]*len(sample_lod[0]))
+    lod.lod_print(sample_lod, tablefmt="grid")
 
 def test_lod_print_empty(empty_lod, capsys):
     lod.lod_print(empty_lod)
@@ -94,6 +96,23 @@ def test_lod_print_zero_rows(sample_lod, capsys):
     captured = capsys.readouterr()
     # Assert against the English translation, as the _() function is active
     assert "No data was printed due to you selected 0 rows" in captured.out
+
+def test_lod_string(sample_lod):
+    """
+    Tests the lod_string function to ensure it returns strings for various inputs.
+    """
+    s = lod.lod_string(sample_lod)
+    assert isinstance(s, str)
+    assert len(s) > 0
+    assert lod.lod_string([]) == "This list of dictionaries hasn't data to print"
+    assert lod.lod_string(sample_lod, number=0) == "No data was printed due to you selected 0 rows"
+    s_grid = lod.lod_string(sample_lod, tablefmt="grid", maxcolwidths=[10]*len(sample_lod[0]))
+    assert isinstance(s_grid, str)
+    s_no_stretch = lod.lod_string(sample_lod, stretch=False)
+    assert isinstance(s_no_stretch, str)
+    s_raw = lod.lod_string(sample_lod, wordwrap=False, stretch=False)
+    assert isinstance(s_raw, str)
+    lod.lod_print(sample_lod, wordwrap=False, stretch=False)
 def test_lod_sum(sample_lod):
     """
     Tests the lod_sum function for summing values in a specific key.
