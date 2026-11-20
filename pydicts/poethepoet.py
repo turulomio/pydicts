@@ -33,7 +33,7 @@ def jupyter():
     Starts the Jupyter Book documentation server. I's not needed to be build due to it will be build in Github
     for GitHub Pages publication.
     """
-    system("cd jupyter && jupyter book start --execute")
+    system("cd jupyter && HOST=127.0.0.1 jupyter book start --execute")
     system("touch docs/.nojekyll")
     
 def coverage():
